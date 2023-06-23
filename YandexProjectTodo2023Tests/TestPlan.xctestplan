@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "C2114B71-630F-44F8-9B7F-7D69C4027027",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:YandexProjectTodo2023.xcodeproj",
+        "identifier" : "943DD45F2A4574FB00C8B8A2",
+        "name" : "YandexProjectTodo2023Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

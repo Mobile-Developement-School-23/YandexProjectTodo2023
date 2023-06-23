@@ -10,24 +10,47 @@
 		943DD4412A45737300C8B8A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4402A45737300C8B8A2 /* AppDelegate.swift */; };
 		943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4422A45737300C8B8A2 /* SceneDelegate.swift */; };
 		943DD4452A45737300C8B8A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4442A45737300C8B8A2 /* ViewController.swift */; };
-		943DD4482A45737300C8B8A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 943DD4462A45737300C8B8A2 /* Main.storyboard */; };
 		943DD44A2A45737400C8B8A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 943DD4492A45737400C8B8A2 /* Assets.xcassets */; };
 		943DD44D2A45737400C8B8A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 943DD44B2A45737400C8B8A2 /* LaunchScreen.storyboard */; };
+		943DD4562A45746900C8B8A2 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4552A45746900C8B8A2 /* TodoItem.swift */; };
+		943DD4582A45747700C8B8A2 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4572A45747700C8B8A2 /* FileCache.swift */; };
+		943DD4632A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4622A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		943DD4642A4574FB00C8B8A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 943DD4352A45737300C8B8A2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 943DD43C2A45737300C8B8A2;
+			remoteInfo = YandexProjectTodo2023;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		943DD43D2A45737300C8B8A2 /* YandexProjectTodo2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexProjectTodo2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		943DD4402A45737300C8B8A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		943DD4422A45737300C8B8A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		943DD4442A45737300C8B8A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		943DD4472A45737300C8B8A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		943DD4492A45737400C8B8A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		943DD44C2A45737400C8B8A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		943DD44E2A45737400C8B8A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		943DD4552A45746900C8B8A2 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
+		943DD4572A45747700C8B8A2 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		943DD4602A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YandexProjectTodo2023Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		943DD4622A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexProjectTodo2023Tests.swift; sourceTree = "<group>"; };
+		943DD4692A4575C000C8B8A2 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		943DD43A2A45737300C8B8A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943DD45D2A4574FB00C8B8A2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				943DD43F2A45737300C8B8A2 /* YandexProjectTodo2023 */,
+				943DD4612A4574FB00C8B8A2 /* YandexProjectTodo2023Tests */,
 				943DD43E2A45737300C8B8A2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				943DD43D2A45737300C8B8A2 /* YandexProjectTodo2023.app */,
+				943DD4602A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,15 +81,33 @@
 		943DD43F2A45737300C8B8A2 /* YandexProjectTodo2023 */ = {
 			isa = PBXGroup;
 			children = (
+				943DD4542A45744E00C8B8A2 /* Model */,
 				943DD4402A45737300C8B8A2 /* AppDelegate.swift */,
 				943DD4422A45737300C8B8A2 /* SceneDelegate.swift */,
 				943DD4442A45737300C8B8A2 /* ViewController.swift */,
-				943DD4462A45737300C8B8A2 /* Main.storyboard */,
 				943DD4492A45737400C8B8A2 /* Assets.xcassets */,
 				943DD44B2A45737400C8B8A2 /* LaunchScreen.storyboard */,
 				943DD44E2A45737400C8B8A2 /* Info.plist */,
 			);
 			path = YandexProjectTodo2023;
+			sourceTree = "<group>";
+		};
+		943DD4542A45744E00C8B8A2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				943DD4552A45746900C8B8A2 /* TodoItem.swift */,
+				943DD4572A45747700C8B8A2 /* FileCache.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		943DD4612A4574FB00C8B8A2 /* YandexProjectTodo2023Tests */ = {
+			isa = PBXGroup;
+			children = (
+				943DD4622A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift */,
+				943DD4692A4575C000C8B8A2 /* TestPlan.xctestplan */,
+			);
+			path = YandexProjectTodo2023Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -87,6 +130,24 @@
 			productReference = 943DD43D2A45737300C8B8A2 /* YandexProjectTodo2023.app */;
 			productType = "com.apple.product-type.application";
 		};
+		943DD45F2A4574FB00C8B8A2 /* YandexProjectTodo2023Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 943DD4662A4574FB00C8B8A2 /* Build configuration list for PBXNativeTarget "YandexProjectTodo2023Tests" */;
+			buildPhases = (
+				943DD45C2A4574FB00C8B8A2 /* Sources */,
+				943DD45D2A4574FB00C8B8A2 /* Frameworks */,
+				943DD45E2A4574FB00C8B8A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				943DD4652A4574FB00C8B8A2 /* PBXTargetDependency */,
+			);
+			name = YandexProjectTodo2023Tests;
+			productName = YandexProjectTodo2023Tests;
+			productReference = 943DD4602A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -99,6 +160,10 @@
 				TargetAttributes = {
 					943DD43C2A45737300C8B8A2 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					943DD45F2A4574FB00C8B8A2 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 943DD43C2A45737300C8B8A2;
 					};
 				};
 			};
@@ -116,6 +181,7 @@
 			projectRoot = "";
 			targets = (
 				943DD43C2A45737300C8B8A2 /* YandexProjectTodo2023 */,
+				943DD45F2A4574FB00C8B8A2 /* YandexProjectTodo2023Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -127,7 +193,13 @@
 			files = (
 				943DD44D2A45737400C8B8A2 /* LaunchScreen.storyboard in Resources */,
 				943DD44A2A45737400C8B8A2 /* Assets.xcassets in Resources */,
-				943DD4482A45737300C8B8A2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943DD45E2A4574FB00C8B8A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,21 +212,31 @@
 			files = (
 				943DD4452A45737300C8B8A2 /* ViewController.swift in Sources */,
 				943DD4412A45737300C8B8A2 /* AppDelegate.swift in Sources */,
+				943DD4562A45746900C8B8A2 /* TodoItem.swift in Sources */,
+				943DD4582A45747700C8B8A2 /* FileCache.swift in Sources */,
 				943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943DD45C2A4574FB00C8B8A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				943DD4632A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		943DD4462A45737300C8B8A2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				943DD4472A45737300C8B8A2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		943DD4652A4574FB00C8B8A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 943DD43C2A45737300C8B8A2 /* YandexProjectTodo2023 */;
+			targetProxy = 943DD4642A4574FB00C8B8A2 /* PBXContainerItemProxy */;
 		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
 		943DD44B2A45737400C8B8A2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +374,6 @@
 				INFOPLIST_FILE = YandexProjectTodo2023/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +401,6 @@
 				INFOPLIST_FILE = YandexProjectTodo2023/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -333,6 +413,42 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		943DD4672A4574FB00C8B8A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U3CGT88S32;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myorganization.YandexProjectTodo2023Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YandexProjectTodo2023.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YandexProjectTodo2023";
+			};
+			name = Debug;
+		};
+		943DD4682A4574FB00C8B8A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U3CGT88S32;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myorganization.YandexProjectTodo2023Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YandexProjectTodo2023.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YandexProjectTodo2023";
 			};
 			name = Release;
 		};
@@ -353,6 +469,15 @@
 			buildConfigurations = (
 				943DD4522A45737400C8B8A2 /* Debug */,
 				943DD4532A45737400C8B8A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		943DD4662A4574FB00C8B8A2 /* Build configuration list for PBXNativeTarget "YandexProjectTodo2023Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				943DD4672A4574FB00C8B8A2 /* Debug */,
+				943DD4682A4574FB00C8B8A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
