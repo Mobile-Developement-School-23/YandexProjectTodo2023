@@ -28,6 +28,7 @@
 		943DD48A2A45790200C8B8A2 /* Constraints&TopButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4892A45790200C8B8A2 /* Constraints&TopButtonLabel.swift */; };
 		943DD48C2A45790A00C8B8A2 /* Exstension UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD48B2A45790A00C8B8A2 /* Exstension UIColor.swift */; };
 		943DD48E2A45791600C8B8A2 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD48D2A45791600C8B8A2 /* ColorPickerViewController.swift */; };
+		9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68B2A45CB7C00F7C879 /* AnimationForTransition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		943DD4892A45790200C8B8A2 /* Constraints&TopButtonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constraints&TopButtonLabel.swift"; sourceTree = "<group>"; };
 		943DD48B2A45790A00C8B8A2 /* Exstension UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exstension UIColor.swift"; sourceTree = "<group>"; };
 		943DD48D2A45791600C8B8A2 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		9488F68B2A45CB7C00F7C879 /* AnimationForTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationForTransition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				943DD4752A45788800C8B8A2 /* FirstScreenTableViewCell.swift */,
 				943DD4772A45789400C8B8A2 /* FirstScreen+Ybutton.swift */,
 				943DD4792A45789F00C8B8A2 /* AnimationsForButtons.swift */,
+				9488F68B2A45CB7C00F7C879 /* AnimationForTransition.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				943DD4842A4578E200C8B8A2 /* SecondScreenViewController.swift in Sources */,
 				943DD4582A45747700C8B8A2 /* FileCache.swift in Sources */,
 				943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */,
+				9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */,
 				943DD4822A4578D800C8B8A2 /* TextViewSettings.swift in Sources */,
 				943DD47A2A45789F00C8B8A2 /* AnimationsForButtons.swift in Sources */,
 				943DD4802A4578CD00C8B8A2 /* SecondScreenTableView+Cells.swift in Sources */,

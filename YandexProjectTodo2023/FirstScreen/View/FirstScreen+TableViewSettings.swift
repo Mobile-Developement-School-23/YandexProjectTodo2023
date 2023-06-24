@@ -62,7 +62,11 @@ extension FirstScreenViewController {
         action.backgroundColor = .red
         
         let actionTwo = UIContextualAction(style: .normal, title: "", handler: { _, _, completionHandler in
-            let vc = SecondScreenViewController()
+            
+            guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            let frame = tableView.convert(cell.frame, to: tableView.superview)
+            
+            let vc = SecondScreenViewController(cellFrame: frame)
             vc.toDo = self.collectionToDo[indexPath.row]
             
             vc.dataCompletionHandler = { data in
@@ -82,8 +86,8 @@ extension FirstScreenViewController {
                 FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
             }
-            vc.modalTransitionStyle = .coverVertical
-            self.navigationController?.present(vc, animated: true)
+//            vc.modalTransitionStyle = .coverVertical
+            self.present(vc, animated: true)
             completionHandler(true)
             
         })

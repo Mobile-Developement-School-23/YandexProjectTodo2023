@@ -21,13 +21,37 @@ extension SecondScreenViewController {
            buttonSave.isEnabled = false
            buttonDelete.isEnabled = false
        }
-       
-       // keyboard observer
+
+        // keyboard observer
        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
    }
     
     func tableViewFrame() {
-       tableView.frame = CGRect(x: view.bounds.minX, y: view.bounds.minY + 50, width: view.bounds.width, height: view.bounds.height - 40)
+        
+//        
+//        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+//        tableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
+//        tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
+        
+        let portraitFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY + 50, width: view.bounds.width, height: view.bounds.height - 40)
+        let landscapeFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height - 40)
+
+        let orientation = UIDevice.current.orientation
+        switch orientation {
+        case .portrait, .portraitUpsideDown:
+            tableView.frame = portraitFrame
+            topLabel.isHidden = false
+            buttonSave.isHidden = false
+            buttonClose.isHidden = false
+
+        case .landscapeLeft, .landscapeRight:
+            tableView.frame = landscapeFrame
+            topLabel.isHidden = true
+            buttonSave.isHidden = true
+            buttonClose.isHidden = true
+        default:
+            tableView.frame = portraitFrame
+        }
    }
 }
 
@@ -184,5 +208,31 @@ extension SecondScreenViewController: UICalendarViewDelegate, UICalendarSelectio
         impactFeedbackGenerator.impactOccurred()
         toDo.deadline = dateComponents?.date
         tableView.reloadData()
+    }
+}
+
+//Handle Orientation Device Change
+
+extension SecondScreenViewController {
+    
+    @objc func handleDeviceOrientationChange() {
+        let orientation = UIDevice.current.orientation
+
+        switch orientation {
+        case .portrait, .portraitUpsideDown:
+            tableView.frame = CGRect(x: view.bounds.minX, y: view.bounds.minY + 50, width: view.bounds.width, height: view.bounds.height - 40)
+            topLabel.isHidden = false
+            buttonSave.isHidden = false
+            buttonClose.isHidden = false
+            
+        case .landscapeLeft, .landscapeRight:
+            tableView.frame = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height - 40)
+            topLabel.isHidden = true
+            buttonSave.isHidden = true
+            buttonClose.isHidden = true
+
+        default:
+            break
+        }
     }
 }
