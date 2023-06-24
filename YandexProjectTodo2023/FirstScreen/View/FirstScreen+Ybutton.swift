@@ -35,21 +35,21 @@ extension FirstScreenViewController {
     
     @objc func tapPlusButton() {
         
-//        let vc = SecondScreenViewController()
-//        vc.toDo = ToDoItem(text: "", priority: .normal)
-//        
-//        vc.dataCompletionHandler = { data in
-//
-//            if data.creationDate == Date.distantPast {
-//                return
-//            }
-//            self.collectionToDo.append(data)
-//            self.collectionToDo.sort { $0.creationDate < $1.creationDate }
-//            self.tableView.reloadData()
-//            
-//            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-//        }
-//        vc.modalTransitionStyle = .coverVertical
-//        navigationController?.present(vc, animated: true)
+        let vc = SecondScreenViewController(cellFrame: button.frame)
+        vc.toDo = ToDoItem(text: "", priority: .normal)
+        
+        vc.dataCompletionHandler = { data in
+
+            if data.creationDate == Date.distantPast {
+                return
+            }
+            self.collectionToDo.append(data)
+            self.collectionToDo.sort { $0.creationDate < $1.creationDate }
+            self.tableView.reloadData()
+            
+            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+        }
+        vc.modalTransitionStyle = .coverVertical
+        navigationController?.present(vc, animated: true)
     }
 }
