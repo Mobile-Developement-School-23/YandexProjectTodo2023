@@ -11,6 +11,8 @@ extension FirstScreenViewController {
         }
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: { () -> UIViewController? in
             let vc = SecondScreenViewController()
+            vc.buttonClose.isHidden = true
+            vc.buttonSave.isHidden = true
             vc.toDo = self.collectionToDo[indexPath.row]
             
             return vc
@@ -34,7 +36,11 @@ extension FirstScreenViewController {
                    animator: UIContextMenuInteractionCommitAnimating) {
         guard let viewController = animator.previewViewController else { return }
         animator.addCompletion {
-            viewController.dismiss(animated: false) {
+            let vc = viewController as? SecondScreenViewController
+            vc?.buttonSave.isHidden = false
+            vc?.buttonClose.isHidden = false
+            vc?.dismiss(animated: false) {
+                
                 self.present(viewController, animated: true, completion: nil)
             }
         }
