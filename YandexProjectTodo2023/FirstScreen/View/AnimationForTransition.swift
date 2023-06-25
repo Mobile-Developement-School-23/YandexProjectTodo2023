@@ -25,10 +25,11 @@ class MyAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
             let toView = transitionContext.view(forKey: .to)!
             containerView.addSubview(toView)
             toView.frame = originFrame
+            toView.alpha = 0.7
             toView.layoutIfNeeded()
-            
             UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
                 toView.frame = containerView.bounds
+                toView.alpha = 1
             }) { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
@@ -36,7 +37,8 @@ class MyAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
             let fromView = transitionContext.view(forKey: .from)!
             UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
                 fromView.frame = self.originFrame
-                
+                fromView.alpha = 0.5
+                fromView.layoutIfNeeded()
             }) { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }

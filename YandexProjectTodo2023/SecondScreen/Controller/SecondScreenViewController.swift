@@ -1,29 +1,8 @@
 import UIKit
 
-class SecondScreenViewController: UIViewController, UITextViewDelegate, UIViewControllerTransitioningDelegate {
+class SecondScreenViewController: UIViewController, UITextViewDelegate {
     
-    
-    var cellFrame: CGRect?
-
-    init(cellFrame: CGRect) {
-        super.init(nibName: nil, bundle: nil)
-        self.cellFrame = cellFrame
-        self.modalPresentationStyle = .formSheet
-        self.transitioningDelegate = self
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return MyAnimationController(isPresenting: true, originFrame: cellFrame ?? CGRect())
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return MyAnimationController(isPresenting: false, originFrame: cellFrame ?? CGRect())
-    }
-
+    var cellFrame: CGRect? // frames for animation transition
 
     // MARK: complitionHandler & data
     

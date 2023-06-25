@@ -1,6 +1,28 @@
 import Foundation
 import UIKit
 
+// MARK: Delete & Mark todo in tableView
+
+extension FirstScreenViewController {
+    
+    func doneUndone(_ indexPath: IndexPath) {
+       collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+       pressedButtonHeaderRight()
+       pressedButtonHeaderRight()
+       tableView.reloadData()
+       
+       FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+   }
+    
+    func removeAndDeleteTodo(_ indexPath: IndexPath) {
+        self.collectionToDo.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.reloadData()
+        
+        FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+    }
+}
+
 // MARK: TableView Settings + Emitter
 
 extension FirstScreenViewController: UITableViewDelegate, UITableViewDataSource {
@@ -51,11 +73,7 @@ extension FirstScreenViewController {
         }
         
         let action = UIContextualAction(style: .normal, title: "", handler: {  ( _, _, _ ) in
-            self.collectionToDo.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
-            
-            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            self.removeAndDeleteTodo(indexPath)
         })
         
         action.image = UIImage(systemName: "trash", withConfiguration: .none)
@@ -86,7 +104,6 @@ extension FirstScreenViewController {
                 FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
             }
-//            vc.modalTransitionStyle = .coverVertical
             self.present(vc, animated: true)
             completionHandler(true)
             
@@ -104,12 +121,8 @@ extension FirstScreenViewController {
             return nil
         }
         let action = UIContextualAction(style: .normal, title: "", handler: { _, _, _ in
-            self.collectionToDo[indexPath.row].isDone = !self.collectionToDo[indexPath.row].isDone
-            self.pressedButtonHeaderRight()
-            self.pressedButtonHeaderRight()
-            tableView.reloadData()
-            
-            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+
+            self.doneUndone(indexPath)
         })
         action.image = UIImage(systemName: "checkmark.circle.fill")
         action.backgroundColor = .systemGreen
