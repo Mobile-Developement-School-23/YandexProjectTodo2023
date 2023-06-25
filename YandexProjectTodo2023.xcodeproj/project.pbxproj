@@ -11,8 +11,6 @@
 		943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4422A45737300C8B8A2 /* SceneDelegate.swift */; };
 		943DD44A2A45737400C8B8A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 943DD4492A45737400C8B8A2 /* Assets.xcassets */; };
 		943DD44D2A45737400C8B8A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 943DD44B2A45737400C8B8A2 /* LaunchScreen.storyboard */; };
-		943DD4562A45746900C8B8A2 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4552A45746900C8B8A2 /* TodoItem.swift */; };
-		943DD4582A45747700C8B8A2 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4572A45747700C8B8A2 /* FileCache.swift */; };
 		943DD4632A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4622A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift */; };
 		943DD4742A45787B00C8B8A2 /* FirstScreen+TableViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4732A45787B00C8B8A2 /* FirstScreen+TableViewSettings.swift */; };
 		943DD4762A45788800C8B8A2 /* FirstScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4752A45788800C8B8A2 /* FirstScreenTableViewCell.swift */; };
@@ -31,6 +29,9 @@
 		9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68B2A45CB7C00F7C879 /* AnimationForTransition.swift */; };
 		9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68D2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift */; };
 		9488F6902A48302100F7C879 /* FirstScreenPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68F2A48302100F7C879 /* FirstScreenPreview.swift */; };
+		94D824342A486E4800A4135B /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824332A486E4800A4135B /* CocoaLumberjack */; };
+		94D824362A486E4800A4135B /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824352A486E4800A4135B /* CocoaLumberjackSwift */; };
+		94D824392A486E6100A4135B /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824382A486E6100A4135B /* FileCachePackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,8 +51,6 @@
 		943DD4492A45737400C8B8A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		943DD44C2A45737400C8B8A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		943DD44E2A45737400C8B8A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		943DD4552A45746900C8B8A2 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
-		943DD4572A45747700C8B8A2 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		943DD4602A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YandexProjectTodo2023Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		943DD4622A4574FB00C8B8A2 /* YandexProjectTodo2023Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexProjectTodo2023Tests.swift; sourceTree = "<group>"; };
 		943DD4692A4575C000C8B8A2 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
@@ -79,6 +78,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94D824392A486E6100A4135B /* FileCachePackage in Frameworks */,
+				94D824362A486E4800A4135B /* CocoaLumberjackSwift in Frameworks */,
+				94D824342A486E4800A4135B /* CocoaLumberjack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +117,6 @@
 			children = (
 				943DD4402A45737300C8B8A2 /* AppDelegate.swift */,
 				943DD4422A45737300C8B8A2 /* SceneDelegate.swift */,
-				943DD4542A45744E00C8B8A2 /* Model */,
 				943DD46A2A45770600C8B8A2 /* FirstScreen */,
 				943DD46D2A45772D00C8B8A2 /* SecondScreen */,
 				943DD4702A45775A00C8B8A2 /* ColorPickerScreen */,
@@ -124,15 +125,6 @@
 				943DD44E2A45737400C8B8A2 /* Info.plist */,
 			);
 			path = YandexProjectTodo2023;
-			sourceTree = "<group>";
-		};
-		943DD4542A45744E00C8B8A2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				943DD4552A45746900C8B8A2 /* TodoItem.swift */,
-				943DD4572A45747700C8B8A2 /* FileCache.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		943DD4612A4574FB00C8B8A2 /* YandexProjectTodo2023Tests */ = {
@@ -246,6 +238,11 @@
 			dependencies = (
 			);
 			name = YandexProjectTodo2023;
+			packageProductDependencies = (
+				94D824332A486E4800A4135B /* CocoaLumberjack */,
+				94D824352A486E4800A4135B /* CocoaLumberjackSwift */,
+				94D824382A486E6100A4135B /* FileCachePackage */,
+			);
 			productName = YandexProjectTodo2023;
 			productReference = 943DD43D2A45737300C8B8A2 /* YandexProjectTodo2023.app */;
 			productType = "com.apple.product-type.application";
@@ -296,6 +293,10 @@
 				Base,
 			);
 			mainGroup = 943DD4342A45737300C8B8A2;
+			packageReferences = (
+				94D824322A486E4800A4135B /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+				94D824372A486E6100A4135B /* XCRemoteSwiftPackageReference "FileCachePackage" */,
+			);
 			productRefGroup = 943DD43E2A45737300C8B8A2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -335,11 +336,9 @@
 				943DD48A2A45790200C8B8A2 /* Constraints&TopButtonLabel.swift in Sources */,
 				943DD48E2A45791600C8B8A2 /* ColorPickerViewController.swift in Sources */,
 				943DD4412A45737300C8B8A2 /* AppDelegate.swift in Sources */,
-				943DD4562A45746900C8B8A2 /* TodoItem.swift in Sources */,
 				943DD4762A45788800C8B8A2 /* FirstScreenTableViewCell.swift in Sources */,
 				943DD4742A45787B00C8B8A2 /* FirstScreen+TableViewSettings.swift in Sources */,
 				943DD4842A4578E200C8B8A2 /* SecondScreenViewController.swift in Sources */,
-				943DD4582A45747700C8B8A2 /* FileCache.swift in Sources */,
 				943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */,
 				9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */,
 				943DD4822A4578D800C8B8A2 /* TextViewSettings.swift in Sources */,
@@ -619,6 +618,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		94D824322A486E4800A4135B /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		94D824372A486E6100A4135B /* XCRemoteSwiftPackageReference "FileCachePackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TheViLkiS/FileCachePackage";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		94D824332A486E4800A4135B /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94D824322A486E4800A4135B /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		94D824352A486E4800A4135B /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94D824322A486E4800A4135B /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		94D824382A486E6100A4135B /* FileCachePackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94D824372A486E6100A4135B /* XCRemoteSwiftPackageReference "FileCachePackage" */;
+			productName = FileCachePackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 943DD4352A45737300C8B8A2 /* Project object */;
 }

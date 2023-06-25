@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import FileCachePackage
 
 // MARK: Delete & Mark todo in tableView
 
@@ -11,7 +12,7 @@ extension FirstScreenViewController {
        pressedButtonHeaderRight()
        tableView.reloadData()
        
-       FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+        FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
    }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
@@ -19,7 +20,7 @@ extension FirstScreenViewController {
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.reloadData()
         
-        FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+        FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
     }
 }
 
@@ -101,7 +102,7 @@ extension FirstScreenViewController {
                 self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                 self.tableView.reloadData()
                 
-                FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
             }
             self.present(vc, animated: true)

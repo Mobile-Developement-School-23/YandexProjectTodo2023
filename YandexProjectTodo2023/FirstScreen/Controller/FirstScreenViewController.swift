@@ -1,11 +1,12 @@
 import Foundation
 import UIKit
+import FileCachePackage
 
 class FirstScreenViewController: UIViewController {
     
-    lazy var cacheToDo = FileCache()
-    public lazy var collectionToDo = [ToDoItem]()
-    lazy var collectionToDoComplete = [ToDoItem]()
+    lazy var cacheToDo = FileCachePackage.FileCache.init()
+    public lazy var collectionToDo = [FileCachePackage.ToDoItem]()
+    lazy var collectionToDoComplete = [FileCachePackage.ToDoItem]()
     lazy var tableView: UITableView = .init(frame: CGRect(), style: .insetGrouped)
     lazy var isCellVisible = false
     lazy var buttonHeaderRight = UIButton()
@@ -16,12 +17,12 @@ class FirstScreenViewController: UIViewController {
     
     // MARK: Last grey cell
     
-    private let todoLast = ToDoItem(text: "Новое", priority: .normal, creationDate: Date.distantFuture)
+    private let todoLast = FileCachePackage.ToDoItem(text: "Новое", priority: .normal, creationDate: Date.distantFuture)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cacheToDo = FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCache()
+        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache.init()
         
         collectionToDo = cacheToDo.getCollectionToDo().sorted { $0.creationDate < $1.creationDate }
         
@@ -52,8 +53,8 @@ extension FirstScreenViewController {
     
      func removeCompleteToDoFromArray() {
         
-        var comleteToDo = [ToDoItem]()
-        var resultArrayToDo = [ToDoItem]()
+         var comleteToDo = [FileCachePackage.ToDoItem]()
+         var resultArrayToDo = [FileCachePackage.ToDoItem]()
         for i in 0..<collectionToDo.count {
             if !collectionToDo[i].isDone {
                 resultArrayToDo.append(collectionToDo[i])
@@ -72,6 +73,6 @@ extension FirstScreenViewController {
             resultArrayToDo.append(collectionToDoComplete[i])
         }
         collectionToDo = resultArrayToDo.sorted(by: { $0.creationDate < $1.creationDate })
-        collectionToDoComplete = [ToDoItem]()
+         collectionToDoComplete = [FileCachePackage.ToDoItem]()
     }
 }

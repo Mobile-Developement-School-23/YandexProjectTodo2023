@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import FileCachePackage
 
 // MARK: Button "Y" for New Todo
 
@@ -36,7 +37,7 @@ extension FirstScreenViewController {
     @objc func tapPlusButton() {
         
         let vc = SecondScreenViewController(cellFrame: button.frame)
-        vc.toDo = ToDoItem(text: "", priority: .normal)
+        vc.toDo = FileCachePackage.ToDoItem.init(text: "", priority: FileCachePackage.ToDoItem.Priority.normal)
         
         vc.dataCompletionHandler = { data in
 
@@ -47,7 +48,7 @@ extension FirstScreenViewController {
             self.collectionToDo.sort { $0.creationDate < $1.creationDate }
             self.tableView.reloadData()
             
-            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
         }
         vc.modalTransitionStyle = .coverVertical
         navigationController?.present(vc, animated: true)
