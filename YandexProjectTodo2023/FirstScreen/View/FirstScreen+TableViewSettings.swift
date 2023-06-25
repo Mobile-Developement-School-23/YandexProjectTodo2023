@@ -83,8 +83,8 @@ extension FirstScreenViewController {
             
             guard let cell = tableView.cellForRow(at: indexPath) else { return }
             let frame = tableView.convert(cell.frame, to: tableView.superview)
-            
-            let vc = SecondScreenViewController(cellFrame: frame)
+            let frameFix = CGRect(x: 0, y: frame.minY, width: frame.width, height: frame.height)
+            let vc = SecondScreenViewController(cellFrame: frameFix)
             vc.toDo = self.collectionToDo[indexPath.row]
             
             vc.dataCompletionHandler = { data in
