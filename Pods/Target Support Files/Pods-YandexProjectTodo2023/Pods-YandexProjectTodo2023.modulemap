@@ -1,0 +1,6 @@
+framework module Pods_YandexProjectTodo2023 {
+  umbrella header "Pods-YandexProjectTodo2023-umbrella.h"
+
+  export *
+  module * { export * }
+}
