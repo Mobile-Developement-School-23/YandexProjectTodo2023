@@ -1,6 +1,28 @@
 import Foundation
 import UIKit
 
+// MARK: Delete & Mark todo in tableView
+
+extension FirstScreenViewController {
+    
+    func doneUndone(_ indexPath: IndexPath) {
+       collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+       pressedButtonHeaderRight()
+       pressedButtonHeaderRight()
+       tableView.reloadData()
+       
+       FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+   }
+    
+    func removeAndDeleteTodo(_ indexPath: IndexPath) {
+        self.collectionToDo.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.reloadData()
+        
+        FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+    }
+}
+
 // MARK: TableView Settings + Emitter
 
 extension FirstScreenViewController: UITableViewDelegate, UITableViewDataSource {
@@ -51,18 +73,18 @@ extension FirstScreenViewController {
         }
         
         let action = UIContextualAction(style: .normal, title: "", handler: {  ( _, _, _ ) in
-            self.collectionToDo.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
-            
-            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            self.removeAndDeleteTodo(indexPath)
         })
         
         action.image = UIImage(systemName: "trash", withConfiguration: .none)
         action.backgroundColor = .red
         
         let actionTwo = UIContextualAction(style: .normal, title: "", handler: { _, _, completionHandler in
-            let vc = SecondScreenViewController()
+            
+            guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            let frame = tableView.convert(cell.frame, to: tableView.superview)
+            let frameFix = CGRect(x: 0, y: frame.minY, width: frame.width, height: frame.height)
+            let vc = SecondScreenViewController(cellFrame: frameFix)
             vc.toDo = self.collectionToDo[indexPath.row]
             
             vc.dataCompletionHandler = { data in
@@ -82,8 +104,7 @@ extension FirstScreenViewController {
                 FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
             }
-            vc.modalTransitionStyle = .coverVertical
-            self.navigationController?.present(vc, animated: true)
+            self.present(vc, animated: true)
             completionHandler(true)
             
         })
@@ -100,12 +121,8 @@ extension FirstScreenViewController {
             return nil
         }
         let action = UIContextualAction(style: .normal, title: "", handler: { _, _, _ in
-            self.collectionToDo[indexPath.row].isDone = !self.collectionToDo[indexPath.row].isDone
-            self.pressedButtonHeaderRight()
-            self.pressedButtonHeaderRight()
-            tableView.reloadData()
-            
-            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+
+            self.doneUndone(indexPath)
         })
         action.image = UIImage(systemName: "checkmark.circle.fill")
         action.backgroundColor = .systemGreen

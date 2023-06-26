@@ -35,7 +35,7 @@ extension FirstScreenViewController {
     
     @objc func tapPlusButton() {
         
-        let vc = SecondScreenViewController()
+        let vc = SecondScreenViewController(cellFrame: button.frame)
         vc.toDo = ToDoItem(text: "", priority: .normal)
         
         vc.dataCompletionHandler = { data in

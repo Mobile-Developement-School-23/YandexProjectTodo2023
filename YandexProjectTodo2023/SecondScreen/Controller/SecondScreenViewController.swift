@@ -1,6 +1,8 @@
 import UIKit
 
 class SecondScreenViewController: UIViewController, UITextViewDelegate {
+    
+    var cellFrame: CGRect? // frames for animation transition
 
     // MARK: complitionHandler & data
     
