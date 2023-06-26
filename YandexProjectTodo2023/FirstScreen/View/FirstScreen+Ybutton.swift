@@ -37,7 +37,7 @@ extension FirstScreenViewController {
     @objc func tapPlusButton() {
         
         let vc = SecondScreenViewController(cellFrame: button.frame)
-        vc.toDo = FileCachePackage.ToDoItem.init(text: "", priority: FileCachePackage.ToDoItem.Priority.normal)
+        vc.toDo = FileCachePackage.ToDoItem(text: "", priority: FileCachePackage.ToDoItem.Priority.normal)
         
         vc.dataCompletionHandler = { data in
 

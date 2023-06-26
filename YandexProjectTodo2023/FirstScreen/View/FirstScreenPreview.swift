@@ -16,7 +16,8 @@ extension FirstScreenViewController {
             vc.toDo = self.collectionToDo[indexPath.row]
             
             return vc
-        }){ _ in
+        },
+                                                       actionProvider: { _ in
             let action1 = UIAction(title: "Завершено") { _ in
                 self.doneUndone(indexPath)
             }
@@ -26,11 +27,11 @@ extension FirstScreenViewController {
             let action2 = UIAction(title: "Удалить", attributes: .destructive) { _ in
                 self.removeAndDeleteTodo(indexPath)
             }
-            return UIMenu(title: "", children: [action1, action2])}
-
+            return UIMenu(title: "", children: [action1, action2])})
+        
         return configuration
     }
-
+    
     func tableView(_ tableView: UITableView,
                    willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                    animator: UIContextMenuInteractionCommitAnimating) {
@@ -45,6 +46,4 @@ extension FirstScreenViewController {
             }
         }
     }
-
-
 }

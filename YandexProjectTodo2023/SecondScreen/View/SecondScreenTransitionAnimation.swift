@@ -20,5 +20,3 @@ extension SecondScreenViewController: UIViewControllerTransitioningDelegate {
         return MyAnimationController(isPresenting: false, originFrame: cellFrame ?? CGRect())
     }
 }
-
-

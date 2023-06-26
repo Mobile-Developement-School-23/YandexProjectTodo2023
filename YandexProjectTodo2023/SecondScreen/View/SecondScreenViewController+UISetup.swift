@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 
-
 // MARK: Prepare for VC
 extension SecondScreenViewController {
     
@@ -211,7 +210,7 @@ extension SecondScreenViewController: UICalendarViewDelegate, UICalendarSelectio
     }
 }
 
-//Handle Orientation Device Change
+// Handle Orientation Device Change
 
 extension SecondScreenViewController {
     

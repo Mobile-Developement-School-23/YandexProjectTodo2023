@@ -4,7 +4,7 @@ import FileCachePackage
 
 class FirstScreenViewController: UIViewController {
     
-    lazy var cacheToDo = FileCachePackage.FileCache.init()
+    lazy var cacheToDo = FileCachePackage.FileCache()
     public lazy var collectionToDo = [FileCachePackage.ToDoItem]()
     lazy var collectionToDoComplete = [FileCachePackage.ToDoItem]()
     lazy var tableView: UITableView = .init(frame: CGRect(), style: .insetGrouped)
@@ -22,7 +22,7 @@ class FirstScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache.init()
+        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
         
         collectionToDo = cacheToDo.getCollectionToDo().sorted { $0.creationDate < $1.creationDate }
         

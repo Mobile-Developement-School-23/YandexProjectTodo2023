@@ -15,7 +15,6 @@ class MyAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
         return 0.5
     }
     
-    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         
@@ -33,9 +32,10 @@ class MyAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
                            animations: {
                 toView.frame = containerView.bounds
                 toView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            }) { _ in
+            },
+                           completion: { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-            }
+            })
             
         } else {
             guard let fromView = transitionContext.view(forKey: .from) else {return}
@@ -52,13 +52,13 @@ class MyAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
                 fromView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                 fromView.layoutIfNeeded()
                 
-            }) { _ in
+            },
+                           completion: { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
                 fromView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            }
+            })
             
         }
         
     }
 }
-
