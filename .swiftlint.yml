@@ -1,0 +1,115 @@
+excluded:
+  - UnitTests
+  - UITests
+  - DerivedData
+  - SwiftSignalRClient
+#  temp disabled for refactoring, Loshchenko
+  - "Tests/*"
+  
+warning_threshold: 100
+
+analyzer_rules:
+  - unused_import
+#  - unused_private_declaration
+
+disabled_rules:
+  - trailing_whitespace
+  # - todo
+  # - cyclomatic_complexity
+  # - function_body_length
+  # - identifier_name
+  # - unused_setter_value
+  # - weak_delegate
+  # - private_over_fileprivate
+  # - orphaned_doc_comment
+  # - force_cast
+  # - force_try
+  # - block_based_kvo
+  # - file_length
+  # - type_body_length
+  - line_length
+  # - force_unwrapping
+  # - notification_center_detachment
+  # - class_delegate_protocol
+  - identifier_name
+  # - line_length
+  # - colon
+  # - identifier_name
+  # - empty_count
+  # - shorthand_operator
+  - empty_enum_arguments
+
+opt_in_rules:
+  - overridden_super_call
+  - prohibited_super_call
+  - empty_count
+  - explicit_init
+
+  - operator_usage_whitespace 
+  - array_init
+  - block_based_kvo
+#  - closure_body_length
+  - closure_spacing
+
+large_tuple: 4
+#line_length:
+#  warning: 160
+
+function_parameter_count:
+  warning: 10
+  error: 15
+#  temp disabled for migration, Loshchenko
+#file_length:
+#  warning: 500
+#
+#type_body_length:
+#  warning: 400
+#  error: 450
+
+nesting:
+  type_level:
+    warning: 3
+  function_level:
+    warning: 5
+
+identifier_name:
+  min_length: 1
+  max_length: 65
+
+type_name:
+  min_length: 3
+  max_length: 65
+#  temp disabled for migration, Loshchenko
+#custom_rules:
+#  vertical_whitespace_before_mark:
+#    regex: '[A-Za-z0-9а-яА-ЯёЁ\/]\n([ \t]*)\/\/[\s*]MARK'
+#    name: "Vertical Whitespace before MARK"
+#    message: "Include vertical whitespace (empty line) before MARK."
+#
+#  vertical_whitespace_after_mark:
+#    included: ".*\\.swift"
+#    regex: '\/\/[\s*]MARK[^\n\r]*\n[ \t]*?[A-Za-z0-9а-яА-ЯёЁ\/]'
+#    name: "Vertical Whitespace after MARK"
+#    message: "Include vertical whitespace (empty line) after MARK."
+#    severity: warning
+#
+#  wrong_mark_syntax:
+#    included: ".*\\.swift"
+#    regex: '\/\/[\s*]MARK:([^ ]|\s[^\-]| \-[^ ])'
+#    name: "Wrong MARK syntax"
+#    message: "Use MARK: - syntax"
+#    severity: warning
+#
+#  wrong_todo_syntax:
+#    included: ".*\\.swift"
+#    regex: '\/\/[\s*]TODO:([^ ]| [^\(0-9)]| [0-9]\.[^(0-9)])'
+#    name: "Wrong TODO syntax"
+#    message: "Use TODO: 4.9 syntax"
+#    severity: warning
+
+  wrong_letter:
+    included: ".*\\.swift"
+    regex: '[а-яА-Я][a-zA-Z]'
+    name: "Wrong russian or english letter"
+    message: "Replace latter to correct"
+    severity: warning

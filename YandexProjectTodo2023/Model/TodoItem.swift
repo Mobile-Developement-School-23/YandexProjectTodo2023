@@ -97,7 +97,8 @@
 //        let parsedCSV = csv.components(
 //            separatedBy: ",")
 //        guard parsedCSV.count >= 7 else {return nil}
-//        var dictionaryFunc = [parsedCSV[0]: ["text": parsedCSV[1], "priority": parsedCSV[2], "deadline": parsedCSV[3], "isDone": parsedCSV[4], "creationDate": parsedCSV[5], "modifyDate": parsedCSV[6]]]
+//        var dictionaryFunc = [parsedCSV[0]: ["text": parsedCSV[1],
+//"priority": parsedCSV[2], "deadline": parsedCSV[3], "isDone": parsedCSV[4], "creationDate": parsedCSV[5], "modifyDate": parsedCSV[6]]]
 //
 //        if dictionaryFunc[parsedCSV[0]]?["deadline"] == "0.0" {
 //            dictionaryFunc[parsedCSV[0]]?["deadline"] = nil

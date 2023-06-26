@@ -1,0 +1,688 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		1C54275F261E4309ECAC82B118E1727B /* Pods-YandexProjectTodo2023Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA9A2EC64DBE5811FCDC45E192C93D /* Pods-YandexProjectTodo2023Tests-dummy.m */; };
+		4E788630F79EAD0C22A5BA2F656671D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		DBB7346C31C3FB32CF7D4310ED6D6544 /* Pods-YandexProjectTodo2023-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 638DB334AA3D6B2AC24FAA60335466C6 /* Pods-YandexProjectTodo2023-dummy.m */; };
+		E66A8A3ECF76E4A8556BB88FC6A9F35F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		F866A9E3850686960271F37BDC0619BF /* Pods-YandexProjectTodo2023Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BE4F1B0D37759A7512E90B60A05CFA3C /* Pods-YandexProjectTodo2023Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FEE409481F88A18F4A582F42DA7264AD /* Pods-YandexProjectTodo2023-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 39D469273061321334ED4B23BE961140 /* Pods-YandexProjectTodo2023-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		286473B655AA685AD248EFB201E33705 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
+			remoteInfo = SwiftLint;
+		};
+		DF48CCA10B940264E718A6974696B8C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1D26539844FC1F8F79B5E8798922A98;
+			remoteInfo = "Pods-YandexProjectTodo2023";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1B28123775C30D596D3D8E0879FBAEAB /* Pods-YandexProjectTodo2023Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-YandexProjectTodo2023Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		1D615ED2DA2AE1959E5EF70A6C6E2FFF /* Pods-YandexProjectTodo2023-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-YandexProjectTodo2023-acknowledgements.plist"; sourceTree = "<group>"; };
+		227E5DE3F1AAEB21A50244A44CD973D4 /* Pods_YandexProjectTodo2023Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_YandexProjectTodo2023Tests.framework; path = "Pods-YandexProjectTodo2023Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2AE116F520F347F971D1A4D7CBF7715B /* Pods-YandexProjectTodo2023-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-YandexProjectTodo2023-Info.plist"; sourceTree = "<group>"; };
+		2EA6A1B1E16CF0B616A7D11EAFAB7A21 /* Pods-YandexProjectTodo2023.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-YandexProjectTodo2023.debug.xcconfig"; sourceTree = "<group>"; };
+		39D469273061321334ED4B23BE961140 /* Pods-YandexProjectTodo2023-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-YandexProjectTodo2023-umbrella.h"; sourceTree = "<group>"; };
+		407FFD8CBE12D627CC2CE218A149ECA4 /* Pods-YandexProjectTodo2023Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-YandexProjectTodo2023Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4ABA9A2EC64DBE5811FCDC45E192C93D /* Pods-YandexProjectTodo2023Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-YandexProjectTodo2023Tests-dummy.m"; sourceTree = "<group>"; };
+		53D7EA64CA1C4350DC5B4EDDD82C87CB /* Pods-YandexProjectTodo2023.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-YandexProjectTodo2023.release.xcconfig"; sourceTree = "<group>"; };
+		638DB334AA3D6B2AC24FAA60335466C6 /* Pods-YandexProjectTodo2023-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-YandexProjectTodo2023-dummy.m"; sourceTree = "<group>"; };
+		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		84904CC01D93BC72B36B7799B152BE4E /* Pods-YandexProjectTodo2023-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-YandexProjectTodo2023-acknowledgements.markdown"; sourceTree = "<group>"; };
+		89F85ACF3D78B39506B75103B4694B36 /* SwiftLint.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.xcconfig; sourceTree = "<group>"; };
+		98A5BCAF07CCB6EB8A0C2F4ED8830092 /* Pods_YandexProjectTodo2023.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_YandexProjectTodo2023.framework; path = "Pods-YandexProjectTodo2023.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BAA10D065E0C086C718ADD10E2E219B3 /* Pods-YandexProjectTodo2023Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-YandexProjectTodo2023Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		BE4F1B0D37759A7512E90B60A05CFA3C /* Pods-YandexProjectTodo2023Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-YandexProjectTodo2023Tests-umbrella.h"; sourceTree = "<group>"; };
+		E5611B0756DB721BEA3E7B8914BBE2EC /* Pods-YandexProjectTodo2023Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-YandexProjectTodo2023Tests.release.xcconfig"; sourceTree = "<group>"; };
+		E6C40B163BF549317CFBF3FD56AF64B1 /* Pods-YandexProjectTodo2023Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-YandexProjectTodo2023Tests-Info.plist"; sourceTree = "<group>"; };
+		F22B6666026E4B6EE6AFB393F8079C0E /* Pods-YandexProjectTodo2023.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-YandexProjectTodo2023.modulemap"; sourceTree = "<group>"; };
+		F3737FC55A256A4B53F7AE585218627D /* Pods-YandexProjectTodo2023Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-YandexProjectTodo2023Tests.modulemap"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5701B9E8343AF9B704943AE79CA9E03E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E66A8A3ECF76E4A8556BB88FC6A9F35F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92CB8941F4D02A10EE4388D1334FED2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E788630F79EAD0C22A5BA2F656671D5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F0CEDD85D2345C8316FBF966C2C071E /* Pods-YandexProjectTodo2023Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F3737FC55A256A4B53F7AE585218627D /* Pods-YandexProjectTodo2023Tests.modulemap */,
+				407FFD8CBE12D627CC2CE218A149ECA4 /* Pods-YandexProjectTodo2023Tests-acknowledgements.markdown */,
+				BAA10D065E0C086C718ADD10E2E219B3 /* Pods-YandexProjectTodo2023Tests-acknowledgements.plist */,
+				4ABA9A2EC64DBE5811FCDC45E192C93D /* Pods-YandexProjectTodo2023Tests-dummy.m */,
+				E6C40B163BF549317CFBF3FD56AF64B1 /* Pods-YandexProjectTodo2023Tests-Info.plist */,
+				BE4F1B0D37759A7512E90B60A05CFA3C /* Pods-YandexProjectTodo2023Tests-umbrella.h */,
+				1B28123775C30D596D3D8E0879FBAEAB /* Pods-YandexProjectTodo2023Tests.debug.xcconfig */,
+				E5611B0756DB721BEA3E7B8914BBE2EC /* Pods-YandexProjectTodo2023Tests.release.xcconfig */,
+			);
+			name = "Pods-YandexProjectTodo2023Tests";
+			path = "Target Support Files/Pods-YandexProjectTodo2023Tests";
+			sourceTree = "<group>";
+		};
+		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		924EC20E2FFADE0D872758BCF739BB81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				98A5BCAF07CCB6EB8A0C2F4ED8830092 /* Pods_YandexProjectTodo2023.framework */,
+				227E5DE3F1AAEB21A50244A44CD973D4 /* Pods_YandexProjectTodo2023Tests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		955B9792A6CBBFD6AA785631F4B4A034 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D5B488ACBDC7E2FA258FD5715420655B /* Pods-YandexProjectTodo2023 */,
+				2F0CEDD85D2345C8316FBF966C2C071E /* Pods-YandexProjectTodo2023Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		965877409E01FB3D85D85E90E6B30185 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9AED61B9A1CFA211C061344F741DBA07 /* SwiftLint */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9AED61B9A1CFA211C061344F741DBA07 /* SwiftLint */ = {
+			isa = PBXGroup;
+			children = (
+				EEA599FE5C15138FF0981CCFB01E55AA /* Support Files */,
+			);
+			name = SwiftLint;
+			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				965877409E01FB3D85D85E90E6B30185 /* Pods */,
+				924EC20E2FFADE0D872758BCF739BB81 /* Products */,
+				955B9792A6CBBFD6AA785631F4B4A034 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				578452D2E740E91742655AC8F1636D1F /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5B488ACBDC7E2FA258FD5715420655B /* Pods-YandexProjectTodo2023 */ = {
+			isa = PBXGroup;
+			children = (
+				F22B6666026E4B6EE6AFB393F8079C0E /* Pods-YandexProjectTodo2023.modulemap */,
+				84904CC01D93BC72B36B7799B152BE4E /* Pods-YandexProjectTodo2023-acknowledgements.markdown */,
+				1D615ED2DA2AE1959E5EF70A6C6E2FFF /* Pods-YandexProjectTodo2023-acknowledgements.plist */,
+				638DB334AA3D6B2AC24FAA60335466C6 /* Pods-YandexProjectTodo2023-dummy.m */,
+				2AE116F520F347F971D1A4D7CBF7715B /* Pods-YandexProjectTodo2023-Info.plist */,
+				39D469273061321334ED4B23BE961140 /* Pods-YandexProjectTodo2023-umbrella.h */,
+				2EA6A1B1E16CF0B616A7D11EAFAB7A21 /* Pods-YandexProjectTodo2023.debug.xcconfig */,
+				53D7EA64CA1C4350DC5B4EDDD82C87CB /* Pods-YandexProjectTodo2023.release.xcconfig */,
+			);
+			name = "Pods-YandexProjectTodo2023";
+			path = "Target Support Files/Pods-YandexProjectTodo2023";
+			sourceTree = "<group>";
+		};
+		EEA599FE5C15138FF0981CCFB01E55AA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				89F85ACF3D78B39506B75103B4694B36 /* SwiftLint.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftLint";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BF976FAE06697E8B0B02B0FE23375A13 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F866A9E3850686960271F37BDC0619BF /* Pods-YandexProjectTodo2023Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9073F46DB78C5E84E28441AFA3447A2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEE409481F88A18F4A582F42DA7264AD /* Pods-YandexProjectTodo2023-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1BC7438112613D0D1CAB7B15E6E0C5CF /* Pods-YandexProjectTodo2023Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DF5237057DD97282B5D34C539CD762B /* Build configuration list for PBXNativeTarget "Pods-YandexProjectTodo2023Tests" */;
+			buildPhases = (
+				BF976FAE06697E8B0B02B0FE23375A13 /* Headers */,
+				AD18AFCC10CA5E1B8999FD3996847E97 /* Sources */,
+				92CB8941F4D02A10EE4388D1334FED2D /* Frameworks */,
+				5C7C8C822EFBB3A0C3B320BE2F6765BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E9B770475DC15B544675F32BEEE5D9F7 /* PBXTargetDependency */,
+			);
+			name = "Pods-YandexProjectTodo2023Tests";
+			productName = "Pods-YandexProjectTodo2023Tests";
+			productReference = 227E5DE3F1AAEB21A50244A44CD973D4 /* Pods_YandexProjectTodo2023Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A1D26539844FC1F8F79B5E8798922A98 /* Pods-YandexProjectTodo2023 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA7220922AB6519F938CAFADF0BB1193 /* Build configuration list for PBXNativeTarget "Pods-YandexProjectTodo2023" */;
+			buildPhases = (
+				D9073F46DB78C5E84E28441AFA3447A2 /* Headers */,
+				3BF6455460BF2B16998A1F2C1184D5E5 /* Sources */,
+				5701B9E8343AF9B704943AE79CA9E03E /* Frameworks */,
+				DF0C3347759C87CF49AF1E5EFCE4781A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5BEF6549CDE292EA86BC5C32562CC865 /* PBXTargetDependency */,
+			);
+			name = "Pods-YandexProjectTodo2023";
+			productName = "Pods-YandexProjectTodo2023";
+			productReference = 98A5BCAF07CCB6EB8A0C2F4ED8830092 /* Pods_YandexProjectTodo2023.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 924EC20E2FFADE0D872758BCF739BB81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1D26539844FC1F8F79B5E8798922A98 /* Pods-YandexProjectTodo2023 */,
+				1BC7438112613D0D1CAB7B15E6E0C5CF /* Pods-YandexProjectTodo2023Tests */,
+				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5C7C8C822EFBB3A0C3B320BE2F6765BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF0C3347759C87CF49AF1E5EFCE4781A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3BF6455460BF2B16998A1F2C1184D5E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBB7346C31C3FB32CF7D4310ED6D6544 /* Pods-YandexProjectTodo2023-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD18AFCC10CA5E1B8999FD3996847E97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C54275F261E4309ECAC82B118E1727B /* Pods-YandexProjectTodo2023Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5BEF6549CDE292EA86BC5C32562CC865 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftLint;
+			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
+			targetProxy = 286473B655AA685AD248EFB201E33705 /* PBXContainerItemProxy */;
+		};
+		E9B770475DC15B544675F32BEEE5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-YandexProjectTodo2023";
+			target = A1D26539844FC1F8F79B5E8798922A98 /* Pods-YandexProjectTodo2023 */;
+			targetProxy = DF48CCA10B940264E718A6974696B8C2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3568128E2E0185493E3C5371DF999A2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5611B0756DB721BEA3E7B8914BBE2EC /* Pods-YandexProjectTodo2023Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		413B2E96019DDAF2329CAE93B48D5D04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EA6A1B1E16CF0B616A7D11EAFAB7A21 /* Pods-YandexProjectTodo2023.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5C90A71ED146ABEB501F7943D59BAEA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89F85ACF3D78B39506B75103B4694B36 /* SwiftLint.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		626527D6CE1C33495A9CB77058978F73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		9660CE6D2D83CF82C4DF565E2778CEC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89F85ACF3D78B39506B75103B4694B36 /* SwiftLint.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D20A6CD7B8D2CA6CA5BCA9C3933C57BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B28123775C30D596D3D8E0879FBAEAB /* Pods-YandexProjectTodo2023Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E07029DF679A57487BBD0999DBA11BD1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		E19D0986BF750C812D34EA47511DA02E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53D7EA64CA1C4350DC5B4EDDD82C87CB /* Pods-YandexProjectTodo2023.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				626527D6CE1C33495A9CB77058978F73 /* Debug */,
+				E07029DF679A57487BBD0999DBA11BD1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DF5237057DD97282B5D34C539CD762B /* Build configuration list for PBXNativeTarget "Pods-YandexProjectTodo2023Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D20A6CD7B8D2CA6CA5BCA9C3933C57BC /* Debug */,
+				3568128E2E0185493E3C5371DF999A2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C90A71ED146ABEB501F7943D59BAEA0 /* Debug */,
+				9660CE6D2D83CF82C4DF565E2778CEC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA7220922AB6519F938CAFADF0BB1193 /* Build configuration list for PBXNativeTarget "Pods-YandexProjectTodo2023" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				413B2E96019DDAF2329CAE93B48D5D04 /* Debug */,
+				E19D0986BF750C812D34EA47511DA02E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}
