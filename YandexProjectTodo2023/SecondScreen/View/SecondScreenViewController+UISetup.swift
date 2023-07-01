@@ -27,11 +27,6 @@ extension SecondScreenViewController {
     
     func tableViewFrame() {
         
-//        
-//        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-//        tableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
-//        tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
-        
         let portraitFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY + 50, width: view.bounds.width, height: view.bounds.height - 40)
         let landscapeFrame = CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.width, height: view.bounds.height - 40)
 
@@ -76,7 +71,7 @@ extension SecondScreenViewController {
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        
+        self.view.endEditing(true)
         feedbackGenerator.impactOccurred()
         
         switch sender.selectedSegmentIndex {

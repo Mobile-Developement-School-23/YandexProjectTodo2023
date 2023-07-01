@@ -30,6 +30,8 @@ class FirstScreenViewController: UIViewController {
         
         removeCompleteToDoFromArray()
         
+        
+        
     }
 
     override func loadView() {
