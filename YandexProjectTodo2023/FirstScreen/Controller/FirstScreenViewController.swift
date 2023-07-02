@@ -22,6 +22,36 @@ class FirstScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // MARK: Для проверки ДЗ 5
+        
+        let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
+        let urlSession = URLSession.shared
+        let urlRequest = URLRequest(url: url)
+
+        let taskConcurrent = Task {
+            let task = try await urlSession.dataTask(for: urlRequest)
+
+            let json = try JSONSerialization.jsonObject(with: task.0)
+            print(task.0)
+
+        }
+        let taskConcurrent2 = Task {
+            let task = try await urlSession.dataTask(for: urlRequest)
+
+            let json = try JSONSerialization.jsonObject(with: task.0)
+            print(task.0)
+
+        }
+        let taskConcurrent3 = Task {
+            let task = try await urlSession.dataTask(for: urlRequest)
+
+            let json = try JSONSerialization.jsonObject(with: task.0)
+            print(task.0)
+
+        }
+//          отмена таски
+        taskConcurrent.cancel()
+        
         cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
         
         collectionToDo = cacheToDo.getCollectionToDo().sorted { $0.creationDate < $1.creationDate }
@@ -29,9 +59,7 @@ class FirstScreenViewController: UIViewController {
         collectionToDo.append(todoLast)
         
         removeCompleteToDoFromArray()
-        
-        
-        
+     
     }
 
     override func loadView() {
