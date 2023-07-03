@@ -31,6 +31,9 @@
 		9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68D2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift */; };
 		9488F6902A48302100F7C879 /* FirstScreenPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68F2A48302100F7C879 /* FirstScreenPreview.swift */; };
 		94B87E652A50722400D48FA2 /* URLSession+dataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E642A50722400D48FA2 /* URLSession+dataTask.swift */; };
+		94B87E6C2A51C48000D48FA2 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E6B2A51C48000D48FA2 /* NetworkingService.swift */; };
+		94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E6D2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift */; };
+		94B87E702A51E48E00D48FA2 /* NW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E6F2A51E48E00D48FA2 /* NW.swift */; };
 		94D824342A486E4800A4135B /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824332A486E4800A4135B /* CocoaLumberjack */; };
 		94D824362A486E4800A4135B /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824352A486E4800A4135B /* CocoaLumberjackSwift */; };
 		94D824392A486E6100A4135B /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824382A486E6100A4135B /* FileCachePackage */; };
@@ -78,6 +81,9 @@
 		9488F68D2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenTransitionAnimation.swift; sourceTree = "<group>"; };
 		9488F68F2A48302100F7C879 /* FirstScreenPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenPreview.swift; sourceTree = "<group>"; };
 		94B87E642A50722400D48FA2 /* URLSession+dataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+dataTask.swift"; sourceTree = "<group>"; };
+		94B87E6B2A51C48000D48FA2 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		94B87E6D2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstScreen+ActivityIndicator.swift"; sourceTree = "<group>"; };
+		94B87E6F2A51E48E00D48FA2 /* NW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NW.swift; sourceTree = "<group>"; };
 		AD3F6A74EA11CC4A015BF357 /* Pods-YandexProjectTodo2023.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023.debug.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5D15F90CBD84342ADCCB93 /* Pods-YandexProjectTodo2023.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023.release.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023.release.xcconfig"; sourceTree = "<group>"; };
 		DA93CA11B13B4121526DEEC7 /* Pods_YandexProjectTodo2023.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexProjectTodo2023.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,7 +137,7 @@
 			children = (
 				943DD4402A45737300C8B8A2 /* AppDelegate.swift */,
 				943DD4422A45737300C8B8A2 /* SceneDelegate.swift */,
-				94B87E6A2A51BC2E00D48FA2 /* Network */,
+				94B87E6A2A51BC2E00D48FA2 /* NetworkingService */,
 				943DD46A2A45770600C8B8A2 /* FirstScreen */,
 				943DD46D2A45772D00C8B8A2 /* SecondScreen */,
 				943DD4702A45775A00C8B8A2 /* ColorPickerScreen */,
@@ -173,6 +179,7 @@
 			children = (
 				943DD4732A45787B00C8B8A2 /* FirstScreen+TableViewSettings.swift */,
 				943DD4752A45788800C8B8A2 /* FirstScreenTableViewCell.swift */,
+				94B87E6D2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift */,
 				943DD4772A45789400C8B8A2 /* FirstScreen+Ybutton.swift */,
 				9488F68F2A48302100F7C879 /* FirstScreenPreview.swift */,
 				943DD4792A45789F00C8B8A2 /* AnimationsForButtons.swift */,
@@ -237,12 +244,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		94B87E6A2A51BC2E00D48FA2 /* Network */ = {
+		94B87E6A2A51BC2E00D48FA2 /* NetworkingService */ = {
 			isa = PBXGroup;
 			children = (
 				94B87E642A50722400D48FA2 /* URLSession+dataTask.swift */,
+				94B87E6B2A51C48000D48FA2 /* NetworkingService.swift */,
+				94B87E6F2A51E48E00D48FA2 /* NW.swift */,
 			);
-			path = Network;
+			path = NetworkingService;
 			sourceTree = "<group>";
 		};
 		D706C6AA0EEAA48ABBB601DD /* Frameworks */ = {
@@ -454,6 +463,7 @@
 				943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */,
 				9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */,
 				943DD4822A4578D800C8B8A2 /* TextViewSettings.swift in Sources */,
+				94B87E6C2A51C48000D48FA2 /* NetworkingService.swift in Sources */,
 				943DD47A2A45789F00C8B8A2 /* AnimationsForButtons.swift in Sources */,
 				943DD4802A4578CD00C8B8A2 /* SecondScreenTableView+Cells.swift in Sources */,
 				943DD4862A4578F000C8B8A2 /* ColorPickerView.swift in Sources */,
@@ -462,6 +472,8 @@
 				943DD4782A45789400C8B8A2 /* FirstScreen+Ybutton.swift in Sources */,
 				943DD4882A4578FA00C8B8A2 /* UISettings.swift in Sources */,
 				9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */,
+				94B87E702A51E48E00D48FA2 /* NW.swift in Sources */,
+				94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

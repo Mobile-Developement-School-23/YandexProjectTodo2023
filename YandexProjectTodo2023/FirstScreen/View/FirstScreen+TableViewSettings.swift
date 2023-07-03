@@ -24,16 +24,18 @@ extension FirstScreenViewController {
     }
 }
 
-// MARK: TableView Settings + Emitter
+// MARK: TableView Settings + Emitter + ActivityIndicator
 
 extension FirstScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     func prepareTableView() {
         self.view = UIView()
+        
         tableView.register(FirstScreenTableViewCell.self, forCellReuseIdentifier: Constants.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
+        
     }
     
     func prepareTableEmitterButton() {

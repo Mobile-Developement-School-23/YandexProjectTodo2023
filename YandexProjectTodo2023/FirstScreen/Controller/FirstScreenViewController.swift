@@ -14,6 +14,7 @@ class FirstScreenViewController: UIViewController {
     lazy var buttonCenter = CGPoint()
     lazy var emitter = CAEmitterLayer()
     lazy var feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    lazy var activityIndicator = UIActivityIndicatorView()
     
     // MARK: Last grey cell
     
@@ -22,58 +23,47 @@ class FirstScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: Для проверки ДЗ 5
-        
-        let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
-        let urlSession = URLSession.shared
-        let urlRequest = URLRequest(url: url)
-
-        let taskConcurrent = Task {
-            let task = try await urlSession.dataTask(for: urlRequest)
-
-            let json = try JSONSerialization.jsonObject(with: task.0)
-            print(task.0)
-
-        }
-        let taskConcurrent2 = Task {
-            let task = try await urlSession.dataTask(for: urlRequest)
-
-            let json = try JSONSerialization.jsonObject(with: task.0)
-            print(task.0)
-
-        }
-        let taskConcurrent3 = Task {
-            let task = try await urlSession.dataTask(for: urlRequest)
-
-            let json = try JSONSerialization.jsonObject(with: task.0)
-            print(task.0)
-
-        }
-//          отмена таски
-        taskConcurrent.cancel()
-        
-        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
+        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTestsTwo", fileType: .json) ?? FileCachePackage.FileCache()
         
         collectionToDo = cacheToDo.getCollectionToDo().sorted { $0.creationDate < $1.creationDate }
         
         collectionToDo.append(todoLast)
         
         removeCompleteToDoFromArray()
+        
+        let network = DefaultNetworkingService()
+        network.fetchData { todo in
+
+            print(todo)
+        }
+        network.sendData()
      
+//        var url = (try? RequestProcessor.makeUrl())!
+//
+//        Task {
+//            print(url)
+//             var t = try await RequestProcessor.performMyAwesomeRequest(url: url)
+//            print(t.1)
+//            print(t.0)
+//        }
+        
     }
 
     override func loadView() {
         prepareTableView()
+        
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         prepareTableEmitterButton()
+        
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         createYButton()
+        settingAcitvityIndicator()
     }
 }
 
