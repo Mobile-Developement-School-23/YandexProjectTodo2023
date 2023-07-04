@@ -20,6 +20,7 @@ class DefaultNetworkingService: NetworkingService {
         }
 
         var request = URLRequest(url: url)
+        request.addValue("0", forHTTPHeaderField: "X-Last-Known-Revision")
         request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
 
         let task = urlSession.dataTask(with: request) { (data, response, error) in
@@ -27,10 +28,11 @@ class DefaultNetworkingService: NetworkingService {
             if let error = error {
                 completion(.failure(error))
             } else if let data = data {
+//                print(data)
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
                 var js = try?  JSONSerialization.jsonObject(with: data)
-                print(js)
+                print(String(data: data, encoding: .utf8))
 
 //                do {
 //                    
@@ -45,54 +47,23 @@ class DefaultNetworkingService: NetworkingService {
         task.resume()
     }
     
-    func sendData() {
-        
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        let item = ToDoItem(id: "123", text: "df", priority: .normal)
-        
-        let fullPath = FileCachePackage.FileCache.getDocumentsDirectory().appendingPathComponent("fileCacheForTestsTwo")
-        
-        guard let content = try? Data(contentsOf: fullPath) else {
-            print("readFromFile content Error")
-            return 
-        }
-
-        
-        var x = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTestsTwo", fileType: .json)
-        var collection = x!.getCollectionToDo()
-        var collectionList = [String: [[String: Any]]]()
-        collectionList["list"] = [[:]]
-        for i in collection {
-            collectionList["list"] = [[
-                "id": i.id,
-                "text": i.text,
-                "importance": i.priority.rawValue,
-                "deadline": i.deadline?.timeIntervalSince1970,
-                "done": i.isDone,
-                "color": "\(i.colorHEX)",
-                "created_at": i.creationDate.timeIntervalSince1970,
-                "changed_at": i.modifyDate?.timeIntervalSince1970,
-                "last_updated_by": "5300880" ]]
-        }
-        collectionList["list"]?.removeFirst()
-        
-        var testCollection = [String:[[String:Any]]]()
-        
-        testCollection["list"] = [["id": 2342342, // уникальный идентификатор элемента
-        "text": "blablabla",
-        "importance": "low", // importance = low | basic | important
-        "deadline": 234234234, // int64, может отсутствовать, тогда нет
-        "done": false,
-        "color": "#FFFFFF", // может отсутствовать
-        "created_at": 234234234,
-        "changed_at": 23423423,
-        "last_updated_by": 234234234]]
+    func sendData()  {
         
 
-        let jsonData = try? JSONSerialization.data(withJSONObject: collectionList)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .custom { date, encoder in
+            let seconds = Int64(date.timeIntervalSince1970)
+            var container = encoder.singleValueContainer()
+            try container.encode(seconds)
+        }
         
-//        print(collectionList)
+        let todoItem = FileCachePackage.ToDoItem(id: UUID().uuidString, text: "text", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, colorHEX: "#FFFFFF", last_updated_by: 723186)
+        
+        let todoList = FileCachePackage.TodoList(status: "ok", list: [todoItem, todoItem])
+        let todoElement = FileCachePackage.TodoList(status: "ok", element: todoItem)
+        
+
+        let jsonData = try? encoder.encode(todoList)
         
         
         let urlSession = URLSession.shared
@@ -102,27 +73,18 @@ class DefaultNetworkingService: NetworkingService {
         }
         var request = URLRequest(url: url)
         request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.addValue("1", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.httpMethod = "PATCH"
-        request.httpBody = jsonData
-//        print(jsonData)
-        var js = try?  JSONSerialization.jsonObject(with: jsonData!)
-                    print(js)
-        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("0", forHTTPHeaderField: "X-Last-Known-Revision")
 
-//        do {
-//            let jsonData = try JSONEncoder().encode(x)
-//            request.httpBody = jsonData
-//            var js = try?  JSONSerialization.jsonObject(with: jsonData)
-//            print(js)
-//        } catch {
-//            // Обработка ошибки
-//            print("error")
-//        }
+        request.httpMethod = "PATCH"
+        var resultString = String(data: jsonData!, encoding: .utf8)
+        print(resultString)
+        request.httpBody = jsonData
+
         let task = urlSession.dataTask(with: request) { data, response, error in
             print(response)
         }
-
         task.resume()
+
     }
 }

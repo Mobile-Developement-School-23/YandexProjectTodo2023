@@ -23,7 +23,7 @@ class FirstScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTestsTwo", fileType: .json) ?? FileCachePackage.FileCache()
+        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
         
         collectionToDo = cacheToDo.getCollectionToDo().sorted { $0.creationDate < $1.creationDate }
         
@@ -37,6 +37,8 @@ class FirstScreenViewController: UIViewController {
             print(todo)
         }
         network.sendData()
+        
+
      
 //        var url = (try? RequestProcessor.makeUrl())!
 //
