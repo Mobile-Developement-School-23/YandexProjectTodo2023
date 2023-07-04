@@ -32,12 +32,12 @@ class FirstScreenViewController: UIViewController {
         removeCompleteToDoFromArray()
         
         let network = DefaultNetworkingService()
-//        network.fetchData { todo in
-////
-//            print(todo)
-//        }
+        network.fetchData { todo in
+//
+            print(todo)
+        }
         
-//        network.sendData()
+        network.sendData()
         
         
     }

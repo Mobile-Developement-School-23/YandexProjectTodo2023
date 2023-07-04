@@ -52,33 +52,34 @@ class DefaultNetworkingService: NetworkingService {
         
 
         let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .custom { date, encoder in
+            let seconds = Int64(date.timeIntervalSince1970)
+            var container = encoder.singleValueContainer()
+            try container.encode(seconds)
+        }
+   
+        var myModel = FileCachePackage.ToDoItem(id: "12342", text: "text", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, colorHEX: "#FFFFFF", last_updated_by: "str")
+        var myList =  FileCachePackage.TodoList(status: "ok", list: [myModel])
+        
 
-        
-        var lastModel = FileCachePackage.TodoItemServerModel(id: "123", text: "sfsdf", importance: "low", deadline: 123214, done: false, color: "#FFFFFF", created_at: 123456, changed_at: 123456, last_updated_by: "kn")
-        var lastList = APIListResponse(status: "ok", list: [lastModel], revision: 0)
-        var lastElem = APIElementResponse(element: lastModel)
-
-        let jsonData = try? encoder.encode(lastElem)
-        
-        print(try? JSONSerialization.jsonObject(with: jsonData!))
-        
         guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list/") else {
             // Обработка ошибки
             return
         }
-        
+        var todoElement = FileCachePackage.TodoList(status: "ok", element: myModel)
 
         
 
-        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60.0)
+        var request = URLRequest(url: url)
         request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("0", forHTTPHeaderField: "X-Last-Known-Revision")
+        request.addValue("13", forHTTPHeaderField: "X-Last-Known-Revision")
 
-        request.httpMethod = "POST"
-        var resultString = String(data: jsonData!, encoding: .utf8)
-        print(resultString)
-        request.httpBody = jsonData
+        request.httpMethod = "PATCH"
+        
+        let jsonDataMyModel = (try? encoder.encode(myList))
+
+        request.httpBody = jsonDataMyModel
 
         
         let task = urlSession.dataTask(with: request) { data, response, error in
