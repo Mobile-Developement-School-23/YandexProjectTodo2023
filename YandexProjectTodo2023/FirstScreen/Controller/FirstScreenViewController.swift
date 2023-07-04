@@ -32,22 +32,13 @@ class FirstScreenViewController: UIViewController {
         removeCompleteToDoFromArray()
         
         let network = DefaultNetworkingService()
-        network.fetchData { todo in
-
-            print(todo)
-        }
-        network.sendData()
-        
-
-     
-//        var url = (try? RequestProcessor.makeUrl())!
-//
-//        Task {
-//            print(url)
-//             var t = try await RequestProcessor.performMyAwesomeRequest(url: url)
-//            print(t.1)
-//            print(t.0)
+//        network.fetchData { todo in
+////
+//            print(todo)
 //        }
+        
+//        network.sendData()
+        
         
     }
 
