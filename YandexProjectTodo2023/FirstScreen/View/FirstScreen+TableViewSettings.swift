@@ -7,7 +7,24 @@ import FileCachePackage
 extension FirstScreenViewController {
     
     func doneUndone(_ indexPath: IndexPath) {
-       collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+        
+        collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+        
+        // PUT todo from network
+        let networkService = DefaultNetworkingService()
+        networkService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
+            print(result)
+            switch result {
+            case .success(let networkCache):
+                DispatchQueue.main.async {
+                    self.networkCache = networkCache
+                }
+            case .failure(let error):
+                // Handle error
+                print(error)
+            }
+        }
+        
        pressedButtonHeaderRight()
        pressedButtonHeaderRight()
        tableView.reloadData()
@@ -16,11 +33,29 @@ extension FirstScreenViewController {
    }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
+        
+        // DELETE todo from network
+        let networkService = DefaultNetworkingService()
+        networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
+            print(result)
+            switch result {
+            case .success(let networkCache):
+                DispatchQueue.main.async {
+                    self.networkCache = networkCache
+                }
+            case .failure(let error):
+                // Handle error
+                print(error)
+            }
+            
+        }
         self.collectionToDo.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.reloadData()
         
         FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+
+
     }
 }
 
@@ -77,6 +112,7 @@ extension FirstScreenViewController {
         
         let action = UIContextualAction(style: .normal, title: "", handler: {  ( _, _, _ ) in
             self.removeAndDeleteTodo(indexPath)
+
         })
         
         action.image = UIImage(systemName: "trash", withConfiguration: .none)
@@ -94,9 +130,30 @@ extension FirstScreenViewController {
                 
                 if data.creationDate == Date.distantPast {
                     
+                    // DELETE todo from network
+                    let networkService = DefaultNetworkingService()
+                    networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
+                        print(result)
+                        switch result {
+                        case .success(let networkCache):
+                            DispatchQueue.main.async {
+                                self.networkCache = networkCache
+                            }
+                        case .failure(let error):
+                            // Handle error
+                            print(error)
+                        }
+                    }
+                    
+
+                    
                     self.collectionToDo.remove(at: indexPath.row)
                     self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                     self.tableView.reloadData()
+                    
+                    // DELETE todo from file
+                    FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                    
                     return
                 }
                 
@@ -105,6 +162,21 @@ extension FirstScreenViewController {
                 self.tableView.reloadData()
                 
                 FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                
+                // PUT todo
+                let network = DefaultNetworkingService()
+                network.putTodoItem(todoItem: data, revision: self.networkCache.revision!) { result in
+                    print(result)
+                    switch result {
+                    case .success(let networkCache):
+                        DispatchQueue.main.async {
+                            self.networkCache = networkCache
+                        }
+                    case .failure(let error):
+                        // Handle error
+                        print(error)
+                    }
+                }
                     
             }
             self.present(vc, animated: true)

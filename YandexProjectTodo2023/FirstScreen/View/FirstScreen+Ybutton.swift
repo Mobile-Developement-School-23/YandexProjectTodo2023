@@ -39,7 +39,7 @@ extension FirstScreenViewController {
         let vc = SecondScreenViewController(cellFrame: button.frame)
         vc.toDo = FileCachePackage.ToDoItem(text: vc.defaultPhraseForTextView, priority: FileCachePackage.ToDoItem.Priority.normal)
         
-        vc.dataCompletionHandler = { data in
+        vc.dataCompletionHandler = { [self] data in
 
             if data.creationDate == Date.distantPast {
                 return
@@ -49,6 +49,22 @@ extension FirstScreenViewController {
             self.tableView.reloadData()
             
             FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            
+            
+            let networkService = DefaultNetworkingService()
+            networkService.postTodoItem(todoItem: data, revision: networkCache.revision!) { result in
+                switch result {
+                case .success(let networkCache):
+                    DispatchQueue.main.async {
+                        self.networkCache = networkCache
+                    }
+                case .failure(let error):
+                    // Handle error
+                    print(error)
+                }
+                print(result)
+            }
+            
         }
         vc.modalTransitionStyle = .coverVertical
         navigationController?.present(vc, animated: true)

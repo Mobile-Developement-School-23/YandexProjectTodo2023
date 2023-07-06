@@ -7,6 +7,22 @@ class FirstScreenViewController: UIViewController {
     lazy var cacheToDo = FileCachePackage.FileCache()
     public lazy var collectionToDo = [FileCachePackage.ToDoItem]()
     lazy var collectionToDoComplete = [FileCachePackage.ToDoItem]()
+    
+    lazy var networkCache = FileCachePackage.TodoList(status: "ok") {
+        
+        willSet {
+            
+            guard let newCollectionTodo = newValue.list else { return }
+                collectionToDo = newCollectionTodo
+                collectionToDo.sort { $0.creationDate < $1.creationDate }
+                checkLastCell()
+                removeCompleteToDoFromArray()
+                tableView.reloadData()
+                    
+        }
+    }
+    
+    
     lazy var tableView: UITableView = .init(frame: CGRect(), style: .insetGrouped)
     lazy var isCellVisible = false
     lazy var buttonHeaderRight = UIButton()
@@ -18,28 +34,63 @@ class FirstScreenViewController: UIViewController {
     
     // MARK: Last grey cell
     
-    private let todoLast = FileCachePackage.ToDoItem(text: "Новое", priority: .normal, creationDate: Date.distantFuture)
+    private let todoLast = FileCachePackage.ToDoItem(text: "Новое", priority: .normal, creationDate: Date.distantFuture, modifyDate: .distantFuture)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
         
-        collectionToDo = cacheToDo.getCollectionToDo().sorted { $0.creationDate < $1.creationDate }
+        collectionToDo = cacheToDo.getCollectionToDo()
+        collectionToDo.sort { $0.creationDate < $1.creationDate }
         
-        collectionToDo.append(todoLast)
-        
-        removeCompleteToDoFromArray()
-        
+        checkLastCell()
+     
         let network = DefaultNetworkingService()
-        network.fetchData { todo in
-//
-            print(todo)
+        
+        network.fetchData { result in
+            switch result {
+            case .success(let networkCache):
+                DispatchQueue.main.async {
+                    self.networkCache = networkCache
+//                    print(self.networkCache)
+//                    print(self.collectionToDo)
+                }
+            case .failure(let error): 
+                // Handle error
+                print(error)
+            }
         }
         
-        network.sendData()
         
+        removeCompleteToDoFromArray()
+  
+//        network.getTodoItemFromId(todoId: "8A5FEE9E-287B-478A-AA3C-FCC5D4B803DC") { result in
+//        print(result)
+//            switch result {
+//            case .success(let todoList):
+//
+////                print(Thread.current)
+//                print(todoList)
+//            case .failure(let error):
+//                // Handle error
+//                print(error)
+//            }
+//        }
         
+//        network.postTodoItem(todoItem: FileCachePackage.ToDoItem(id: "34234", text: "test", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, last_updated_by: ""), revision: networkCache.revision ?? 0) { result in
+//                        switch result {
+//        print(result)
+//                        case .success(let todoItem):
+//
+//                            print(Thread.current)
+//                            print(todoItem)
+//                        case .failure(let error):
+//                            // Handle error
+//                            print(error)
+//                        }
+//        }
     }
 
     override func loadView() {
@@ -57,6 +108,12 @@ class FirstScreenViewController: UIViewController {
         super.viewWillLayoutSubviews()
         createYButton()
         settingAcitvityIndicator()
+    }
+    
+    func checkLastCell() {
+        if collectionToDo.last?.text != "Новое" {
+            collectionToDo.append(todoLast)
+        }
     }
 }
 

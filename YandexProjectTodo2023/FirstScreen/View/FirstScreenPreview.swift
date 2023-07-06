@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import FileCachePackage
 
 // MARK: Preview & context menu
 extension FirstScreenViewController {
@@ -14,6 +15,38 @@ extension FirstScreenViewController {
             vc.buttonClose.isHidden = true
             vc.buttonSave.isHidden = true
             vc.toDo = self.collectionToDo[indexPath.row]
+            vc.dataCompletionHandler = { data in
+                
+                if data.creationDate == Date.distantPast {
+                    
+                    // DELETE todo from network
+                    let networkService = DefaultNetworkingService()
+                    networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
+                        print(result)
+                    }
+                    
+                    self.collectionToDo.remove(at: indexPath.row)
+                    self.collectionToDo.sort { $0.creationDate < $1.creationDate }
+                    self.tableView.reloadData()
+                    
+                    // DELETE todo from file
+                    FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                    
+                    return
+                }
+                
+                self.collectionToDo[indexPath.row] = data
+                self.collectionToDo.sort { $0.creationDate < $1.creationDate }
+                self.tableView.reloadData()
+                
+                FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                    
+                // PUT todo from network
+                let networkService = DefaultNetworkingService()
+                networkService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
+                    print(result)
+                }
+            }
             
             return vc
         },
