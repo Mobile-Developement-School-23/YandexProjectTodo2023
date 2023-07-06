@@ -49,48 +49,16 @@ class FirstScreenViewController: UIViewController {
      
         let network = DefaultNetworkingService()
         
+        // Update from server
+        
         network.fetchData { result in
-            switch result {
-            case .success(let networkCache):
-                DispatchQueue.main.async {
-                    self.networkCache = networkCache
-//                    print(self.networkCache)
-//                    print(self.collectionToDo)
-                }
-            case .failure(let error): 
-                // Handle error
-                print(error)
+            Task {
+                await self.resultProcessing(result: result)
             }
         }
         
-        
         removeCompleteToDoFromArray()
-  
-//        network.getTodoItemFromId(todoId: "8A5FEE9E-287B-478A-AA3C-FCC5D4B803DC") { result in
-//        print(result)
-//            switch result {
-//            case .success(let todoList):
-//
-////                print(Thread.current)
-//                print(todoList)
-//            case .failure(let error):
-//                // Handle error
-//                print(error)
-//            }
-//        }
-        
-//        network.postTodoItem(todoItem: FileCachePackage.ToDoItem(id: "34234", text: "test", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, last_updated_by: ""), revision: networkCache.revision ?? 0) { result in
-//                        switch result {
-//        print(result)
-//                        case .success(let todoItem):
-//
-//                            print(Thread.current)
-//                            print(todoItem)
-//                        case .failure(let error):
-//                            // Handle error
-//                            print(error)
-//                        }
-//        }
+
     }
 
     override func loadView() {

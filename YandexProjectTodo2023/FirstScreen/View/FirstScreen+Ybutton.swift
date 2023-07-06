@@ -53,16 +53,10 @@ extension FirstScreenViewController {
             
             let networkService = DefaultNetworkingService()
             networkService.postTodoItem(todoItem: data, revision: networkCache.revision!) { result in
-                switch result {
-                case .success(let networkCache):
-                    DispatchQueue.main.async {
-                        self.networkCache = networkCache
-                    }
-                case .failure(let error):
-                    // Handle error
-                    print(error)
-                }
                 print(result)
+                Task {
+                    await self.resultProcessing(result: result)
+                }
             }
             
         }

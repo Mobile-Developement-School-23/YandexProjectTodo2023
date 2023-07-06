@@ -14,14 +14,8 @@ extension FirstScreenViewController {
         let networkService = DefaultNetworkingService()
         networkService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
             print(result)
-            switch result {
-            case .success(let networkCache):
-                DispatchQueue.main.async {
-                    self.networkCache = networkCache
-                }
-            case .failure(let error):
-                // Handle error
-                print(error)
+            Task {
+                await self.resultProcessing(result: result)
             }
         }
         
@@ -38,14 +32,8 @@ extension FirstScreenViewController {
         let networkService = DefaultNetworkingService()
         networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
             print(result)
-            switch result {
-            case .success(let networkCache):
-                DispatchQueue.main.async {
-                    self.networkCache = networkCache
-                }
-            case .failure(let error):
-                // Handle error
-                print(error)
+            Task {
+                await self.resultProcessing(result: result)
             }
             
         }
@@ -134,14 +122,8 @@ extension FirstScreenViewController {
                     let networkService = DefaultNetworkingService()
                     networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
                         print(result)
-                        switch result {
-                        case .success(let networkCache):
-                            DispatchQueue.main.async {
-                                self.networkCache = networkCache
-                            }
-                        case .failure(let error):
-                            // Handle error
-                            print(error)
+                        Task {
+                            await self.resultProcessing(result: result)
                         }
                     }
                     
@@ -167,14 +149,8 @@ extension FirstScreenViewController {
                 let network = DefaultNetworkingService()
                 network.putTodoItem(todoItem: data, revision: self.networkCache.revision!) { result in
                     print(result)
-                    switch result {
-                    case .success(let networkCache):
-                        DispatchQueue.main.async {
-                            self.networkCache = networkCache
-                        }
-                    case .failure(let error):
-                        // Handle error
-                        print(error)
+                    Task {
+                        await self.resultProcessing(result: result)
                     }
                 }
                     

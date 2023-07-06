@@ -23,6 +23,9 @@ extension FirstScreenViewController {
                     let networkService = DefaultNetworkingService()
                     networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
                         print(result)
+                        Task {
+                            await self.resultProcessing(result: result)
+                        }
                     }
                     
                     self.collectionToDo.remove(at: indexPath.row)
@@ -45,6 +48,9 @@ extension FirstScreenViewController {
                 let networkService = DefaultNetworkingService()
                 networkService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision!) { result in
                     print(result)
+                    Task {
+                        await self.resultProcessing(result: result)
+                    }
                 }
             }
             

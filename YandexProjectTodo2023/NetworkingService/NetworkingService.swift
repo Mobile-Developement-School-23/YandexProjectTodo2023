@@ -2,268 +2,137 @@ import Foundation
 import FileCachePackage
 
 protocol NetworkingService {
-    func fetchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void)
-    // Определите остальные методы в соответствии с вашим API
+    
+    func fetchData(todoId: String?, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void)
+    func getTodoItemFromId(todoId: String, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void)
+    func patchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void)
+    func postTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void)
+    func putTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void)
+    func deleteTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void)
 }
 
-class DefaultNetworkingService: NetworkingService {
+// MARK: Settings for Yandex server
+
+class DefaultNetworkingService {
+    
     private let urlSession: URLSession
+    private let baseURL = "https://beta.mrdekk.ru/todobackend/list"
     
     init(urlSession: URLSession = URLSession.shared) {
         self.urlSession = urlSession
     }
     
-    func fetchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list") else {
-            // Обработка ошибки
+    private func createRequest(for url: URL, method: String, token: String, revision: String = "0", requestBody: Data? = nil) -> URLRequest {
+//                print(Thread.current) Not main thread
+        var request = URLRequest(url: url)
+        request.addValue(revision, forHTTPHeaderField: "X-Last-Known-Revision")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = method
+        request.httpBody = requestBody
+        return request
+    }
+    
+    private func processResponseData<T: Decodable>(_ data: Data?, _ error: Error?, completion: @escaping (Result<T, Error>) -> Void) {
+//        print(Thread.current) Not main thread
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        if let error = error {
+            completion(.failure(error))
+        } else if let data = data {
+            do {
+                let list = try decoder.decode(T.self, from: data)
+                completion(.success(list))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    private func makeRequest(for endpoint: String, method: String, revision: String, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+//        print(Thread.current) Not main thread
+        guard let url = URL(string: "\(baseURL)/\(endpoint)") else {
+            completion(.failure(URLError(.badURL)))
             return
         }
-        
-        var request = URLRequest(url: url)
-        request.addValue("0", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.httpMethod = "GET"
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data {
-                
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-//                    print(list)
-                    completion(.success(list))
-                } catch {
-                    completion(.failure(error))
-                }
-            }
+
+        let request = createRequest(for: url, method: method, token: "despoil", revision: revision, requestBody: requestBody)
+
+        let task = urlSession.dataTask(with: request) { (data, _, error) in
+
+            self.processResponseData(data, error, completion: completion)
         }
         task.resume()
     }
-    
-    func patchData(todoList: FileCachePackage.TodoList, completion: @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        
-        guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list") else {
-            // Обработка ошибки
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("0", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "PATCH"
-        
+
+    private func createBodyDataFrom(_ todoItem: FileCachePackage.ToDoItem) -> Data? {
+//        print(Thread.current) Not main thread
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .custom { date, encoder in
             let seconds = Int64(date.timeIntervalSince1970)
             var container = encoder.singleValueContainer()
             try container.encode(seconds)
         }
-        
-        let list = try? encoder.encode(todoList)
-//        print(Thread.current) !!! Main
-        request.httpBody = list
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-//                completion(.failure(error))
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-//                    print(list)
-                    completion(.success(list))
-                } catch {
-                    completion(.failure(error))
-                }
-            }
+        return try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
+    }
+}
+
+// MARK: Methods for use
+
+extension DefaultNetworkingService: NetworkingService {
+    
+    func fetchData(todoId: String? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+        DispatchQueue.global().async {
+            self.makeRequest(for: todoId ?? "", method: "GET", revision: "0", completion: completion)
         }
-        task.resume()
+
     }
     
     func getTodoItemFromId(todoId: String, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        
-        guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list/\(todoId)") else {
-            // Обработка ошибки
-            return
+        DispatchQueue.global().async {
+            self.makeRequest(for: todoId, method: "GET", revision: "0", completion: completion)
         }
-        
-        var request = URLRequest(url: url)
-        request.addValue("0", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.httpMethod = "GET"
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print(response as Any)
-                completion(.failure(error))
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-                    completion(.success(list))
-                } catch {
-                    print(response as Any)
-                    completion(.failure(error))
-                }
-            }
-        }
-        task.resume()
-        
     }
-    
-    func postTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        
-        guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list") else {
-            // Обработка ошибки
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("\(revision)", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .custom { date, encoder in
-            let seconds = Int64(date.timeIntervalSince1970)
-            var container = encoder.singleValueContainer()
-            try container.encode(seconds)
-        }
-        
-        let list = try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
-//        print(Thread.current) !!! Main
-        request.httpBody = list
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-                    completion(.success(list))
-                } catch {
-                    print(response as Any)
-                    completion(.failure(error))
-                }
-            }
-        }
-        task.resume()
-    }
-    
-    
-    func putTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        
-        guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list/\(todoItem.id)") else {
-            // Обработка ошибки
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("\(revision)", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "PUT"
-        
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .custom { date, encoder in
-            let seconds = Int64(date.timeIntervalSince1970)
-            var container = encoder.singleValueContainer()
-            try container.encode(seconds)
-        }
-        
-        let list = try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
-//        print(Thread.current) !!! Main
-        request.httpBody = list
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-                    completion(.success(list))
-                } catch {
-                    print(response as Any)
-                    completion(.failure(error))
-                }
-            }
-        }
-        task.resume()
-    }
-    
-    func deleteTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        
-        guard let url = URL(string: "https://beta.mrdekk.ru/todobackend/list/\(todoItem.id)") else {
-            // Обработка ошибки
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue("\(revision)", forHTTPHeaderField: "X-Last-Known-Revision")
-        request.addValue("Bearer despoil", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "DELETE"
-        
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .custom { date, encoder in
-            let seconds = Int64(date.timeIntervalSince1970)
-            var container = encoder.singleValueContainer()
-            try container.encode(seconds)
-        }
-        
-        let list = try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
-//        print(Thread.current) !!! Main
-        request.httpBody = list
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-                    completion(.success(list))
-                } catch {
-                    print(response as Any)
-                    completion(.failure(error))
-                }
-            }
-        }
 
-        task.resume()
-    }
-    func createTaskAndSendList(request: URLRequest, completion:  (Result<FileCachePackage.TodoList, Error>)) -> URLSessionDataTask {
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
-           
-            
-            if let error = error {
-//                completion(.failure(error))
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                do {
-                    let list = try decoder.decode(FileCachePackage.TodoList.self, from: data)
-//                    completion(.success(list))
-                } catch {
-                    print(response as Any)
-//                    completion(.failure(error))
-                }
-            }
+    func patchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+        DispatchQueue.global().async {
+            self.makeRequest(for: "", method: "PATCH", revision: "0", completion: completion)
         }
-        
-        
-      return task
+    }
+
+    func postTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
+        DispatchQueue.global().async {
+            let bodyData = self.createBodyDataFrom(todoItem)
+            self.makeRequest(for: "", method: "POST", revision: "\(revision)", requestBody: bodyData, completion: completion)
+        }
+    }
+
+    func putTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
+        DispatchQueue.global().async {
+            let bodyData = self.createBodyDataFrom(todoItem)
+            self.makeRequest(for: "\(todoItem.id)", method: "PUT", revision: "\(revision)", requestBody: bodyData, completion: completion)
+        }
+    }
+
+    func deleteTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
+        DispatchQueue.global().async {
+            let bodyData = self.createBodyDataFrom(todoItem)
+            self.makeRequest(for: "\(todoItem.id)", method: "DELETE", revision: "\(revision)", requestBody: bodyData, completion: completion)
+        }
+    }
+}
+
+
+extension FirstScreenViewController {
+    
+    func resultProcessing(result: Result<FileCachePackage.TodoList, Error>) {
+        switch result {
+        case .success(let networkCache):
+            DispatchQueue.main.async {
+                self.networkCache = networkCache
+            }
+        case .failure(let error):
+            
+            print(error)
+        }
     }
 }

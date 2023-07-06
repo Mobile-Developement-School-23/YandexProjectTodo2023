@@ -33,7 +33,6 @@
 		94B87E652A50722400D48FA2 /* URLSession+dataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E642A50722400D48FA2 /* URLSession+dataTask.swift */; };
 		94B87E6C2A51C48000D48FA2 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E6B2A51C48000D48FA2 /* NetworkingService.swift */; };
 		94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E6D2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift */; };
-		94B87E702A51E48E00D48FA2 /* NW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B87E6F2A51E48E00D48FA2 /* NW.swift */; };
 		94D824342A486E4800A4135B /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824332A486E4800A4135B /* CocoaLumberjack */; };
 		94D824362A486E4800A4135B /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824352A486E4800A4135B /* CocoaLumberjackSwift */; };
 		94D824392A486E6100A4135B /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 94D824382A486E6100A4135B /* FileCachePackage */; };
@@ -83,7 +82,6 @@
 		94B87E642A50722400D48FA2 /* URLSession+dataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+dataTask.swift"; sourceTree = "<group>"; };
 		94B87E6B2A51C48000D48FA2 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		94B87E6D2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstScreen+ActivityIndicator.swift"; sourceTree = "<group>"; };
-		94B87E6F2A51E48E00D48FA2 /* NW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NW.swift; sourceTree = "<group>"; };
 		AD3F6A74EA11CC4A015BF357 /* Pods-YandexProjectTodo2023.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023.debug.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5D15F90CBD84342ADCCB93 /* Pods-YandexProjectTodo2023.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023.release.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023/Pods-YandexProjectTodo2023.release.xcconfig"; sourceTree = "<group>"; };
 		DA93CA11B13B4121526DEEC7 /* Pods_YandexProjectTodo2023.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexProjectTodo2023.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -249,7 +247,6 @@
 			children = (
 				94B87E642A50722400D48FA2 /* URLSession+dataTask.swift */,
 				94B87E6B2A51C48000D48FA2 /* NetworkingService.swift */,
-				94B87E6F2A51E48E00D48FA2 /* NW.swift */,
 			);
 			path = NetworkingService;
 			sourceTree = "<group>";
@@ -472,7 +469,6 @@
 				943DD4782A45789400C8B8A2 /* FirstScreen+Ybutton.swift in Sources */,
 				943DD4882A4578FA00C8B8A2 /* UISettings.swift in Sources */,
 				9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */,
-				94B87E702A51E48E00D48FA2 /* NW.swift in Sources */,
 				94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
