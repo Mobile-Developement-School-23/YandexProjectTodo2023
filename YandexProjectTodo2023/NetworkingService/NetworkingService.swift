@@ -13,7 +13,15 @@ protocol NetworkingService {
 
 // MARK: Settings for Yandex server
 
-class DefaultNetworkingService {
+final class DefaultNetworkingService: Sendable {
+    
+    // Default settings fo jitter
+    
+    private let minDelay: Double = 2
+    private let maxDelay: Double = 120
+    private let factor: Double = 1.5
+    private let jitter: Double = 0.05
+    private var currentDelay: Double = 2
     
     private let urlSession: URLSession
     private let baseURL = "https://beta.mrdekk.ru/todobackend/list"
@@ -48,9 +56,9 @@ class DefaultNetworkingService {
         }
     }
 
-    private func makeRequest(for endpoint: String, method: String, revision: String, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    private func makeRequest(todoItem: FileCachePackage.ToDoItem, method: String, type: RequestType, revision: String, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
 //        print(Thread.current) Not main thread
-        guard let url = URL(string: "\(baseURL)/\(endpoint)") else {
+        guard let url = URL(string: "\(baseURL)/\(todoItem.id)") else {
             completion(.failure(URLError(.badURL)))
             return
         }
@@ -59,8 +67,34 @@ class DefaultNetworkingService {
 
         let task = urlSession.dataTask(with: request) { (data, _, error) in
 
-            self.processResponseData(data, error, completion: completion)
-        }
+            self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, Error>) in
+                            switch result {
+                            case .success(let list):
+                                completion(.success(list))
+                                self.resetDelay()
+                            case .failure(let error):
+                                print("Failed to fetch data due to: \(error)")
+                                self.retryRequest {
+                                    switch type {
+                                        
+                                    case .fetch:
+                                        self.fetchData(todoItem: todoItem, completion: completion)
+                                    case .getItem:
+                                        self.getTodoItemFromId(todoItem: todoItem, completion: completion)
+                                    case .patch:
+                                        self.patchData(completion: completion)
+                                    case .post: break
+                                        
+                                    case .put: break
+                                    case .delete: break
+                                    }
+                                    
+                                    
+                                    
+                                }
+                            }
+                        }
+                    }
         task.resume()
     }
 
@@ -78,49 +112,50 @@ class DefaultNetworkingService {
 
 // MARK: Methods for use
 
-extension DefaultNetworkingService: NetworkingService {
+extension DefaultNetworkingService  {
     
-    func fetchData(todoId: String? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    func fetchData(todoItem: FileCachePackage.ToDoItem, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
-            self.makeRequest(for: todoId ?? "", method: "GET", revision: "0", completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "GET", type: .fetch, revision: "0", completion: completion)
         }
 
     }
     
-    func getTodoItemFromId(todoId: String, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    func getTodoItemFromId(todoItem: FileCachePackage.ToDoItem, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
-            self.makeRequest(for: todoId, method: "GET", revision: "0", completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "GET", type: .getItem, revision: "0", completion: completion)
         }
     }
 
     func patchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
-            self.makeRequest(for: "", method: "PATCH", revision: "0", completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "PATCH", type: .patch, revision: "0", completion: completion)
         }
     }
 
-    func postTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    func postTodoItem( todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
             let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(for: "", method: "POST", revision: "\(revision)", requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "POST", type: .post, revision: "\(revision)", requestBody: bodyData, completion: completion)
         }
     }
 
     func putTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
             let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(for: "\(todoItem.id)", method: "PUT", revision: "\(revision)", requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "PUT", type: .put, revision: "\(revision)", requestBody: bodyData, completion: completion)
         }
     }
 
     func deleteTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
             let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(for: "\(todoItem.id)", method: "DELETE", revision: "\(revision)", requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "DELETE", type: .delete, revision: "\(revision)", requestBody: bodyData, completion: completion)
         }
     }
 }
 
+// MARK: Result processing + Jitter
 
 extension FirstScreenViewController {
     
@@ -131,8 +166,38 @@ extension FirstScreenViewController {
                 self.networkCache = networkCache
             }
         case .failure(let error):
-            
             print(error)
         }
     }
 }
+
+// Jitter
+
+extension DefaultNetworkingService {
+
+    private func retryRequest(_ request: @escaping @Sendable () -> Void) {
+        DispatchQueue.global().asyncAfter(deadline: .now() + currentDelay) {
+            request()
+        }
+        updateDelay()
+    }
+    
+    private func updateDelay() {
+        let randomJitter = Double.random(in: 0...(jitter * currentDelay))
+        currentDelay = min(maxDelay, factor * currentDelay) + randomJitter
+    }
+
+    private func resetDelay() {
+        currentDelay = minDelay
+    }
+}
+
+enum RequestType {
+    case fetch
+    case getItem
+    case patch
+    case post
+    case put
+    case delete
+}
+
