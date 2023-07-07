@@ -104,6 +104,8 @@ extension SecondScreenViewController {
         let constraintHeight = cell.textView.heightAnchor.constraint(equalToConstant: 120)
         constraintHeight.priority = .dragThatCanResizeScene
         constraintHeight.isActive = true
+        
+        cell.textView.text = toDo.text
         return cell
     }
     

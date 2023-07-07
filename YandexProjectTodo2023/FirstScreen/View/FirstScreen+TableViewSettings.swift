@@ -7,7 +7,17 @@ import FileCachePackage
 extension FirstScreenViewController {
     
     func doneUndone(_ indexPath: IndexPath) {
-       collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+        
+        collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+        
+        // PUT todo from network
+        
+        networkingService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+            Task {
+                await self.resultProcessing(result: result)
+            }
+        }
+        
        pressedButtonHeaderRight()
        pressedButtonHeaderRight()
        tableView.reloadData()
@@ -16,24 +26,35 @@ extension FirstScreenViewController {
    }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
+        
+        // DELETE todo from network
+        networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+            Task {
+                await self.resultProcessing(result: result)
+            }
+            
+        }
         self.collectionToDo.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.reloadData()
         
         FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+
     }
 }
 
-// MARK: TableView Settings + Emitter
+// MARK: TableView Settings + Emitter + ActivityIndicator
 
 extension FirstScreenViewController: UITableViewDelegate, UITableViewDataSource {
     
     func prepareTableView() {
         self.view = UIView()
+        
         tableView.register(FirstScreenTableViewCell.self, forCellReuseIdentifier: Constants.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
+        
     }
     
     func prepareTableEmitterButton() {
@@ -75,6 +96,7 @@ extension FirstScreenViewController {
         
         let action = UIContextualAction(style: .normal, title: "", handler: {  ( _, _, _ ) in
             self.removeAndDeleteTodo(indexPath)
+
         })
         
         action.image = UIImage(systemName: "trash", withConfiguration: .none)
@@ -92,9 +114,22 @@ extension FirstScreenViewController {
                 
                 if data.creationDate == Date.distantPast {
                     
+                    // DELETE todo from network
+                    self.networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+                        Task {
+                            await self.resultProcessing(result: result)
+                        }
+                    }
+                    
+
+                    
                     self.collectionToDo.remove(at: indexPath.row)
                     self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                     self.tableView.reloadData()
+                    
+                    // DELETE todo from file
+                    FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                    
                     return
                 }
                 
@@ -103,6 +138,13 @@ extension FirstScreenViewController {
                 self.tableView.reloadData()
                 
                 FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                
+                // PUT todo
+                self.networkingService.putTodoItem(todoItem: data, revision: self.networkCache.revision ?? 0) { result in
+                    Task {
+                        await self.resultProcessing(result: result)
+                    }
+                }
                     
             }
             self.present(vc, animated: true)
@@ -134,7 +176,7 @@ extension FirstScreenViewController {
     }
 }
 
-// MARK: Header Button & Label
+// MARK: Header Button & Label & ActivityIndicator
 
 extension FirstScreenViewController {
     
@@ -151,6 +193,12 @@ extension FirstScreenViewController {
         
         viewHeader.addSubview(buttonHeaderRight)
         viewHeader.addSubview(labelHeaderLeft)
+        viewHeader.addSubview(refreshControl)
+        
+        
+        refreshControl.translatesAutoresizingMaskIntoConstraints = false
+        refreshControl.centerXAnchor.constraint(equalTo: viewHeader.centerXAnchor).isActive = true
+        refreshControl.centerYAnchor.constraint(equalTo: viewHeader.centerYAnchor).isActive = true
         
         buttonHeaderRight.frame = CGRect(x: viewHeader.bounds.maxX - 100, y: 0, width: 150, height: 40)
         buttonHeaderRight.setTitle("Показать", for: .normal)

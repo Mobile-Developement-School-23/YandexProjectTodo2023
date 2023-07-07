@@ -199,7 +199,7 @@ extension FirstScreenTableViewCell {
     }
     
     private func checkForFootherButton(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [FileCachePackage.ToDoItem]) {
-        if collectionToDo[indexPath.row].creationDate == Date.distantFuture {
+        if collectionToDo[indexPath.row].text == "Новое" {
 
             cell.descriptionLabel.textColor = .systemGray
             cell.circleToDoImageView.alpha = 0

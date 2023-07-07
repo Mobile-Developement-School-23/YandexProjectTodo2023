@@ -37,9 +37,9 @@ extension FirstScreenViewController {
     @objc func tapPlusButton() {
         
         let vc = SecondScreenViewController(cellFrame: button.frame)
-        vc.toDo = FileCachePackage.ToDoItem(text: "", priority: FileCachePackage.ToDoItem.Priority.normal)
+        vc.toDo = FileCachePackage.ToDoItem(text: vc.defaultPhraseForTextView, priority: FileCachePackage.ToDoItem.Priority.normal)
         
-        vc.dataCompletionHandler = { data in
+        vc.dataCompletionHandler = { [self] data in
 
             if data.creationDate == Date.distantPast {
                 return
@@ -49,6 +49,13 @@ extension FirstScreenViewController {
             self.tableView.reloadData()
             
             FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+
+            networkingService.postTodoItem(todoItem: data, revision: networkCache.revision ?? 0) { result in
+                Task {
+                    await self.resultProcessing(result: result)
+                }
+            }
+            
         }
         vc.modalTransitionStyle = .coverVertical
         navigationController?.present(vc, animated: true)

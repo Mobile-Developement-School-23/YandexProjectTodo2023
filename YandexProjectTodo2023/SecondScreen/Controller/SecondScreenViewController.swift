@@ -31,7 +31,7 @@ class SecondScreenViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        
         prepareUIforVC()
         settingTopLabel()
         settingSaveButton()
