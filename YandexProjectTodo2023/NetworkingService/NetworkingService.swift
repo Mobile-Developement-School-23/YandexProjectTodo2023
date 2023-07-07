@@ -24,7 +24,7 @@ final class DefaultNetworkingService: Sendable {
     private var currentDelay: Double = 2
     
     private let urlSession: URLSession
-    private let baseURL = "https://beta.mrdekk.ru/todobackend/list"
+    private var baseURL = "https://beta.mrdekk.ru/todobackend/list"
     
     init(urlSession: URLSession = URLSession.shared) {
         self.urlSession = urlSession
@@ -56,18 +56,23 @@ final class DefaultNetworkingService: Sendable {
         }
     }
 
-    private func makeRequest(todoItem: FileCachePackage.ToDoItem, method: String, type: RequestType, revision: String, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    private func makeRequest(todoItem: FileCachePackage.ToDoItem = FileCachePackage.ToDoItem(id: "", text: "", priority: .normal), method: String, type: RequestType, revision: Int, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
 //        print(Thread.current) Not main thread
-        guard let url = URL(string: "\(baseURL)/\(todoItem.id)") else {
+        switch type {
+        case .getItem, .put, .delete:
+            baseURL += "/\(todoItem.id)"
+        default: break
+        }
+        guard let url = URL(string: "\(baseURL)") else {
             completion(.failure(URLError(.badURL)))
             return
         }
 
-        let request = createRequest(for: url, method: method, token: "despoil", revision: revision, requestBody: requestBody)
+        let request = createRequest(for: url, method: method, token: "despoil", revision: "\(revision)", requestBody: requestBody)
 
-        let task = urlSession.dataTask(with: request) { (data, _, error) in
-
+        let task = urlSession.dataTask(with: request) { (data, response, error) in
             self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, Error>) in
+                print(result)
                             switch result {
                             case .success(let list):
                                 completion(.success(list))
@@ -78,19 +83,18 @@ final class DefaultNetworkingService: Sendable {
                                     switch type {
                                         
                                     case .fetch:
-                                        self.fetchData(todoItem: todoItem, completion: completion)
+                                        self.fetchData(completion: completion)
                                     case .getItem:
                                         self.getTodoItemFromId(todoItem: todoItem, completion: completion)
                                     case .patch:
                                         self.patchData(completion: completion)
-                                    case .post: break
-                                        
-                                    case .put: break
-                                    case .delete: break
+                                    case .post:
+                                        self.postTodoItem(todoItem: todoItem, revision: revision, completion: completion)
+                                    case .put:
+                                        self.putTodoItem(todoItem: todoItem, revision: revision, completion: completion)
+                                    case .delete:
+                                        self.deleteTodoItem(todoItem: todoItem, revision: revision, completion: completion)
                                     }
-                                    
-                                    
-                                    
                                 }
                             }
                         }
@@ -106,6 +110,7 @@ final class DefaultNetworkingService: Sendable {
             var container = encoder.singleValueContainer()
             try container.encode(seconds)
         }
+        
         return try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
     }
 }
@@ -114,43 +119,43 @@ final class DefaultNetworkingService: Sendable {
 
 extension DefaultNetworkingService  {
     
-    func fetchData(todoItem: FileCachePackage.ToDoItem, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    func fetchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
-            self.makeRequest(todoItem: todoItem, method: "GET", type: .fetch, revision: "0", completion: completion)
+            self.makeRequest(method: "GET", type: .fetch, revision: 0, completion: completion)
         }
 
     }
     
     func getTodoItemFromId(todoItem: FileCachePackage.ToDoItem, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
-            self.makeRequest(todoItem: todoItem, method: "GET", type: .getItem, revision: "0", completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "GET", type: .getItem, revision: 0, completion: completion)
         }
     }
 
     func patchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
-            self.makeRequest(todoItem: todoItem, method: "PATCH", type: .patch, revision: "0", completion: completion)
+            self.makeRequest(method: "PATCH", type: .patch, revision: 0, completion: completion)
         }
     }
 
     func postTodoItem( todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
             let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(todoItem: todoItem, method: "POST", type: .post, revision: "\(revision)", requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "POST", type: .post, revision: revision, requestBody: bodyData, completion: completion)
         }
     }
 
     func putTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
             let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(todoItem: todoItem, method: "PUT", type: .put, revision: "\(revision)", requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "PUT", type: .put, revision: revision, requestBody: bodyData, completion: completion)
         }
     }
 
     func deleteTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
             let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(todoItem: todoItem, method: "DELETE", type: .delete, revision: "\(revision)", requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem, method: "DELETE", type: .delete, revision: revision, requestBody: bodyData, completion: completion)
         }
     }
 }
@@ -200,4 +205,3 @@ enum RequestType {
     case put
     case delete
 }
-

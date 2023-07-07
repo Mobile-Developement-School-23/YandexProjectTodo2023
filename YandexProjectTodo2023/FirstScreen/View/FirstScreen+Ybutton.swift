@@ -52,8 +52,7 @@ extension FirstScreenViewController {
             
             
             let networkService = DefaultNetworkingService()
-            networkService.postTodoItem(todoItem: data, revision: networkCache.revision!) { result in
-                print(result)
+            networkService.postTodoItem(todoItem: data, revision: networkCache.revision ?? 0) { result in
                 Task {
                     await self.resultProcessing(result: result)
                 }
