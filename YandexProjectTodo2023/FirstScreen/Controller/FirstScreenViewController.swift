@@ -55,16 +55,16 @@ class FirstScreenViewController: UIViewController {
             let task = Task {
                 await print( try? urlSession.dataTask(for: request))
             }
-            //            task.cancel() // Для отмены запроса
+            //            task.cancel() // To cancel a request
         }
-        //        testURLSession() // Старт
+        //        testURLSession() // Start
         
         // MARK: Homework 6 - Update from server
         
-        // activityIndicatorObserver
+        // activityIndicator Observer
         NotificationCenter.default.addObserver(self, selector: #selector(activeRequestsChanged), name: .activeRequestsChanged, object: nil)
         
-        // обновляет таблицу
+        // update tableview from server
                 networkingService.fetchData { result in
                     Task {
                         await self.resultProcessing(result: result)
