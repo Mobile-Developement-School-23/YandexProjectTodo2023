@@ -1,6 +1,15 @@
 import Foundation
 import FileCachePackage
 
+enum RequestType {
+    case fetch
+    case getItem
+    case patch
+    case post
+    case put
+    case delete
+}
+
 protocol NetworkingService {
     
     func fetchData(todoId: String?, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void)
@@ -17,6 +26,10 @@ final class DefaultNetworkingService: Sendable {
     
     // Default settings fo jitter
     
+    private var retryCount = 0
+    private let maxRetryCount = 5
+    private var fetchRequestStart = false
+    
     private let minDelay: Double = 2
     private let maxDelay: Double = 120
     private let factor: Double = 1.5
@@ -24,7 +37,7 @@ final class DefaultNetworkingService: Sendable {
     private var currentDelay: Double = 2
     
     private let urlSession: URLSession
-    private var baseURL = "https://beta.mrdekk.ru/todobackend/list"
+    private var baseURL = "https://beta.mrdekk.ru/todobackend/list1"
     
     init(urlSession: URLSession = URLSession.shared) {
         self.urlSession = urlSession
@@ -56,8 +69,17 @@ final class DefaultNetworkingService: Sendable {
         }
     }
 
-    private func makeRequest(todoItem: FileCachePackage.ToDoItem = FileCachePackage.ToDoItem(id: "", text: "", priority: .normal), method: String, type: RequestType, revision: Int, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    private func makeRequest(todoItem: FileCachePackage.ToDoItem = FileCachePackage.ToDoItem(text: "", priority: .normal), method: String, type: RequestType, revision: Int, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
 //        print(Thread.current) Not main thread
+        
+        if retryCount >= 5 && !fetchRequestStart {
+            self.fetchData(completion: completion)
+            retryCount = 0
+            return
+        } else if retryCount >= 5 && fetchRequestStart {
+            return
+        }
+        
         switch type {
         case .getItem, .put, .delete:
             baseURL += "/\(todoItem.id)"
@@ -73,12 +95,15 @@ final class DefaultNetworkingService: Sendable {
         let task = urlSession.dataTask(with: request) { (data, response, error) in
             self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, Error>) in
                 print(result)
+                print("RetryCount - \(self.retryCount)")
                             switch result {
                             case .success(let list):
                                 completion(.success(list))
+                                self.retryCount = 0
                                 self.resetDelay()
                             case .failure(let error):
                                 print("Failed to fetch data due to: \(error)")
+                                self.retryCount += 1
                                 self.retryRequest {
                                     switch type {
                                         
@@ -117,7 +142,7 @@ final class DefaultNetworkingService: Sendable {
 
 // MARK: Methods for use
 
-extension DefaultNetworkingService  {
+extension DefaultNetworkingService {
     
     func fetchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
         DispatchQueue.global().async {
@@ -197,11 +222,4 @@ extension DefaultNetworkingService {
     }
 }
 
-enum RequestType {
-    case fetch
-    case getItem
-    case patch
-    case post
-    case put
-    case delete
-}
+

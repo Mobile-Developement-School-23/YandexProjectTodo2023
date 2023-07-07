@@ -46,11 +46,24 @@ class FirstScreenViewController: UIViewController {
         collectionToDo.sort { $0.creationDate < $1.creationDate }
         
         checkLastCell()
-     
+             
+        // MARK: Homework 5 - URLSession
+
+        func testURLSession() {
+            guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
+            let urlSession = URLSession.shared
+            let request = URLRequest(url: url)
+            let task = Task {
+                await print( try? urlSession.dataTask(for: request))
+            }
+//            task.cancel() // Для отмены запроса
+        }
+//        testURLSession() // Старт
+
+        // MARK: Homework 6 - Update from server
+
         let network = DefaultNetworkingService()
-        
-        // Update from server
-        
+            // обновляет таблицу
         network.fetchData { result in
             Task {
                 await self.resultProcessing(result: result)
