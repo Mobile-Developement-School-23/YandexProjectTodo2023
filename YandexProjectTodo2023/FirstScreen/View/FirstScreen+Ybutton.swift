@@ -49,10 +49,8 @@ extension FirstScreenViewController {
             self.tableView.reloadData()
             
             FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-            
-            
-            let networkService = DefaultNetworkingService()
-            networkService.postTodoItem(todoItem: data, revision: networkCache.revision ?? 0) { result in
+
+            networkingService.postTodoItem(todoItem: data, revision: networkCache.revision ?? 0) { result in
                 Task {
                     await self.resultProcessing(result: result)
                 }

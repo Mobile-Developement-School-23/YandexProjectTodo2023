@@ -4,24 +4,24 @@ import FileCachePackage
 
 class FirstScreenViewController: UIViewController {
     
+    lazy var refreshControl = UIActivityIndicatorView()
+    
     lazy var cacheToDo = FileCachePackage.FileCache()
     public lazy var collectionToDo = [FileCachePackage.ToDoItem]()
     lazy var collectionToDoComplete = [FileCachePackage.ToDoItem]()
     
+    lazy var networkingService = DefaultNetworkingService()
     lazy var networkCache = FileCachePackage.TodoList(status: "ok") {
         
         willSet {
-            
             guard let newCollectionTodo = newValue.list else { return }
-                collectionToDo = newCollectionTodo
-                collectionToDo.sort { $0.creationDate < $1.creationDate }
-                checkLastCell()
-                removeCompleteToDoFromArray()
-                tableView.reloadData()
-                    
+            collectionToDo = newCollectionTodo
+            collectionToDo.sort { $0.creationDate < $1.creationDate }
+            checkLastCell()
+            removeCompleteToDoFromArray()
+            tableView.reloadData()
         }
     }
-    
     
     lazy var tableView: UITableView = .init(frame: CGRect(), style: .insetGrouped)
     lazy var isCellVisible = false
@@ -30,7 +30,7 @@ class FirstScreenViewController: UIViewController {
     lazy var buttonCenter = CGPoint()
     lazy var emitter = CAEmitterLayer()
     lazy var feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-    lazy var activityIndicator = UIActivityIndicatorView()
+    lazy var loadingIndicator = UIActivityIndicatorView()
     
     // MARK: Last grey cell
     
@@ -38,7 +38,6 @@ class FirstScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
         
@@ -46,9 +45,9 @@ class FirstScreenViewController: UIViewController {
         collectionToDo.sort { $0.creationDate < $1.creationDate }
         
         checkLastCell()
-             
+        
         // MARK: Homework 5 - URLSession
-
+        
         func testURLSession() {
             guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
             let urlSession = URLSession.shared
@@ -56,29 +55,31 @@ class FirstScreenViewController: UIViewController {
             let task = Task {
                 await print( try? urlSession.dataTask(for: request))
             }
-//            task.cancel() // Для отмены запроса
+            //            task.cancel() // Для отмены запроса
         }
-//        testURLSession() // Старт
-
+        //        testURLSession() // Старт
+        
         // MARK: Homework 6 - Update from server
-
-        let network = DefaultNetworkingService()
-            // обновляет таблицу
-        network.fetchData { result in
-            Task {
-                await self.resultProcessing(result: result)
-            }
-        }
+        
+        // activityIndicatorObserver
+        NotificationCenter.default.addObserver(self, selector: #selector(activeRequestsChanged), name: .activeRequestsChanged, object: nil)
+        
+        // обновляет таблицу
+                networkingService.fetchData { result in
+                    Task {
+                        await self.resultProcessing(result: result)
+                    }
+                }
         
         removeCompleteToDoFromArray()
-
+        
     }
-
+    
     override func loadView() {
         prepareTableView()
         
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         prepareTableEmitterButton()
@@ -88,7 +89,6 @@ class FirstScreenViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         createYButton()
-        settingAcitvityIndicator()
     }
     
     func checkLastCell() {
@@ -96,16 +96,17 @@ class FirstScreenViewController: UIViewController {
             collectionToDo.append(todoLast)
         }
     }
+    
 }
 
 // MARK: Array for TableView
 
 extension FirstScreenViewController {
     
-     func removeCompleteToDoFromArray() {
+    func removeCompleteToDoFromArray() {
         
-         var comleteToDo = [FileCachePackage.ToDoItem]()
-         var resultArrayToDo = [FileCachePackage.ToDoItem]()
+        var comleteToDo = [FileCachePackage.ToDoItem]()
+        var resultArrayToDo = [FileCachePackage.ToDoItem]()
         for i in 0..<collectionToDo.count {
             if !collectionToDo[i].isDone {
                 resultArrayToDo.append(collectionToDo[i])
@@ -117,13 +118,13 @@ extension FirstScreenViewController {
         collectionToDoComplete = comleteToDo.sorted(by: { $0.creationDate < $1.creationDate })
     }
     
-     func addDoneToDoForCollection() {
+    func addDoneToDoForCollection() {
         
         var resultArrayToDo = collectionToDo
         for i in 0..<collectionToDoComplete.count {
             resultArrayToDo.append(collectionToDoComplete[i])
         }
         collectionToDo = resultArrayToDo.sorted(by: { $0.creationDate < $1.creationDate })
-         collectionToDoComplete = [FileCachePackage.ToDoItem]()
+        collectionToDoComplete = [FileCachePackage.ToDoItem]()
     }
 }

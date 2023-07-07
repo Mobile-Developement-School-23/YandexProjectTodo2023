@@ -11,8 +11,8 @@ extension FirstScreenViewController {
         collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
         
         // PUT todo from network
-        let networkService = DefaultNetworkingService()
-        networkService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+        
+        networkingService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
             Task {
                 await self.resultProcessing(result: result)
             }
@@ -28,8 +28,7 @@ extension FirstScreenViewController {
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
         
         // DELETE todo from network
-        let networkService = DefaultNetworkingService()
-        networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+        networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
             Task {
                 await self.resultProcessing(result: result)
             }
@@ -40,7 +39,6 @@ extension FirstScreenViewController {
         tableView.reloadData()
         
         FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-
 
     }
 }
@@ -117,8 +115,7 @@ extension FirstScreenViewController {
                 if data.creationDate == Date.distantPast {
                     
                     // DELETE todo from network
-                    let networkService = DefaultNetworkingService()
-                    networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+                    self.networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
                         Task {
                             await self.resultProcessing(result: result)
                         }
@@ -143,8 +140,7 @@ extension FirstScreenViewController {
                 FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                 
                 // PUT todo
-                let network = DefaultNetworkingService()
-                network.putTodoItem(todoItem: data, revision: self.networkCache.revision ?? 0) { result in
+                self.networkingService.putTodoItem(todoItem: data, revision: self.networkCache.revision ?? 0) { result in
                     Task {
                         await self.resultProcessing(result: result)
                     }
@@ -180,7 +176,7 @@ extension FirstScreenViewController {
     }
 }
 
-// MARK: Header Button & Label
+// MARK: Header Button & Label & ActivityIndicator
 
 extension FirstScreenViewController {
     
@@ -197,6 +193,12 @@ extension FirstScreenViewController {
         
         viewHeader.addSubview(buttonHeaderRight)
         viewHeader.addSubview(labelHeaderLeft)
+        viewHeader.addSubview(refreshControl)
+        
+        
+        refreshControl.translatesAutoresizingMaskIntoConstraints = false
+        refreshControl.centerXAnchor.constraint(equalTo: viewHeader.centerXAnchor).isActive = true
+        refreshControl.centerYAnchor.constraint(equalTo: viewHeader.centerYAnchor).isActive = true
         
         buttonHeaderRight.frame = CGRect(x: viewHeader.bounds.maxX - 100, y: 0, width: 150, height: 40)
         buttonHeaderRight.setTitle("Показать", for: .normal)

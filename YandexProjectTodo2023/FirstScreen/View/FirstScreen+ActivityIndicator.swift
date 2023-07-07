@@ -1,24 +1,22 @@
 import Foundation
 import UIKit
 
+// MARK: UI in viewForHeaderInSection
 
 extension FirstScreenViewController {
-    
-    func settingAcitvityIndicator() {
-        
-//        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .large
-        activityIndicator.startAnimating()
-        
-        navigationController?.navigationBar.addSubview(activityIndicator)
-        activityIndicator.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            activityIndicator.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-            activityIndicator.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -26),
 
+    @objc func activeRequestsChanged() {
+        
+        DispatchQueue.main.async { [weak self] in
 
-            
-        ])
+            if self?.networkingService.activeRequests ?? 0 > 0 {
+                self?.refreshControl.startAnimating()
+            } else {
+                self?.refreshControl.stopAnimating()
+            }
+        }
     }
+}
+extension NSNotification.Name {
+    static let activeRequestsChanged = NSNotification.Name("activeRequestsChanged")
 }

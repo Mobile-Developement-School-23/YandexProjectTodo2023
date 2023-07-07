@@ -20,8 +20,7 @@ extension FirstScreenViewController {
                 if data.creationDate == Date.distantPast {
                     
                     // DELETE todo from network
-                    let networkService = DefaultNetworkingService()
-                    networkService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+                    self.networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
                         Task {
                             await self.resultProcessing(result: result)
                         }
@@ -44,8 +43,7 @@ extension FirstScreenViewController {
                 FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
                 // PUT todo from network
-                let networkService = DefaultNetworkingService()
-                networkService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+                self.networkingService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
                     Task {
                         await self.resultProcessing(result: result)
                     }
