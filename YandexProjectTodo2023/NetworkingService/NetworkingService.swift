@@ -9,10 +9,27 @@ enum RequestType {
     case put
     case delete
 }
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case patch = "PATCH"
+    case delete = "DELETE"
+}
+
 enum ServerString: String {
     case url = "https://beta.mrdekk.ru/todobackend/list/"
     case token = "despoil"
 }
+
+enum NetworkError: Error {
+    case badURL
+    case serverError
+    case parseError(Error)
+}
+
+typealias NetworkCompletionHandler = @Sendable (Result<FileCachePackage.TodoList, NetworkError>) -> Void
 
 protocol NetworkingServiceDelegate: AnyObject {
     func didStartLoading()
@@ -22,8 +39,6 @@ protocol NetworkingServiceDelegate: AnyObject {
 // MARK: Settings for Yandex server
 
 final class DefaultNetworkingService: Sendable {
-    
-    // Activity indicator
     
     private lazy var _activeRequests = Int()
     private let activeRequestsQueue = DispatchQueue(label: "activeRequestsQueue")
@@ -40,10 +55,7 @@ final class DefaultNetworkingService: Sendable {
                 NotificationCenter.default.post(name: .activeRequestsChanged, object: nil)
             }
         }
-        
     }
-    
-    // Default settings fo jitter
     
     private var retryCount = 0
     private let maxRetryCount = 5
@@ -56,66 +68,48 @@ final class DefaultNetworkingService: Sendable {
     private var currentDelay: Double = 2
     
     private let urlSession: URLSession
-    private var baseURL = ""
     
     init(urlSession: URLSession = URLSession.shared) {
         self.urlSession = urlSession
     }
     
-    private func createRequest(for url: URL, method: String, token: String, revision: String = "0", requestBody: Data? = nil) -> URLRequest {
-        //                print(Thread.current) Not main thread
+    private func getURL(for type: RequestType, with id: String? = nil) -> URL? {
+        let urlString: String
+        switch type {
+        case .getItem, .put, .delete:
+            guard let id = id else { return nil }
+            urlString = ServerString.url.rawValue + id
+        default:
+            urlString = ServerString.url.rawValue
+        }
+        return URL(string: urlString)
+    }
+    
+    private func createRequest(for url: URL, method: HTTPMethod, token: String, revision: String = "0", requestBody: Data? = nil) -> URLRequest {
         var request = URLRequest(url: url)
         request.addValue(revision, forHTTPHeaderField: "X-Last-Known-Revision")
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.httpMethod = method
+        request.httpMethod = method.rawValue
         request.httpBody = requestBody
         return request
     }
     
-    private func processResponseData<T: Decodable>(_ data: Data?, _ error: Error?, completion: @escaping (Result<T, Error>) -> Void) {
+    private func createBodyDataFrom(_ todoItem: FileCachePackage.ToDoItem) -> Data? {
         //        print(Thread.current) Not main thread
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        if let error = error {
-            completion(.failure(error))
-        } else if let data = data {
-            do {
-                let list = try decoder.decode(T.self, from: data)
-                completion(.success(list))
-            } catch {
-                completion(.failure(error))
-            }
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .custom { date, encoder in
+            let seconds = Int64(date.timeIntervalSince1970)
+            var container = encoder.singleValueContainer()
+            try container.encode(seconds)
         }
+        
+        return try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
     }
     
-    private func makeRequest(todoItem: FileCachePackage.ToDoItem = FileCachePackage.ToDoItem(text: "", priority: .normal), method: String, type: RequestType, revision: Int, requestBody: Data? = nil, completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        //        print(Thread.current) Not main thread
-        
-        activeRequests += 1
-        if retryCount >= 5 && !fetchRequestStart {
-            self.fetchData(completion: completion)
-            retryCount = 0
-            return
-        } else if retryCount >= 5 && fetchRequestStart {
-            return
-        }
-
-        switch type {
-        case .getItem, .put, .delete:
-            baseURL = ServerString.url.rawValue + "\(todoItem.id)"
-        default:
-            baseURL = ServerString.url.rawValue
-        }
-        guard let url = URL(string: "\(baseURL)") else {
-            completion(.failure(URLError(.badURL)))
-            return
-        }
-        
-        let request = createRequest(for: url, method: method, token: "despoil", revision: "\(revision)", requestBody: requestBody)
-        
-        let task = urlSession.dataTask(with: request) { (data, response, error) in
+    private func createNetworkTask(_ request: URLRequest, _ completion: @escaping NetworkCompletionHandler, _ type: RequestType, _ todoItem: ToDoItem, _ revision: Int) -> URLSessionDataTask {
+        return urlSession.dataTask(with: request) { (data, response, error) in
             
-            self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, Error>) in
+            self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, NetworkError>) in
                 print(result)
                 print("RetryCount - \(self.retryCount)")
                 switch result {
@@ -131,89 +125,95 @@ final class DefaultNetworkingService: Sendable {
                         switch type {
                             
                         case .fetch:
-                            self.fetchData(completion: completion)
+                            self.handleRequest(method: .get, type: .fetch, completion: completion)
+                            
                         case .getItem:
-                            self.getTodoItemFromId(todoItem: todoItem, completion: completion)
+                            self.handleRequest(todoItem: todoItem, method: .get, type: .getItem, completion: completion)
+                            
                         case .patch:
-                            self.patchData(completion: completion)
+                            self.handleRequest(method: .patch, type: .patch, completion: completion)
+                            
                         case .post:
-                            self.postTodoItem(todoItem: todoItem, revision: revision, completion: completion)
+                            self.handleRequest(todoItem: todoItem, method: .post, type: .post, revision: revision, completion: completion)
+                            
                         case .put:
-                            self.putTodoItem(todoItem: todoItem, revision: revision, completion: completion)
+                            self.handleRequest(todoItem: todoItem, method: .put, type: .put, revision: revision, completion: completion)
+                            
                         case .delete:
-                            self.deleteTodoItem(todoItem: todoItem, revision: revision, completion: completion)
+                            self.handleRequest(todoItem: todoItem, method: .delete, type: .delete, revision: revision, completion: completion)
+                            
                         }
-                        self.activeRequests -= 1
                     }
                 }
             }
         }
-        task.resume()
     }
     
-    private func createBodyDataFrom(_ todoItem: FileCachePackage.ToDoItem) -> Data? {
-        //        print(Thread.current) Not main thread
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .custom { date, encoder in
-            let seconds = Int64(date.timeIntervalSince1970)
-            var container = encoder.singleValueContainer()
-            try container.encode(seconds)
+    private func processResponseData<T: Decodable>(_ data: Data?, _ error: Error?, completion: @escaping (Result<T, NetworkError>) -> Void) {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        if let error = error {
+            completion(.failure(.serverError))
+        } else if let data = data {
+            do {
+                let list = try decoder.decode(T.self, from: data)
+                completion(.success(list))
+            } catch {
+                completion(.failure(.parseError(error)))
+            }
         }
-        
-        return try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
     }
+
+    private func makeRequest(
+        todoItem: FileCachePackage.ToDoItem = FileCachePackage.ToDoItem(text: "", priority: .normal),
+        method: HTTPMethod,
+        type: RequestType,
+        revision: Int,
+        requestBody: Data? = nil,
+        completion: @escaping NetworkCompletionHandler) {
+            
+            activeRequests += 1
+            if retryCount >= maxRetryCount && !fetchRequestStart {
+                self.handleRequest(method: .get, type: .fetch, completion: completion)
+                retryCount = 0
+                return
+            } else if retryCount >= maxRetryCount && fetchRequestStart {
+                return
+            }
+            
+            guard let url = getURL(for: type, with: todoItem.id) else {
+                completion(.failure(.badURL))
+                return
+            }
+            
+            let request = createRequest(for: url, method: method, token: ServerString.token.rawValue, revision: "\(revision)", requestBody: requestBody)
+            
+            let task = createNetworkTask(request, completion, type, todoItem, revision)
+            
+            task.resume()
+        }
+    
+
 }
 
 // MARK: Methods for use
 
 extension DefaultNetworkingService {
     
-    func fetchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
+    func handleRequest(todoItem: FileCachePackage.ToDoItem? = nil, method: HTTPMethod, type: RequestType, revision: Int = 0, completion: @escaping NetworkCompletionHandler) {
         DispatchQueue.global().async {
-            self.makeRequest(method: "GET", type: .fetch, revision: 0, completion: completion)
-        }
-        
-    }
-    
-    func getTodoItemFromId(todoItem: FileCachePackage.ToDoItem, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        DispatchQueue.global().async {
-            self.makeRequest(todoItem: todoItem, method: "GET", type: .getItem, revision: 0, completion: completion)
+            let bodyData = todoItem != nil ? self.createBodyDataFrom(todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal)) : nil
+            self.makeRequest(todoItem: todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal), method: method, type: type, revision: revision, requestBody: bodyData, completion: completion)
         }
     }
     
-    func patchData(completion: @escaping @Sendable (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        DispatchQueue.global().async {
-            self.makeRequest(method: "PATCH", type: .patch, revision: 0, completion: completion)
-        }
-    }
-    
-    func postTodoItem( todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        DispatchQueue.global().async {
-            let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(todoItem: todoItem, method: "POST", type: .post, revision: revision, requestBody: bodyData, completion: completion)
-        }
-    }
-    
-    func putTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        DispatchQueue.global().async {
-            let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(todoItem: todoItem, method: "PUT", type: .put, revision: revision, requestBody: bodyData, completion: completion)
-        }
-    }
-    
-    func deleteTodoItem(todoItem: FileCachePackage.ToDoItem, revision: Int, completion: @Sendable @escaping (Result<FileCachePackage.TodoList, Error>) -> Void) {
-        DispatchQueue.global().async {
-            let bodyData = self.createBodyDataFrom(todoItem)
-            self.makeRequest(todoItem: todoItem, method: "DELETE", type: .delete, revision: revision, requestBody: bodyData, completion: completion)
-        }
-    }
 }
 
 // MARK: Result processing + Jitter
 
 extension FirstScreenViewController {
     
-    func resultProcessing(result: Result<FileCachePackage.TodoList, Error>) {
+    func resultProcessing(result: Result<FileCachePackage.TodoList, NetworkError>) {
         switch result {
         case .success(let networkCache):
             DispatchQueue.main.async {

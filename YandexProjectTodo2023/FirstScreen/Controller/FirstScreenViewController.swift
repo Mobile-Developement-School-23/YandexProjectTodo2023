@@ -65,7 +65,8 @@ class FirstScreenViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(activeRequestsChanged), name: .activeRequestsChanged, object: nil)
         
         // update tableview from server
-                networkingService.fetchData { result in
+                networkingService.handleRequest(method: .get, type: .fetch)
+        { result in
                     Task {
                         await self.resultProcessing(result: result)
                     }

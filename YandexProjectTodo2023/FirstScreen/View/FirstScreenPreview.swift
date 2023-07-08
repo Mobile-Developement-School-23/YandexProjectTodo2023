@@ -20,12 +20,12 @@ extension FirstScreenViewController {
                 if data.creationDate == Date.distantPast {
                     
                     // DELETE todo from network
-                    self.networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+                    self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
                         Task {
                             await self.resultProcessing(result: result)
                         }
                     }
-                    
+      
                     self.collectionToDo.remove(at: indexPath.row)
                     self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                     self.tableView.reloadData()
@@ -43,11 +43,13 @@ extension FirstScreenViewController {
                 FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
                 // PUT todo from network
-                self.networkingService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+
+                self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
                     Task {
                         await self.resultProcessing(result: result)
                     }
                 }
+                
             }
             
             return vc

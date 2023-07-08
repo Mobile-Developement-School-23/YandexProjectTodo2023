@@ -50,7 +50,7 @@ extension FirstScreenViewController {
             
             FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
 
-            networkingService.postTodoItem(todoItem: data, revision: networkCache.revision ?? 0) { result in
+            networkingService.handleRequest(todoItem: data, method: .post, type: .post, revision: networkCache.revision ?? 0) { result in
                 Task {
                     await self.resultProcessing(result: result)
                 }

@@ -11,8 +11,7 @@ extension FirstScreenViewController {
         collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
         
         // PUT todo from network
-        
-        networkingService.putTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+        networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
             Task {
                 await self.resultProcessing(result: result)
             }
@@ -28,11 +27,11 @@ extension FirstScreenViewController {
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
         
         // DELETE todo from network
-        networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+        networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
             Task {
                 await self.resultProcessing(result: result)
             }
-            
+
         }
         self.collectionToDo.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
@@ -115,14 +114,12 @@ extension FirstScreenViewController {
                 if data.creationDate == Date.distantPast {
                     
                     // DELETE todo from network
-                    self.networkingService.deleteTodoItem(todoItem: self.collectionToDo[indexPath.row], revision: self.networkCache.revision ?? 0) { result in
+                    self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
                         Task {
                             await self.resultProcessing(result: result)
                         }
                     }
-                    
-
-                    
+              
                     self.collectionToDo.remove(at: indexPath.row)
                     self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                     self.tableView.reloadData()
@@ -140,7 +137,7 @@ extension FirstScreenViewController {
                 FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                 
                 // PUT todo
-                self.networkingService.putTodoItem(todoItem: data, revision: self.networkCache.revision ?? 0) { result in
+                self.networkingService.handleRequest(todoItem: data, method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
                     Task {
                         await self.resultProcessing(result: result)
                     }
@@ -194,8 +191,7 @@ extension FirstScreenViewController {
         viewHeader.addSubview(buttonHeaderRight)
         viewHeader.addSubview(labelHeaderLeft)
         viewHeader.addSubview(refreshControl)
-        
-        
+
         refreshControl.translatesAutoresizingMaskIntoConstraints = false
         refreshControl.centerXAnchor.constraint(equalTo: viewHeader.centerXAnchor).isActive = true
         refreshControl.centerYAnchor.constraint(equalTo: viewHeader.centerYAnchor).isActive = true
