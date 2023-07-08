@@ -11,7 +11,7 @@ class FirstScreenViewController: UIViewController {
     lazy var collectionToDoComplete = [FileCachePackage.ToDoItem]()
     
     lazy var networkingService = DefaultNetworkingService()
-    lazy var networkCache = FileCachePackage.TodoList(status: "ok") {
+    lazy var networkCache = FileCachePackage.TodoList() {
         
         willSet {
             guard let newCollectionTodo = newValue.list else { return }
@@ -46,26 +46,13 @@ class FirstScreenViewController: UIViewController {
         
         checkLastCell()
         
-        // MARK: Homework 5 - URLSession
-        
-        func testURLSession() {
-            guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
-            let urlSession = URLSession.shared
-            let request = URLRequest(url: url)
-            let task = Task {
-                await print( try? urlSession.dataTask(for: request))
-            }
-            //            task.cancel() // To cancel a request
-        }
-        //        testURLSession() // Start
-        
         // MARK: Homework 6 - Update from server
         
         // activityIndicator Observer
         NotificationCenter.default.addObserver(self, selector: #selector(activeRequestsChanged), name: .activeRequestsChanged, object: nil)
         
         // update tableview from server
-                networkingService.handleRequest(method: .get, type: .fetch)
+        networkingService.handleRequest(todoList: TodoList(list: collectionToDo + collectionToDoComplete), method: .patch, type: .patch, revision: networkCache.revision ?? 0)
         { result in
                     Task {
                         await self.resultProcessing(result: result)

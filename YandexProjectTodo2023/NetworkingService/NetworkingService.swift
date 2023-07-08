@@ -2,21 +2,12 @@ import Foundation
 import FileCachePackage
 
 enum RequestType {
-    case fetch
-    case getItem
-    case patch
-    case post
-    case put
-    case delete
+    case fetch, getItem, patch, post, put, delete
 }
 
 enum HTTPMethod: String {
-    case get = "GET"
-    case post = "POST"
-    case put = "PUT"
-    case patch = "PATCH"
-    case delete = "DELETE"
-}
+        case get = "GET", post = "POST", put = "PUT", patch = "PATCH", delete = "DELETE"
+    }
 
 enum ServerString: String {
     case url = "https://beta.mrdekk.ru/todobackend/list/"
@@ -24,9 +15,7 @@ enum ServerString: String {
 }
 
 enum NetworkError: Error {
-    case badURL
-    case serverError
-    case parseError(Error)
+    case badURL, serverError, parseError(Error)
 }
 
 typealias NetworkCompletionHandler = @Sendable (Result<FileCachePackage.TodoList, NetworkError>) -> Void
@@ -94,7 +83,7 @@ final class DefaultNetworkingService: Sendable {
         return request
     }
     
-    private func createBodyDataFrom(_ todoItem: FileCachePackage.ToDoItem) -> Data? {
+    private func createBodyDataFrom(_ todoItem: FileCachePackage.ToDoItem? = nil, todoList: FileCachePackage.TodoList? = nil) -> Data? {
         //        print(Thread.current) Not main thread
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .custom { date, encoder in
@@ -103,15 +92,19 @@ final class DefaultNetworkingService: Sendable {
             try container.encode(seconds)
         }
         
-        return try? encoder.encode(FileCachePackage.TodoList(status: "ok", element: todoItem))
+        if todoList != nil {
+            return try? encoder.encode(todoList)
+        }
+        return try? encoder.encode(FileCachePackage.TodoList(element: todoItem))
     }
     
     private func createNetworkTask(_ request: URLRequest, _ completion: @escaping NetworkCompletionHandler, _ type: RequestType, _ todoItem: ToDoItem, _ revision: Int) -> URLSessionDataTask {
-        return urlSession.dataTask(with: request) { (data, _, error) in
+        return urlSession.dataTask(with: request) { (data, response, error) in
             
             self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, NetworkError>) in
                 print(result)
                 print("RetryCount - \(self.retryCount)")
+                print(response)
                 switch result {
                 case .success(let list):
                     completion(.success(list))
@@ -198,13 +191,28 @@ final class DefaultNetworkingService: Sendable {
 
 extension DefaultNetworkingService {
     
-    func handleRequest(todoItem: FileCachePackage.ToDoItem? = nil, method: HTTPMethod, type: RequestType, revision: Int = 0, completion: @escaping NetworkCompletionHandler) {
+    func handleRequest(todoItem: FileCachePackage.ToDoItem? = nil,
+                       todoList: FileCachePackage.TodoList? = nil,
+                       method: HTTPMethod,
+                       type: RequestType,
+                       revision: Int = 0,
+                       completion: @escaping NetworkCompletionHandler) {
+        
         DispatchQueue.global().async {
-            let bodyData = todoItem != nil ? self.createBodyDataFrom(todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal)) : nil
+            
+            var bodyData: Data?
+            
+            if todoItem != nil {
+                bodyData = self.createBodyDataFrom(todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal))
+            }
+            
+            if todoList != nil {
+                bodyData = self.createBodyDataFrom(todoList: todoList)
+            }
+            
             self.makeRequest(todoItem: todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal), method: method, type: type, revision: revision, requestBody: bodyData, completion: completion)
         }
     }
-    
 }
 
 // MARK: Result processing + Jitter
