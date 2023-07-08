@@ -107,7 +107,7 @@ final class DefaultNetworkingService: Sendable {
     }
     
     private func createNetworkTask(_ request: URLRequest, _ completion: @escaping NetworkCompletionHandler, _ type: RequestType, _ todoItem: ToDoItem, _ revision: Int) -> URLSessionDataTask {
-        return urlSession.dataTask(with: request) { (data, response, error) in
+        return urlSession.dataTask(with: request) { (data, _, error) in
             
             self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, NetworkError>) in
                 print(result)
@@ -192,11 +192,9 @@ final class DefaultNetworkingService: Sendable {
             
             task.resume()
         }
-    
-
 }
 
-// MARK: Methods for use
+// MARK: Method for use
 
 extension DefaultNetworkingService {
     
