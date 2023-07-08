@@ -87,7 +87,7 @@ class FirstScreenTableViewCell: UITableViewCell {
 
 extension FirstScreenTableViewCell {
     
-    public func settingCell(collectionToDo: [FileCachePackage.ToDoItem], indexPath: IndexPath) -> FirstScreenTableViewCell {
+    public func settingCell(collectionToDo: [ToDoItem], indexPath: IndexPath) -> FirstScreenTableViewCell {
      
         checkPriority(cell: self, indexPath: indexPath, collectionToDo: collectionToDo)
         
@@ -130,7 +130,7 @@ extension FirstScreenTableViewCell {
         return self
     }
     
-    private func checkPriority(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [FileCachePackage.ToDoItem]) {
+    private func checkPriority(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [ToDoItem]) {
         
         if collectionToDo[indexPath.row].priority == .high {
             
@@ -158,7 +158,7 @@ extension FirstScreenTableViewCell {
         }
     }
     
-    private func checkIsDone(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [FileCachePackage.ToDoItem]) {
+    private func checkIsDone(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [ToDoItem]) {
         
         let str = cell.descriptionLabel.text ?? " "
         
@@ -181,7 +181,7 @@ extension FirstScreenTableViewCell {
         }
     }
     
-    private func checkDeadline(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [FileCachePackage.ToDoItem]) {
+    private func checkDeadline(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [ToDoItem]) {
         
         if collectionToDo[indexPath.row].deadline != nil {
             let dateFormatter = DateFormatter()
@@ -198,7 +198,7 @@ extension FirstScreenTableViewCell {
         }
     }
     
-    private func checkForFootherButton(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [FileCachePackage.ToDoItem]) {
+    private func checkForFootherButton(cell: FirstScreenTableViewCell, indexPath: IndexPath, collectionToDo: [ToDoItem]) {
         if collectionToDo[indexPath.row].text == "Новое" {
 
             cell.descriptionLabel.textColor = .systemGray

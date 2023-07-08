@@ -7,8 +7,8 @@ class SecondScreenViewController: UIViewController, UITextViewDelegate {
 
     // MARK: complitionHandler & data
     
-    public var dataCompletionHandler: ((FileCachePackage.ToDoItem) -> Void)?
-    lazy var toDo = FileCachePackage.ToDoItem(text: "", priority: .normal)
+    public var dataCompletionHandler: ((ToDoItem) -> Void)?
+    lazy var toDo = ToDoItem(text: "", priority: .normal)
     private lazy var items = ["First", "Нет", "Third"]
     lazy var exclamationmarkImage = UIImage(systemName: "exclamationmark.2")?.withTintColor(.red, renderingMode: .alwaysOriginal)
     lazy var arrowDownImage = UIImage(systemName: "arrow.down")?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)

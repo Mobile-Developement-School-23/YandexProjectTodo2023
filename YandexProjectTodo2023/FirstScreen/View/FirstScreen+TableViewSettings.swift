@@ -21,7 +21,7 @@ extension FirstScreenViewController {
        pressedButtonHeaderRight()
        tableView.reloadData()
        
-        FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+        FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
    }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
@@ -37,7 +37,7 @@ extension FirstScreenViewController {
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.reloadData()
         
-        FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+        FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
 
     }
 }
@@ -125,7 +125,7 @@ extension FirstScreenViewController {
                     self.tableView.reloadData()
                     
                     // DELETE todo from file
-                    FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                    FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
                     return
                 }
@@ -134,7 +134,7 @@ extension FirstScreenViewController {
                 self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                 self.tableView.reloadData()
                 
-                FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                 
                 // PUT todo
                 self.networkingService.handleRequest(todoItem: data, method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in

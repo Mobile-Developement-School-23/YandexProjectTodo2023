@@ -4,8 +4,8 @@ import FileCachePackage
 class ColorPickerViewController: UIViewController {
     
     var colorPickerView = ColorPickerView()
-    public var dataCompletionHandler: ((FileCachePackage.ToDoItem) -> Void)?
-    lazy var todo = FileCachePackage.ToDoItem(text: "", priority: .normal)
+    public var dataCompletionHandler: ((ToDoItem) -> Void)?
+    lazy var todo = ToDoItem(text: "", priority: .normal)
     lazy var colorView = UIView()
     lazy var backgroundView = UIView()
     lazy var backgroundSecondView = UIView()

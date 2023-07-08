@@ -1,5 +1,4 @@
 import Foundation
-import FileCachePackage
 
 enum RequestType {
     case fetch, getItem, patch, post, put, delete
@@ -18,7 +17,7 @@ enum NetworkError: Error {
     case badURL, serverError, parseError(Error)
 }
 
-typealias NetworkCompletionHandler = @Sendable (Result<FileCachePackage.TodoList, NetworkError>) -> Void
+typealias NetworkCompletionHandler = @Sendable (Result<TodoList, NetworkError>) -> Void
 
 protocol NetworkingServiceDelegate: AnyObject {
     func didStartLoading()
@@ -83,7 +82,7 @@ final class DefaultNetworkingService: Sendable {
         return request
     }
     
-    private func createBodyDataFrom(_ todoItem: FileCachePackage.ToDoItem? = nil, todoList: FileCachePackage.TodoList? = nil) -> Data? {
+    private func createBodyDataFrom(_ todoItem: ToDoItem? = nil, todoList: TodoList? = nil) -> Data? {
         //        print(Thread.current) Not main thread
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .custom { date, encoder in
@@ -95,16 +94,16 @@ final class DefaultNetworkingService: Sendable {
         if todoList != nil {
             return try? encoder.encode(todoList)
         }
-        return try? encoder.encode(FileCachePackage.TodoList(element: todoItem))
+        return try? encoder.encode(TodoList(element: todoItem))
     }
     
     private func createNetworkTask(_ request: URLRequest, _ completion: @escaping NetworkCompletionHandler, _ type: RequestType, _ todoItem: ToDoItem, _ revision: Int) -> URLSessionDataTask {
         return urlSession.dataTask(with: request) { (data, response, error) in
             
-            self.processResponseData(data, error) { (result: Result<FileCachePackage.TodoList, NetworkError>) in
+            self.processResponseData(data, error) { (result: Result<TodoList, NetworkError>) in
                 print(result)
                 print("RetryCount - \(self.retryCount)")
-                print(response)
+//                print(response)
                 switch result {
                 case .success(let list):
                     completion(.success(list))
@@ -158,7 +157,7 @@ final class DefaultNetworkingService: Sendable {
     }
 
     private func makeRequest(
-        todoItem: FileCachePackage.ToDoItem = FileCachePackage.ToDoItem(text: "", priority: .normal),
+        todoItem: ToDoItem = ToDoItem(text: "", priority: .normal),
         method: HTTPMethod,
         type: RequestType,
         revision: Int,
@@ -191,8 +190,8 @@ final class DefaultNetworkingService: Sendable {
 
 extension DefaultNetworkingService {
     
-    func handleRequest(todoItem: FileCachePackage.ToDoItem? = nil,
-                       todoList: FileCachePackage.TodoList? = nil,
+    func handleRequest(todoItem: ToDoItem? = nil,
+                       todoList: TodoList? = nil,
                        method: HTTPMethod,
                        type: RequestType,
                        revision: Int = 0,
@@ -203,14 +202,14 @@ extension DefaultNetworkingService {
             var bodyData: Data?
             
             if todoItem != nil {
-                bodyData = self.createBodyDataFrom(todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal))
+                bodyData = self.createBodyDataFrom(todoItem ?? ToDoItem(text: "", priority: .normal))
             }
             
             if todoList != nil {
                 bodyData = self.createBodyDataFrom(todoList: todoList)
             }
             
-            self.makeRequest(todoItem: todoItem ?? FileCachePackage.ToDoItem(text: "", priority: .normal), method: method, type: type, revision: revision, requestBody: bodyData, completion: completion)
+            self.makeRequest(todoItem: todoItem ?? ToDoItem(text: "", priority: .normal), method: method, type: type, revision: revision, requestBody: bodyData, completion: completion)
         }
     }
 }
@@ -219,7 +218,7 @@ extension DefaultNetworkingService {
 
 extension FirstScreenViewController {
     
-    func resultProcessing(result: Result<FileCachePackage.TodoList, NetworkError>) {
+    func resultProcessing(result: Result<TodoList, NetworkError>) {
         switch result {
         case .success(let networkCache):
             DispatchQueue.main.async {

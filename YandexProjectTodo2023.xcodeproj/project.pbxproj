@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7E700850DADEE56250539E27 /* Pods_YandexProjectTodo2023Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581046C3CA63EC9CE027C370 /* Pods_YandexProjectTodo2023Tests.framework */; };
+		940D07EB2A599FD30049D66B /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D07EA2A599FD30049D66B /* FileCache.swift */; };
+		940D07ED2A599FE70049D66B /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D07EC2A599FE70049D66B /* TodoItem.swift */; };
 		943DD4412A45737300C8B8A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4402A45737300C8B8A2 /* AppDelegate.swift */; };
 		943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4422A45737300C8B8A2 /* SceneDelegate.swift */; };
 		943DD44A2A45737400C8B8A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 943DD4492A45737400C8B8A2 /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 		437D768BBEBBBE867653B547 /* Pods-YandexProjectTodo2023Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023Tests.release.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests.release.xcconfig"; sourceTree = "<group>"; };
 		56404AACB170AA47F3D773BE /* Pods-YandexProjectTodo2023Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023Tests.debug.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		581046C3CA63EC9CE027C370 /* Pods_YandexProjectTodo2023Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexProjectTodo2023Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		940D07EA2A599FD30049D66B /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		940D07EC2A599FE70049D66B /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		943DD43D2A45737300C8B8A2 /* YandexProjectTodo2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexProjectTodo2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		943DD4402A45737300C8B8A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		943DD4422A45737300C8B8A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +114,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		940D07E92A599FC60049D66B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				940D07EA2A599FD30049D66B /* FileCache.swift */,
+				940D07EC2A599FE70049D66B /* TodoItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		943DD4342A45737300C8B8A2 = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +146,7 @@
 		943DD43F2A45737300C8B8A2 /* YandexProjectTodo2023 */ = {
 			isa = PBXGroup;
 			children = (
+				940D07E92A599FC60049D66B /* Model */,
 				943DD4402A45737300C8B8A2 /* AppDelegate.swift */,
 				943DD4422A45737300C8B8A2 /* SceneDelegate.swift */,
 				94B87E6A2A51BC2E00D48FA2 /* NetworkingService */,
@@ -466,9 +480,11 @@
 				943DD4862A4578F000C8B8A2 /* ColorPickerView.swift in Sources */,
 				943DD47C2A4578AC00C8B8A2 /* FirstScreenViewController.swift in Sources */,
 				943DD47E2A4578C000C8B8A2 /* SecondScreenViewController+UISetup.swift in Sources */,
+				940D07EB2A599FD30049D66B /* FileCache.swift in Sources */,
 				943DD4782A45789400C8B8A2 /* FirstScreen+Ybutton.swift in Sources */,
 				943DD4882A4578FA00C8B8A2 /* UISettings.swift in Sources */,
 				9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */,
+				940D07ED2A599FE70049D66B /* TodoItem.swift in Sources */,
 				94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

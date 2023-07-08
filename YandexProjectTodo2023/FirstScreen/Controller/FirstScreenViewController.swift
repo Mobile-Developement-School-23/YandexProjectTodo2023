@@ -6,12 +6,12 @@ class FirstScreenViewController: UIViewController {
     
     lazy var refreshControl = UIActivityIndicatorView()
     
-    lazy var cacheToDo = FileCachePackage.FileCache()
-    public lazy var collectionToDo = [FileCachePackage.ToDoItem]()
-    lazy var collectionToDoComplete = [FileCachePackage.ToDoItem]()
+    lazy var cacheToDo = FileCache()
+    public lazy var collectionToDo = [ToDoItem]()
+    lazy var collectionToDoComplete = [ToDoItem]()
     
     lazy var networkingService = DefaultNetworkingService()
-    lazy var networkCache = FileCachePackage.TodoList() {
+    lazy var networkCache = TodoList() {
         
         willSet {
             guard let newCollectionTodo = newValue.list else { return }
@@ -34,12 +34,12 @@ class FirstScreenViewController: UIViewController {
     
     // MARK: Last grey cell
     
-    private let todoLast = FileCachePackage.ToDoItem(text: "Новое", priority: .normal, creationDate: Date.distantFuture, modifyDate: .distantFuture)
+    private let todoLast = ToDoItem(text: "Новое", priority: .normal, creationDate: Date.distantFuture, modifyDate: .distantFuture)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cacheToDo = FileCachePackage.FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCachePackage.FileCache()
+        cacheToDo = FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCache()
         
         collectionToDo = cacheToDo.getCollectionToDo()
         collectionToDo.sort { $0.creationDate < $1.creationDate }
@@ -93,8 +93,8 @@ extension FirstScreenViewController {
     
     func removeCompleteToDoFromArray() {
         
-        var comleteToDo = [FileCachePackage.ToDoItem]()
-        var resultArrayToDo = [FileCachePackage.ToDoItem]()
+        var comleteToDo = [ToDoItem]()
+        var resultArrayToDo = [ToDoItem]()
         for i in 0..<collectionToDo.count {
             if !collectionToDo[i].isDone {
                 resultArrayToDo.append(collectionToDo[i])
@@ -113,6 +113,6 @@ extension FirstScreenViewController {
             resultArrayToDo.append(collectionToDoComplete[i])
         }
         collectionToDo = resultArrayToDo.sorted(by: { $0.creationDate < $1.creationDate })
-        collectionToDoComplete = [FileCachePackage.ToDoItem]()
+        collectionToDoComplete = [ToDoItem]()
     }
 }

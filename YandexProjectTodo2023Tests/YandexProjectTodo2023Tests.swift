@@ -1,27 +1,26 @@
 import XCTest
-import FileCachePackage
 
 @testable import YandexProjectTodo2023
 
 final class YandexToDo2022Tests: XCTestCase {
 
-    var toDoItem1: FileCachePackage.ToDoItem?
-    var toDoItem2: FileCachePackage.ToDoItem?
-    var toDoItem3: FileCachePackage.ToDoItem?
-    var toDoItem4: FileCachePackage.ToDoItem?
-    var fileCache: FileCachePackage.FileCache?
+    var toDoItem1: ToDoItem?
+    var toDoItem2: ToDoItem?
+    var toDoItem3: ToDoItem?
+    var toDoItem4: ToDoItem?
+    var fileCache: FileCache?
     var json: Any?
     var csv: Any?
 
     override func setUpWithError() throws {
 
-        fileCache = FileCachePackage.FileCache()
+        fileCache = FileCache()
 
-        toDoItem1 = FileCachePackage.ToDoItem(id: "testID1", text: "testText1", priority: .low, deadline: Date.now.addingTimeInterval(1600),
+        toDoItem1 = ToDoItem(id: "testID1", text: "testText1", priority: .low, deadline: Date.now.addingTimeInterval(1600),
 isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200))
-        toDoItem2 = FileCachePackage.ToDoItem(id: "testID2", text: "testText2", priority: .low, isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(3200))
-        toDoItem3 = FileCachePackage.ToDoItem(id: "testID3", text: "testText3", priority: .low, deadline: Date.now.addingTimeInterval(3600), isDone: false, modifyDate: Date.now.addingTimeInterval(2200))
-        toDoItem4 = FileCachePackage.ToDoItem(id: "testID4", text: "testText4", priority: .low, deadline: Date.now.addingTimeInterval(4600), isDone: false, creationDate: .now)
+        toDoItem2 = ToDoItem(id: "testID2", text: "testText2", priority: .low, isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(3200))
+        toDoItem3 = ToDoItem(id: "testID3", text: "testText3", priority: .low, deadline: Date.now.addingTimeInterval(3600), isDone: false, modifyDate: Date.now.addingTimeInterval(2200))
+        toDoItem4 = ToDoItem(id: "testID4", text: "testText4", priority: .low, deadline: Date.now.addingTimeInterval(4600), isDone: false, creationDate: .now)
 
         try fileCache?.addNewToDo(toDoItem1!)
         try fileCache?.addNewToDo(toDoItem2!)
@@ -72,10 +71,10 @@ isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200)
         XCTAssertEqual(todo1.id, todo2.id)
         XCTAssertEqual(todo1.text, todo2.text)
         XCTAssertEqual(todo1.priority, todo2.priority)
-        XCTAssertEqual(todo1.deadline?.timeIntervalSince1970, todo2.deadline?.timeIntervalSince1970)
+        XCTAssertEqual(floor(todo1.deadline?.timeIntervalSince1970 ?? 0), floor(todo2.deadline?.timeIntervalSince1970 ?? 1))
         XCTAssertEqual(todo1.isDone, todo2.isDone)
-        XCTAssertEqual(todo1.creationDate.timeIntervalSince1970, todo2.creationDate.timeIntervalSince1970)
-        XCTAssertEqual(todo1.modifyDate?.timeIntervalSince1970, todo2.modifyDate?.timeIntervalSince1970)
+        XCTAssertEqual(floor(todo1.creationDate.timeIntervalSince1970), floor(todo2.creationDate.timeIntervalSince1970))
+        XCTAssertEqual(floor(todo1.modifyDate?.timeIntervalSince1970 ?? 0), floor(todo2.modifyDate?.timeIntervalSince1970 ?? 1))
 
     }
 

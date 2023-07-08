@@ -37,7 +37,7 @@ extension FirstScreenViewController {
     @objc func tapPlusButton() {
         
         let vc = SecondScreenViewController(cellFrame: button.frame)
-        vc.toDo = FileCachePackage.ToDoItem(text: vc.defaultPhraseForTextView, priority: FileCachePackage.ToDoItem.Priority.normal)
+        vc.toDo = ToDoItem(text: vc.defaultPhraseForTextView, priority: ToDoItem.Priority.normal)
         
         vc.dataCompletionHandler = { [self] data in
 
@@ -48,7 +48,7 @@ extension FirstScreenViewController {
             self.collectionToDo.sort { $0.creationDate < $1.creationDate }
             self.tableView.reloadData()
             
-            FileCachePackage.FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
 
             networkingService.handleRequest(todoItem: data, method: .post, type: .post, revision: networkCache.revision ?? 0) { result in
                 Task {
