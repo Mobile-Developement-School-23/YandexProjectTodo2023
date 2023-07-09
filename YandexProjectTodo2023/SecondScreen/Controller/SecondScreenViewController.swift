@@ -1,7 +1,10 @@
 import UIKit
 import FileCachePackage
+import SQLite
 
 class SecondScreenViewController: UIViewController, UITextViewDelegate {
+    
+    lazy var db = try? Connection()
     
     var cellFrame: CGRect? // frames for animation transition
 

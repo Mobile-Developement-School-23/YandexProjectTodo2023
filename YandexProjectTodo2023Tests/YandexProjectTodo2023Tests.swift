@@ -8,13 +8,13 @@ final class YandexToDo2022Tests: XCTestCase {
     var toDoItem2: ToDoItem?
     var toDoItem3: ToDoItem?
     var toDoItem4: ToDoItem?
-    var fileCache: FileCache?
+    var fileCache: FileCacheJSON?
     var json: Any?
     var csv: Any?
 
     override func setUpWithError() throws {
 
-        fileCache = FileCache()
+        fileCache = FileCacheJSON()
 
         toDoItem1 = ToDoItem(id: "testID1", text: "testText1", priority: .low, deadline: Date.now.addingTimeInterval(1600),
 isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200))
@@ -83,7 +83,7 @@ isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200)
 
         fileCache?.saveToFile(fileName: "testSaveCsv", fileType: .csv)
 
-        let cacheFromFile = FileCache.readFromFile(fileName: "testSaveCsv", fileType: .csv)
+        let cacheFromFile = FileCacheJSON.readFromFile(fileName: "testSaveCsv", fileType: .csv)
 
         let collectionTodoFromFile = cacheFromFile?.getCollectionToDo()
 
@@ -98,7 +98,7 @@ isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200)
 
         fileCache?.saveToFile(fileName: "testSaveJson", fileType: .json)
 
-        let cacheFromFile = FileCache.readFromFile(fileName: "testSaveJson", fileType: .json)
+        let cacheFromFile = FileCacheJSON.readFromFile(fileName: "testSaveJson", fileType: .json)
 
         let collectionTodoFromFile = cacheFromFile?.getCollectionToDo()
 
@@ -128,14 +128,14 @@ isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200)
     }
 
     func testReadWrongPath() {
-        XCTAssertNil(FileCache.readFromFile(fileName: "foo", fileType: .csv))
-        XCTAssertNil(FileCache.readFromFile(fileName: "foo", fileType: .json))
+        XCTAssertNil(FileCacheJSON.readFromFile(fileName: "foo", fileType: .csv))
+        XCTAssertNil(FileCacheJSON.readFromFile(fileName: "foo", fileType: .json))
     }
 
     func testReadFromWrongData() {
 
         let fileName = "foo"
-        let fullPath = FileCache.getDocumentsDirectory().appendingPathComponent(fileName )
+        let fullPath = FileCacheJSON.getDocumentsDirectory().appendingPathComponent(fileName )
         let strFrom = "efdwrged, sdv sd d \n fgfsd, sdf adf \n sdf, sfsdf  \n"
 
         do {
@@ -144,8 +144,8 @@ isDone: false, creationDate: .now, modifyDate: Date.now.addingTimeInterval(4200)
             print( "failed to write file")
         }
 
-        XCTAssertNil(FileCache.readFromFile(fileName: "foo", fileType: .csv))
-        XCTAssertNil(FileCache.readFromFile(fileName: "foo", fileType: .json))
+        XCTAssertNil(FileCacheJSON.readFromFile(fileName: "foo", fileType: .csv))
+        XCTAssertNil(FileCacheJSON.readFromFile(fileName: "foo", fileType: .json))
 
     }
 

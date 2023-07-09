@@ -1,12 +1,14 @@
 import Foundation
+import SQLite
 import UIKit
-import FileCachePackage
 
 class FirstScreenViewController: UIViewController {
+   
+    lazy var db = try? Connection()
     
     lazy var refreshControl = UIActivityIndicatorView()
     
-    lazy var cacheToDo = FileCache()
+    lazy var cacheToDo = FileCacheJSON()
     public lazy var collectionToDo = [ToDoItem]()
     lazy var collectionToDoComplete = [ToDoItem]()
     
@@ -38,28 +40,44 @@ class FirstScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // MARK: Homework 1-2 - JSON
+
+
+//        cacheToDo = FileCacheJSON.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCacheJSON()
         
-        cacheToDo = FileCache.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCache()
+//        collectionToDo = cacheToDo.getCollectionToDo()
+//        collectionToDo.sort { $0.creationDate < $1.creationDate }
         
-        collectionToDo = cacheToDo.getCollectionToDo()
-        collectionToDo.sort { $0.creationDate < $1.creationDate }
-        
-        checkLastCell()
         
         // MARK: Homework 6 - Update from server
         
         // activityIndicator Observer
-        NotificationCenter.default.addObserver(self, selector: #selector(activeRequestsChanged), name: .activeRequestsChanged, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(activeRequestsChanged), name: .activeRequestsChanged, object: nil)
         
         // update tableview from server
-        networkingService.handleRequest(todoList: TodoList(list: collectionToDo + collectionToDoComplete), method: .patch, type: .patch, revision: networkCache.revision ?? 0)
-        { result in
-                    Task {
-                        await self.resultProcessing(result: result)
-                    }
-                }
+//        networkingService.handleRequest(todoList: TodoList(list: collectionToDo + collectionToDoComplete), method: .patch, type: .patch, revision: networkCache.revision ?? 0)
+//        { result in
+//                    Task {
+//                        await self.resultProcessing(result: result)
+//                    }
+//                }
+        
+        
+        //MARK: Homework 7 SQLite
+        
+        
+        db = FileCacheSQLite.checkOldDataBaseAndCreateNew()
+
+//        FileCache.insertOrReplaceOneTodoForSqlite(db: db!, todoItem: ToDoItem(id: "5", text: "text5", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, colorHEX: "sdf", last_updated_by: "him56"))
+
+        var arr = FileCacheSQLite.createTodoItemArrayFromSQLiteDB(db: db!)
+        collectionToDo = arr
+
         
         removeCompleteToDoFromArray()
+        checkLastCell()
+
         
     }
     

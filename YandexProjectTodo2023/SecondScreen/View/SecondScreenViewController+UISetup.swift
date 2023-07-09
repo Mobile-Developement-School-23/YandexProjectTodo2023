@@ -58,6 +58,7 @@ extension SecondScreenViewController {
         self.view.endEditing(true)
         let vc = ColorPickerViewController()
         vc.todo = toDo
+        vc.db = self.db
         present(vc, animated: true)
         
         vc.dataCompletionHandler = { data in
