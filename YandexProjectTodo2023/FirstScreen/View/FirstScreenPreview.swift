@@ -19,6 +19,11 @@ extension FirstScreenViewController {
             vc.dataCompletionHandler = { data in
                 
                 if data.creationDate == Date.distantPast {
+                    
+                    // MARK: Homework 7
+                    
+                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                    
                     // MARK: Homework 6 - Update from server
 
                     // DELETE todo from network
@@ -43,6 +48,7 @@ extension FirstScreenViewController {
                 self.tableView.reloadData()
                 
                 FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                
                 // MARK: Homework 6 - Update from server
 
                 // PUT todo from network
@@ -52,6 +58,9 @@ extension FirstScreenViewController {
 //                        await self.resultProcessing(result: result)
 //                    }
 //                }
+                
+                // MARK: Homework 7
+                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
                 
             }
             

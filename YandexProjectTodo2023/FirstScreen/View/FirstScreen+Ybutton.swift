@@ -45,11 +45,16 @@ extension FirstScreenViewController {
             if data.creationDate == Date.distantPast {
                 return
             }
+            // MARK: Homework 7
+            
+            FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: db, todoItem: data)
+            
             self.collectionToDo.append(data)
             self.collectionToDo.sort { $0.creationDate < $1.creationDate }
             self.tableView.reloadData()
             
             FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            
             // MARK: Homework 6 - Update from server
 
 //            networkingService.handleRequest(todoItem: data, method: .post, type: .post, revision: networkCache.revision ?? 0) { result in
@@ -57,6 +62,7 @@ extension FirstScreenViewController {
 //                    await self.resultProcessing(result: result)
 //                }
 //            }
+            
             
         }
         vc.modalTransitionStyle = .coverVertical

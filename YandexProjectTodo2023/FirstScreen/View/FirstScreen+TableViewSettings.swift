@@ -9,6 +9,12 @@ extension FirstScreenViewController {
     func doneUndone(_ indexPath: IndexPath) {
         
         collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
+     
+        // MARK: Homework 7
+        
+        FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: db, todoItem: collectionToDo[indexPath.row])
+        
+        
         // MARK: Homework 6 - Update from server
 
         // PUT todo from network
@@ -23,10 +29,17 @@ extension FirstScreenViewController {
        tableView.reloadData()
        
         FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+
+
    }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
         
+        
+        // MARK: Homework 7
+        
+        FileCacheSQLite.deleteTodoFromSqlite(db: db, todoItem: collectionToDo[indexPath.row])
+
         // MARK: Homework 6 - Update from server
 
         // DELETE todo from network
@@ -41,6 +54,7 @@ extension FirstScreenViewController {
         tableView.reloadData()
         
         FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+        
 
     }
 }
@@ -117,6 +131,12 @@ extension FirstScreenViewController {
             vc.dataCompletionHandler = { data in
                 
                 if data.creationDate == Date.distantPast {
+                    
+                    
+                    // MARK: Homework 7
+                    
+                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+
                     // MARK: Homework 6 - Update from server
 
                     // DELETE todo from network
@@ -132,10 +152,10 @@ extension FirstScreenViewController {
                     
                     // DELETE todo from file
                     FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-                    
+
                     return
                 }
-                
+
                 self.collectionToDo[indexPath.row] = data
                 self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                 self.tableView.reloadData()
@@ -149,6 +169,11 @@ extension FirstScreenViewController {
 //                        await self.resultProcessing(result: result)
 //                    }
 //                }
+                
+                // MARK: Homework 7
+
+                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+
                     
             }
             self.present(vc, animated: true)

@@ -47,7 +47,6 @@ class FirstScreenViewController: UIViewController {
 //        cacheToDo = FileCacheJSON.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCacheJSON()
         
 //        collectionToDo = cacheToDo.getCollectionToDo()
-//        collectionToDo.sort { $0.creationDate < $1.creationDate }
         
         
         // MARK: Homework 6 - Update from server
@@ -66,19 +65,19 @@ class FirstScreenViewController: UIViewController {
         
         //MARK: Homework 7 SQLite
         
-        
-        db = FileCacheSQLite.checkOldDataBaseAndCreateNew()
-
 //        FileCache.insertOrReplaceOneTodoForSqlite(db: db!, todoItem: ToDoItem(id: "5", text: "text5", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, colorHEX: "sdf", last_updated_by: "him56"))
 
-        var arr = FileCacheSQLite.createTodoItemArrayFromSQLiteDB(db: db!)
-        collectionToDo = arr
-
+            
         
+        db = FileCacheSQLite.checkOldDataBaseAndCreateNew()
+    
+        
+        collectionToDo = FileCacheSQLite.createTodoItemArrayFromSQLiteDB(db: db)
+
+        collectionToDo.sort { $0.creationDate < $1.creationDate }
         removeCompleteToDoFromArray()
         checkLastCell()
 
-        
     }
     
     override func loadView() {
