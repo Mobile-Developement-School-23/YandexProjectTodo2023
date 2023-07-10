@@ -9,53 +9,60 @@ extension FirstScreenViewController {
     func doneUndone(_ indexPath: IndexPath) {
         
         collectionToDo[indexPath.row].isDone = !collectionToDo[indexPath.row].isDone
-     
-        // MARK: Homework 7
         
-        FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: db, todoItem: collectionToDo[indexPath.row])
+        // MARK: Homework 7*
         
+        //        FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: db, todoItem: collectionToDo[indexPath.row])
+        
+        // MARK: Homework 7**
+        
+        coreDataManager.updateTodoFromCoreData(todo: collectionToDo[indexPath.row])
         
         // MARK: Homework 6 - Update from server
-
-        // PUT todo from network
-//        networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
-//            Task {
-//                await self.resultProcessing(result: result)
-//            }
-//        }
         
-       pressedButtonHeaderRight()
-       pressedButtonHeaderRight()
-       tableView.reloadData()
-       
+        // PUT todo from network
+        //        networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
+        //            Task {
+        //                await self.resultProcessing(result: result)
+        //            }
+        //        }
+        
+        pressedButtonHeaderRight()
+        pressedButtonHeaderRight()
+        tableView.reloadData()
+        
         FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-
-
-   }
+        
+        
+    }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
         
         
-        // MARK: Homework 7
+        // MARK: Homework 7*
         
-        FileCacheSQLite.deleteTodoFromSqlite(db: db, todoItem: collectionToDo[indexPath.row])
-
+        //        FileCacheSQLite.deleteTodoFromSqlite(db: db, todoItem: collectionToDo[indexPath.row])
+        
+        // MARK: Homework 7**
+        
+        coreDataManager.deleteTodoFromCoreData(todo: collectionToDo[indexPath.row])
+        
         // MARK: Homework 6 - Update from server
-
+        
         // DELETE todo from network
-//        networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
-//            Task {
-//                await self.resultProcessing(result: result)
-//            }
-//
-//        }
+        //        networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
+        //            Task {
+        //                await self.resultProcessing(result: result)
+        //            }
+        //
+        //        }
         self.collectionToDo.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.reloadData()
         
         FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
         
-
+        
     }
 }
 
@@ -74,10 +81,10 @@ extension FirstScreenViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func prepareTableEmitterButton() {
-       tableView.frame = view.bounds
-       view.addSubview(settingButtonPlus(button: button))
-       emitter = createEmitter()
-   }
+        tableView.frame = view.bounds
+        view.addSubview(settingButtonPlus(button: button))
+        emitter = createEmitter()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -112,7 +119,7 @@ extension FirstScreenViewController {
         
         let action = UIContextualAction(style: .normal, title: "", handler: {  ( _, _, _ ) in
             self.removeAndDeleteTodo(indexPath)
-
+            
         })
         
         action.image = UIImage(systemName: "trash", withConfiguration: .none)
@@ -127,54 +134,61 @@ extension FirstScreenViewController {
             vc.toDo = self.collectionToDo[indexPath.row]
             vc.db = self.db
             
-            
             vc.dataCompletionHandler = { data in
                 
                 if data.creationDate == Date.distantPast {
                     
                     
-                    // MARK: Homework 7
+                    // MARK: Homework 7*
                     
-                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
-
+                    //                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                    
+                    // MARK: Homework 7**
+                    self.coreDataManager.deleteTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
+                    
+                    
                     // MARK: Homework 6 - Update from server
-
+                    
                     // DELETE todo from network
-//                    self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
-//                        Task {
-//                            await self.resultProcessing(result: result)
-//                        }
-//                    }
-              
+                    //                    self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
+                    //                        Task {
+                    //                            await self.resultProcessing(result: result)
+                    //                        }
+                    //                    }
+                    
                     self.collectionToDo.remove(at: indexPath.row)
                     self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                     self.tableView.reloadData()
                     
                     // DELETE todo from file
                     FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-
+                    
                     return
                 }
-
+                
                 self.collectionToDo[indexPath.row] = data
                 self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                 self.tableView.reloadData()
                 
                 FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                 // MARK: Homework 6 - Update from server
-
-                // PUT todo
-//                self.networkingService.handleRequest(todoItem: data, method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
-//                    Task {
-//                        await self.resultProcessing(result: result)
-//                    }
-//                }
                 
-                // MARK: Homework 7
+                // PUT todo
+                //                self.networkingService.handleRequest(todoItem: data, method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
+                //                    Task {
+                //                        await self.resultProcessing(result: result)
+                //                    }
+                //                }
+                
+                // MARK: Homework 7*
+                
+                //                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                
+                // MARK: Homework 7**
+                self.coreDataManager.updateTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
 
-                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
-
-                    
+                
+                
             }
             self.present(vc, animated: true)
             completionHandler(true)
@@ -193,7 +207,7 @@ extension FirstScreenViewController {
             return nil
         }
         let action = UIContextualAction(style: .normal, title: "", handler: { _, _, _ in
-
+            
             self.doneUndone(indexPath)
         })
         action.image = UIImage(systemName: "checkmark.circle.fill")
@@ -223,7 +237,7 @@ extension FirstScreenViewController {
         viewHeader.addSubview(buttonHeaderRight)
         viewHeader.addSubview(labelHeaderLeft)
         viewHeader.addSubview(refreshControl)
-
+        
         refreshControl.translatesAutoresizingMaskIntoConstraints = false
         refreshControl.centerXAnchor.constraint(equalTo: viewHeader.centerXAnchor).isActive = true
         refreshControl.centerYAnchor.constraint(equalTo: viewHeader.centerYAnchor).isActive = true

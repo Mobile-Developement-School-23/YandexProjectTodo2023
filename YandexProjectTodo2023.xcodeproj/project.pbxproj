@@ -12,6 +12,10 @@
 		940D07ED2A599FE70049D66B /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D07EC2A599FE70049D66B /* TodoItem.swift */; };
 		940D07F02A59A9850049D66B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 940D07EF2A59A9850049D66B /* SQLite */; };
 		940D07F22A5ACF290049D66B /* FileCacheSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D07F12A5ACF290049D66B /* FileCacheSQLite.swift */; };
+		940D07F52A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 940D07F32A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodeld */; };
+		940D08052A5C19980049D66B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D08042A5C19980049D66B /* CoreDataManager.swift */; };
+		940D080D2A5C1FC20049D66B /* TodoItemEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D080B2A5C1FC20049D66B /* TodoItemEntity+CoreDataClass.swift */; };
+		940D080E2A5C1FC20049D66B /* TodoItemEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D080C2A5C1FC20049D66B /* TodoItemEntity+CoreDataProperties.swift */; };
 		943DD4412A45737300C8B8A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4402A45737300C8B8A2 /* AppDelegate.swift */; };
 		943DD4432A45737300C8B8A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4422A45737300C8B8A2 /* SceneDelegate.swift */; };
 		943DD44A2A45737400C8B8A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 943DD4492A45737400C8B8A2 /* Assets.xcassets */; };
@@ -60,6 +64,10 @@
 		940D07EA2A599FD30049D66B /* FileCacheJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheJSON.swift; sourceTree = "<group>"; };
 		940D07EC2A599FE70049D66B /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		940D07F12A5ACF290049D66B /* FileCacheSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheSQLite.swift; sourceTree = "<group>"; };
+		940D07F42A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileCacheCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		940D08042A5C19980049D66B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		940D080B2A5C1FC20049D66B /* TodoItemEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TodoItemEntity+CoreDataClass.swift"; path = "../../../TodoItemEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		940D080C2A5C1FC20049D66B /* TodoItemEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TodoItemEntity+CoreDataProperties.swift"; path = "../../../TodoItemEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		943DD43D2A45737300C8B8A2 /* YandexProjectTodo2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexProjectTodo2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		943DD4402A45737300C8B8A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		943DD4422A45737300C8B8A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,11 +129,23 @@
 		940D07E92A599FC60049D66B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				940D08062A5C19A80049D66B /* CoreData */,
 				940D07F12A5ACF290049D66B /* FileCacheSQLite.swift */,
 				940D07EA2A599FD30049D66B /* FileCacheJSON.swift */,
 				940D07EC2A599FE70049D66B /* TodoItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		940D08062A5C19A80049D66B /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				940D07F32A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodeld */,
+				940D080B2A5C1FC20049D66B /* TodoItemEntity+CoreDataClass.swift */,
+				940D080C2A5C1FC20049D66B /* TodoItemEntity+CoreDataProperties.swift */,
+				940D08042A5C19980049D66B /* CoreDataManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		943DD4342A45737300C8B8A2 = {
@@ -470,6 +490,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				943DD48C2A45790A00C8B8A2 /* Exstension UIColor.swift in Sources */,
+				940D07F52A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodeld in Sources */,
 				9488F6902A48302100F7C879 /* FirstScreenPreview.swift in Sources */,
 				943DD48A2A45790200C8B8A2 /* Constraints&TopButtonLabel.swift in Sources */,
 				94B87E652A50722400D48FA2 /* URLSession+dataTask.swift in Sources */,
@@ -483,14 +504,17 @@
 				9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */,
 				943DD4822A4578D800C8B8A2 /* TextViewSettings.swift in Sources */,
 				94B87E6C2A51C48000D48FA2 /* NetworkingService.swift in Sources */,
+				940D080E2A5C1FC20049D66B /* TodoItemEntity+CoreDataProperties.swift in Sources */,
 				943DD47A2A45789F00C8B8A2 /* AnimationsForButtons.swift in Sources */,
 				943DD4802A4578CD00C8B8A2 /* SecondScreenTableView+Cells.swift in Sources */,
 				943DD4862A4578F000C8B8A2 /* ColorPickerView.swift in Sources */,
 				943DD47C2A4578AC00C8B8A2 /* FirstScreenViewController.swift in Sources */,
+				940D080D2A5C1FC20049D66B /* TodoItemEntity+CoreDataClass.swift in Sources */,
 				943DD47E2A4578C000C8B8A2 /* SecondScreenViewController+UISetup.swift in Sources */,
 				940D07EB2A599FD30049D66B /* FileCacheJSON.swift in Sources */,
 				943DD4782A45789400C8B8A2 /* FirstScreen+Ybutton.swift in Sources */,
 				943DD4882A4578FA00C8B8A2 /* UISettings.swift in Sources */,
+				940D08052A5C19980049D66B /* CoreDataManager.swift in Sources */,
 				9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */,
 				940D07ED2A599FE70049D66B /* TodoItem.swift in Sources */,
 				94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */,
@@ -818,6 +842,19 @@
 			productName = FileCachePackage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		940D07F32A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				940D07F42A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodel */,
+			);
+			currentVersion = 940D07F42A5C0F010049D66B /* FileCacheCoreDataModel.xcdatamodel */;
+			path = FileCacheCoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 943DD4352A45737300C8B8A2 /* Project object */;
 }

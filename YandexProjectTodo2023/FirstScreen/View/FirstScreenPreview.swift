@@ -16,13 +16,17 @@ extension FirstScreenViewController {
             vc.buttonSave.isHidden = true
             vc.toDo = self.collectionToDo[indexPath.row]
             vc.db = self.db
+            vc.coreDataManager = self.coreDataManager
             vc.dataCompletionHandler = { data in
                 
                 if data.creationDate == Date.distantPast {
                     
-                    // MARK: Homework 7
+                    // MARK: Homework 7*
                     
-                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+//                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                    
+                    // MARK: Homework 7**
+                    self.coreDataManager.deleteTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
                     
                     // MARK: Homework 6 - Update from server
 
@@ -59,8 +63,11 @@ extension FirstScreenViewController {
 //                    }
 //                }
                 
-                // MARK: Homework 7
-                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                // MARK: Homework 7*
+//                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                
+                // MARK: Homework 7**
+                self.coreDataManager.updateTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
                 
             }
             

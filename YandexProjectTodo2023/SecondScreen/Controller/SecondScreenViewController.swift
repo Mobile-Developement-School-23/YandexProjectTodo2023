@@ -4,6 +4,8 @@ import SQLite
 
 class SecondScreenViewController: UIViewController, UITextViewDelegate {
     
+    lazy var coreDataManager = CoreDataManager()
+    
     lazy var db = try? Connection()
     
     var cellFrame: CGRect? // frames for animation transition

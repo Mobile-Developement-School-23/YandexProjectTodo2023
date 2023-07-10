@@ -4,6 +4,8 @@ import UIKit
 
 class FirstScreenViewController: UIViewController {
    
+    lazy var coreDataManager = CoreDataManager()
+    
     lazy var db = try? Connection()
     
     lazy var refreshControl = UIActivityIndicatorView()
@@ -63,17 +65,16 @@ class FirstScreenViewController: UIViewController {
 //                }
         
         
-        //MARK: Homework 7 SQLite
+        //MARK: Homework 7* SQLite
         
-//        FileCache.insertOrReplaceOneTodoForSqlite(db: db!, todoItem: ToDoItem(id: "5", text: "text5", priority: .normal, deadline: .now, isDone: false, creationDate: .now, modifyDate: .now, colorHEX: "sdf", last_updated_by: "him56"))
+//        db = FileCacheSQLite.checkOldDataBaseAndCreateNew()
+//        collectionToDo = FileCacheSQLite.createTodoItemArrayFromSQLiteDB(db: db)
 
-            
+        //MARK: Homework 7** CoreData
+        collectionToDo = coreDataManager.getCollectionTodoFromCoreData()
         
-        db = FileCacheSQLite.checkOldDataBaseAndCreateNew()
-    
         
-        collectionToDo = FileCacheSQLite.createTodoItemArrayFromSQLiteDB(db: db)
-
+        
         collectionToDo.sort { $0.creationDate < $1.creationDate }
         removeCompleteToDoFromArray()
         checkLastCell()
