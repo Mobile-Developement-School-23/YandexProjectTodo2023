@@ -38,23 +38,35 @@ extension FirstScreenViewController {
         
         let vc = SecondScreenViewController(cellFrame: button.frame)
         vc.toDo = ToDoItem(text: vc.defaultPhraseForTextView, priority: ToDoItem.Priority.normal)
+        vc.db = self.db
+        vc.coreDataManager = self.coreDataManager
         
         vc.dataCompletionHandler = { [self] data in
 
             if data.creationDate == Date.distantPast {
                 return
             }
+            // MARK: Homework 7*
+            
+//            FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: db, todoItem: data)
+            
+            // MARK: Homework 7**
+            coreDataManager.saveTodoToCoreData(todo: data)
+            
             self.collectionToDo.append(data)
             self.collectionToDo.sort { $0.creationDate < $1.creationDate }
             self.tableView.reloadData()
             
-            FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+            
+            // MARK: Homework 6 - Update from server
 
-            networkingService.handleRequest(todoItem: data, method: .post, type: .post, revision: networkCache.revision ?? 0) { result in
-                Task {
-                    await self.resultProcessing(result: result)
-                }
-            }
+//            networkingService.handleRequest(todoItem: data, method: .post, type: .post, revision: networkCache.revision ?? 0) { result in
+//                Task {
+//                    await self.resultProcessing(result: result)
+//                }
+//            }
+            
             
         }
         vc.modalTransitionStyle = .coverVertical

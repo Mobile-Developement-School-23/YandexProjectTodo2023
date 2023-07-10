@@ -1,7 +1,12 @@
 import UIKit
 import FileCachePackage
+import SQLite
 
 class ColorPickerViewController: UIViewController {
+    
+    lazy var coreDataManager = CoreDataManager()
+
+    lazy var db = try? Connection()
     
     var colorPickerView = ColorPickerView()
     public var dataCompletionHandler: ((ToDoItem) -> Void)?

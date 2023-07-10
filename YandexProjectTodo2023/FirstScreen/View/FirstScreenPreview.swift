@@ -15,23 +15,34 @@ extension FirstScreenViewController {
             vc.buttonClose.isHidden = true
             vc.buttonSave.isHidden = true
             vc.toDo = self.collectionToDo[indexPath.row]
+            vc.db = self.db
+            vc.coreDataManager = self.coreDataManager
             vc.dataCompletionHandler = { data in
                 
                 if data.creationDate == Date.distantPast {
                     
+                    // MARK: Homework 7*
+                    
+//                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                    
+                    // MARK: Homework 7**
+                    self.coreDataManager.deleteTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
+                    
+                    // MARK: Homework 6 - Update from server
+
                     // DELETE todo from network
-                    self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
-                        Task {
-                            await self.resultProcessing(result: result)
-                        }
-                    }
+//                    self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .delete, type: .delete, revision: self.networkCache.revision ?? 0) { result in
+//                        Task {
+//                            await self.resultProcessing(result: result)
+//                        }
+//                    }
       
                     self.collectionToDo.remove(at: indexPath.row)
                     self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                     self.tableView.reloadData()
                     
                     // DELETE todo from file
-                    FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                    FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
                     
                     return
                 }
@@ -40,15 +51,23 @@ extension FirstScreenViewController {
                 self.collectionToDo.sort { $0.creationDate < $1.creationDate }
                 self.tableView.reloadData()
                 
-                FileCache.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-                    
+                FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
+                
+                // MARK: Homework 6 - Update from server
+
                 // PUT todo from network
 
-                self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
-                    Task {
-                        await self.resultProcessing(result: result)
-                    }
-                }
+//                self.networkingService.handleRequest(todoItem: self.collectionToDo[indexPath.row], method: .put, type: .put, revision: self.networkCache.revision ?? 0) { result in
+//                    Task {
+//                        await self.resultProcessing(result: result)
+//                    }
+//                }
+                
+                // MARK: Homework 7*
+//                FileCacheSQLite.insertOrReplaceOneTodoForSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
+                
+                // MARK: Homework 7**
+                self.coreDataManager.updateTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
                 
             }
             
