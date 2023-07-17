@@ -35,6 +35,8 @@
 		943DD48A2A45790200C8B8A2 /* Constraints&TopButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD4892A45790200C8B8A2 /* Constraints&TopButtonLabel.swift */; };
 		943DD48C2A45790A00C8B8A2 /* Exstension UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD48B2A45790A00C8B8A2 /* Exstension UIColor.swift */; };
 		943DD48E2A45791600C8B8A2 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DD48D2A45791600C8B8A2 /* ColorPickerViewController.swift */; };
+		946407432A63FFD80012F9ED /* FirstScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946407422A63FFD80012F9ED /* FirstScreenSwiftUIView.swift */; };
+		946407472A652C440012F9ED /* SecondScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946407462A652C440012F9ED /* SecondScreenSwiftUIView.swift */; };
 		9488F68C2A45CB7C00F7C879 /* AnimationForTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68B2A45CB7C00F7C879 /* AnimationForTransition.swift */; };
 		9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68D2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift */; };
 		9488F6902A48302100F7C879 /* FirstScreenPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488F68F2A48302100F7C879 /* FirstScreenPreview.swift */; };
@@ -91,6 +93,8 @@
 		943DD4892A45790200C8B8A2 /* Constraints&TopButtonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constraints&TopButtonLabel.swift"; sourceTree = "<group>"; };
 		943DD48B2A45790A00C8B8A2 /* Exstension UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exstension UIColor.swift"; sourceTree = "<group>"; };
 		943DD48D2A45791600C8B8A2 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		946407422A63FFD80012F9ED /* FirstScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenSwiftUIView.swift; sourceTree = "<group>"; };
+		946407462A652C440012F9ED /* SecondScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenSwiftUIView.swift; sourceTree = "<group>"; };
 		9488F68B2A45CB7C00F7C879 /* AnimationForTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationForTransition.swift; sourceTree = "<group>"; };
 		9488F68D2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenTransitionAnimation.swift; sourceTree = "<group>"; };
 		9488F68F2A48302100F7C879 /* FirstScreenPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenPreview.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 		943DD43F2A45737300C8B8A2 /* YandexProjectTodo2023 */ = {
 			isa = PBXGroup;
 			children = (
+				946407412A63FFB50012F9ED /* SwiftUI */,
 				943DD4402A45737300C8B8A2 /* AppDelegate.swift */,
 				943DD4422A45737300C8B8A2 /* SceneDelegate.swift */,
 				94B87E6A2A51BC2E00D48FA2 /* NetworkingService */,
@@ -279,6 +284,15 @@
 				943DD48B2A45790A00C8B8A2 /* Exstension UIColor.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		946407412A63FFB50012F9ED /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				946407422A63FFD80012F9ED /* FirstScreenSwiftUIView.swift */,
+				946407462A652C440012F9ED /* SecondScreenSwiftUIView.swift */,
+			);
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		94B87E6A2A51BC2E00D48FA2 /* NetworkingService */ = {
@@ -505,6 +519,7 @@
 				943DD4822A4578D800C8B8A2 /* TextViewSettings.swift in Sources */,
 				94B87E6C2A51C48000D48FA2 /* NetworkingService.swift in Sources */,
 				940D080E2A5C1FC20049D66B /* TodoItemEntity+CoreDataProperties.swift in Sources */,
+				946407472A652C440012F9ED /* SecondScreenSwiftUIView.swift in Sources */,
 				943DD47A2A45789F00C8B8A2 /* AnimationsForButtons.swift in Sources */,
 				943DD4802A4578CD00C8B8A2 /* SecondScreenTableView+Cells.swift in Sources */,
 				943DD4862A4578F000C8B8A2 /* ColorPickerView.swift in Sources */,
@@ -516,6 +531,7 @@
 				943DD4882A4578FA00C8B8A2 /* UISettings.swift in Sources */,
 				940D08052A5C19980049D66B /* CoreDataManager.swift in Sources */,
 				9488F68E2A4826D900F7C879 /* SecondScreenTransitionAnimation.swift in Sources */,
+				946407432A63FFD80012F9ED /* FirstScreenSwiftUIView.swift in Sources */,
 				940D07ED2A599FE70049D66B /* TodoItem.swift in Sources */,
 				94B87E6E2A51C65C00D48FA2 /* FirstScreen+ActivityIndicator.swift in Sources */,
 			);
