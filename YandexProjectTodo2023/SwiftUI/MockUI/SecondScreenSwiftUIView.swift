@@ -6,7 +6,6 @@ struct SecondScreenSwiftUIView: View {
     @State private var switcher = false
     @State var selectedDate: Date = Date()
 
-    
     var body: some View {
         
         NavigationView {
@@ -21,7 +20,6 @@ struct SecondScreenSwiftUIView: View {
                     }
                 }
                 
-                
                 Section {
                     VStack {
                         HStack {
@@ -35,8 +33,7 @@ struct SecondScreenSwiftUIView: View {
                             .pickerStyle(SegmentedPickerStyle())
                             .frame(width: 150, height: 40)
                         }
-                        
-                        
+                                          
                     }
                     HStack {
                         VStack {
@@ -53,7 +50,7 @@ struct SecondScreenSwiftUIView: View {
                         }
                     }
 
-                    VStack() {
+                    VStack {
                         DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
                             .padding(.horizontal)
                             .datePickerStyle(.graphical)
@@ -62,9 +59,7 @@ struct SecondScreenSwiftUIView: View {
                 }
                 
             }
-            
-            
-            
+       
             .toolbar(content: {
                 
                 ToolbarItem(placement: .navigationBarLeading) {

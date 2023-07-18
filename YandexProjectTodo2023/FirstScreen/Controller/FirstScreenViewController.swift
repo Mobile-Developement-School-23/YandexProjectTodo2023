@@ -45,11 +45,9 @@ class FirstScreenViewController: UIViewController {
 
         // MARK: Homework 1-2 - JSON
 
-
 //        cacheToDo = FileCacheJSON.readFromFile(fileName: "fileCacheForTests", fileType: .json) ?? FileCacheJSON()
         
 //        collectionToDo = cacheToDo.getCollectionToDo()
-        
         
         // MARK: Homework 6 - Update from server
         
@@ -64,17 +62,14 @@ class FirstScreenViewController: UIViewController {
 //                    }
 //                }
         
-        
-        //MARK: Homework 7* SQLite
+        // MARK: Homework 7* SQLite
         
 //        db = FileCacheSQLite.checkOldDataBaseAndCreateNew()
 //        collectionToDo = FileCacheSQLite.createTodoItemArrayFromSQLiteDB(db: db)
 
-        //MARK: Homework 7** CoreData
+        // MARK: Homework 7** CoreData
         collectionToDo = coreDataManager.getCollectionTodoFromCoreData()
-        
-        
-        
+
         collectionToDo.sort { $0.creationDate < $1.creationDate }
         removeCompleteToDoFromArray()
         checkLastCell()

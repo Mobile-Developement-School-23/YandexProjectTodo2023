@@ -33,12 +33,10 @@ extension FirstScreenViewController {
         
         FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
         
-        
     }
     
     func removeAndDeleteTodo(_ indexPath: IndexPath) {
-        
-        
+                
         // MARK: Homework 7*
         
         //        FileCacheSQLite.deleteTodoFromSqlite(db: db, todoItem: collectionToDo[indexPath.row])
@@ -61,8 +59,6 @@ extension FirstScreenViewController {
         tableView.reloadData()
         
         FileCacheJSON.saveToDefaultFileAsync(collectionToDo: self.collectionToDo, collectionToDoComplete: self.collectionToDoComplete)
-        
-        
     }
 }
 
@@ -138,14 +134,12 @@ extension FirstScreenViewController {
                 
                 if data.creationDate == Date.distantPast {
                     
-                    
                     // MARK: Homework 7*
                     
                     //                    FileCacheSQLite.deleteTodoFromSqlite(db: self.db, todoItem: self.collectionToDo[indexPath.row])
                     
                     // MARK: Homework 7**
                     self.coreDataManager.deleteTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
-                    
                     
                     // MARK: Homework 6 - Update from server
                     
@@ -187,8 +181,6 @@ extension FirstScreenViewController {
                 // MARK: Homework 7**
                 self.coreDataManager.updateTodoFromCoreData(todo: self.collectionToDo[indexPath.row])
 
-                
-                
             }
             self.present(vc, animated: true)
             completionHandler(true)

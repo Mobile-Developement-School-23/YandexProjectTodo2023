@@ -5,7 +5,7 @@ class CoreDataManager {
     
    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FileCacheCoreDataModel")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 print("Unresolved error \(error), \(error.userInfo)")
             }
@@ -14,7 +14,6 @@ class CoreDataManager {
     }()
     
    private lazy var viewContext = persistentContainer.viewContext
-    
     
     private func saveContext () {
         let context = persistentContainer.viewContext
@@ -66,7 +65,7 @@ class CoreDataManager {
     }
     
     func saveTodoToCoreData(todo: ToDoItem) {
-        var item = convertTodoItemToEntity(todo: todo)
+        _ = convertTodoItemToEntity(todo: todo)
         saveContext()
     }
     
@@ -126,11 +125,3 @@ class CoreDataManager {
        return resultArray
     }
 }
-
-//
-//extension TodoItemEntity {
-//    public override func awakeFromInsert() {
-//        super.awakeFromInsert()
-//        creationDate = Date()
-//    }
-//}

@@ -1,14 +1,5 @@
-//
-//  TodoItemEntity+CoreDataProperties.swift
-//  
-//
-//  Created by Дмитрий Гусев on 10.07.2023.
-//
-//
-
 import Foundation
 import CoreData
-
 
 extension TodoItemEntity {
 

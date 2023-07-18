@@ -1,7 +1,6 @@
 import SQLite
 import Foundation
 
-
 // MARK: SQLite
 
 class FileCacheSQLite {
@@ -19,8 +18,7 @@ class FileCacheSQLite {
     private static let modifyDate = Expression<Int64?>("modifyDate")
     private static let colorHEX = Expression<String>("colorHEX")
     private static let last_updated_by = Expression<String>("last_updated_by")
-    
-    
+        
     static func checkOldDataBaseAndCreateNew() -> Connection? {
         
         var db = try? Connection()
@@ -74,7 +72,7 @@ class FileCacheSQLite {
         let deadlineTmp = todoItem.deadline?.timeIntervalSince1970
         let modifyDateTmp = todoItem.modifyDate?.timeIntervalSince1970
         
-        let rowId = try? db.run(todo.insert(or: .replace,
+        _ = try? db.run(todo.insert(or: .replace,
                                             id <- todoItem.id,
                                             text <- todoItem.text,
                                             priority <- todoItem.priority.rawValue,

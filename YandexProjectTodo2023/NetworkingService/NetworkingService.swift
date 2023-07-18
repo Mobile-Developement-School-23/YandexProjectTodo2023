@@ -98,7 +98,7 @@ final class DefaultNetworkingService: Sendable {
     }
     
     private func createNetworkTask(_ request: URLRequest, _ completion: @escaping NetworkCompletionHandler, _ type: RequestType, _ todoItem: ToDoItem, _ revision: Int) -> URLSessionDataTask {
-        return urlSession.dataTask(with: request) { (data, response, error) in
+        return urlSession.dataTask(with: request) { (data, _, error) in
             
             self.processResponseData(data, error) { (result: Result<TodoList, NetworkError>) in
 //                print(result)
@@ -144,7 +144,7 @@ final class DefaultNetworkingService: Sendable {
     private func processResponseData<T: Decodable>(_ data: Data?, _ error: Error?, completion: @escaping (Result<T, NetworkError>) -> Void) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
-        if let error = error {
+        if error != nil {
             completion(.failure(.serverError))
         } else if let data = data {
             do {

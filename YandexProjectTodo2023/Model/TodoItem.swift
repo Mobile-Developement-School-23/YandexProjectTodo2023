@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 15, *)
 public struct TodoList: Codable, Sendable {
     public let status: String
     public let list: [ToDoItem]?
@@ -15,7 +14,6 @@ public struct TodoList: Codable, Sendable {
     }
 }
 
-@available(iOS 15, *)
 public struct ToDoItem: Codable, Sendable {
     
     public let id: String
@@ -46,15 +44,16 @@ public struct ToDoItem: Codable, Sendable {
         case high = "important"
     }
     
-   public init(id number: String = UUID().uuidString,
-         text: String,
-         priority: Priority,
-         deadline: Date? = nil,
-         isDone: Bool = false,
-         creationDate: Date = .now,
-               modifyDate: Date? = .now,
-        colorHEX: String = "000000FF",
-        last_updated_by: String = "") {
+    public init(
+                id number: String = UUID().uuidString,
+                text: String,
+                priority: Priority,
+                deadline: Date? = nil,
+                isDone: Bool = false,
+                creationDate: Date = .now,
+                modifyDate: Date? = .now,
+                colorHEX: String = "000000FF",
+                last_updated_by: String = "") {
         id = number
         self.text = text
         self.priority = priority
@@ -65,10 +64,9 @@ public struct ToDoItem: Codable, Sendable {
         self.colorHEX = colorHEX
         self.last_updated_by = last_updated_by
     }
-  
+    
 }
 
-@available(iOS 15, *)
 extension ToDoItem {
     
     public var json: Any {
@@ -110,18 +108,17 @@ extension ToDoItem {
         }
         return createToDoFromDictionary(dictionaryFunc: dictionaryFunc)
     }
-
+    
 }
 
-@available(iOS 15, *)
 extension ToDoItem {
     
     public var csv: Any {
         let contentOfObj = "\(id),\(text),\(priority.rawValue),\((deadline?.timeIntervalSince1970) ?? 0),\(isDone),\(creationDate.timeIntervalSince1970),\((modifyDate?.timeIntervalSince1970) ?? 0)"
-   
+        
         return contentOfObj
     }
-
+    
     public static func parseCSV(csv: Any) -> ToDoItem? {
         guard let csv = csv as? String else {
             print("csv not String")
@@ -131,7 +128,7 @@ extension ToDoItem {
             separatedBy: ",")
         guard parsedCSV.count >= 7 else {return nil}
         var dictionaryFunc = [parsedCSV[0]: ["text": parsedCSV[1], "priority": parsedCSV[2], "deadline": parsedCSV[3], "isDone": parsedCSV[4], "creationDate": parsedCSV[5], "modifyDate": parsedCSV[6]]]
-
+        
         if dictionaryFunc[parsedCSV[0]]?["deadline"] == "0.0" {
             dictionaryFunc[parsedCSV[0]]?["deadline"] = nil
         }
@@ -142,7 +139,6 @@ extension ToDoItem {
     }
 }
 
-@available(iOS 15, *)
 extension ToDoItem {
     
     static func createToDoFromDictionary(dictionaryFunc: [String: [String: String]]) -> ToDoItem? {
