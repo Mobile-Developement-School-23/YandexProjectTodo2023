@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -8,14 +9,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let scene = (scene as? UIWindowScene) else { return }
-        let vc = FirstScreenViewController()
-        vc.title = "Мои дела"
-        let nav = UINavigationController(rootViewController: vc)
-        nav.navigationBar.prefersLargeTitles = true
+//        let vc = FirstScreenViewController()
+//        vc.title = "Мои дела"
+//        let nav = UINavigationController(rootViewController: vc)
+//        nav.navigationBar.prefersLargeTitles = true
+//
+//        window = UIWindow(windowScene: scene)
+//        window?.rootViewController = nav
+//        window?.makeKeyAndVisible()
         
+        // MARK: Homework 8
+        
+        let vc = FirstScreenSwiftUI()
+        let host = UIHostingController(rootView: vc)
+
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = nav
+        window?.rootViewController = host
         window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
