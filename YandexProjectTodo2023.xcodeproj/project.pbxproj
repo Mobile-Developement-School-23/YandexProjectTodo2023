@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E700850DADEE56250539E27 /* Pods_YandexProjectTodo2023Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581046C3CA63EC9CE027C370 /* Pods_YandexProjectTodo2023Tests.framework */; };
+		9400A7992A658D4900D151E4 /* FirstScreenSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9400A7982A658D4900D151E4 /* FirstScreenSwiftUI.swift */; };
 		940D07EB2A599FD30049D66B /* FileCacheJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D07EA2A599FD30049D66B /* FileCacheJSON.swift */; };
 		940D07ED2A599FE70049D66B /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940D07EC2A599FE70049D66B /* TodoItem.swift */; };
 		940D07F02A59A9850049D66B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 940D07EF2A59A9850049D66B /* SQLite */; };
@@ -63,6 +64,7 @@
 		437D768BBEBBBE867653B547 /* Pods-YandexProjectTodo2023Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023Tests.release.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests.release.xcconfig"; sourceTree = "<group>"; };
 		56404AACB170AA47F3D773BE /* Pods-YandexProjectTodo2023Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexProjectTodo2023Tests.debug.xcconfig"; path = "Target Support Files/Pods-YandexProjectTodo2023Tests/Pods-YandexProjectTodo2023Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		581046C3CA63EC9CE027C370 /* Pods_YandexProjectTodo2023Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexProjectTodo2023Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9400A7982A658D4900D151E4 /* FirstScreenSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenSwiftUI.swift; sourceTree = "<group>"; };
 		940D07EA2A599FD30049D66B /* FileCacheJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheJSON.swift; sourceTree = "<group>"; };
 		940D07EC2A599FE70049D66B /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		940D07F12A5ACF290049D66B /* FileCacheSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheSQLite.swift; sourceTree = "<group>"; };
@@ -130,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9400A7952A658C6800D151E4 /* MockUI */ = {
+			isa = PBXGroup;
+			children = (
+				946407422A63FFD80012F9ED /* FirstScreenSwiftUIView.swift */,
+				946407462A652C440012F9ED /* SecondScreenSwiftUIView.swift */,
+			);
+			path = MockUI;
+			sourceTree = "<group>";
+		};
 		940D07E92A599FC60049D66B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,9 +186,9 @@
 		943DD43F2A45737300C8B8A2 /* YandexProjectTodo2023 */ = {
 			isa = PBXGroup;
 			children = (
-				946407412A63FFB50012F9ED /* SwiftUI */,
 				943DD4402A45737300C8B8A2 /* AppDelegate.swift */,
 				943DD4422A45737300C8B8A2 /* SceneDelegate.swift */,
+				946407412A63FFB50012F9ED /* SwiftUI */,
 				94B87E6A2A51BC2E00D48FA2 /* NetworkingService */,
 				940D07E92A599FC60049D66B /* Model */,
 				943DD46A2A45770600C8B8A2 /* FirstScreen */,
@@ -289,8 +300,8 @@
 		946407412A63FFB50012F9ED /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				946407422A63FFD80012F9ED /* FirstScreenSwiftUIView.swift */,
-				946407462A652C440012F9ED /* SecondScreenSwiftUIView.swift */,
+				9400A7952A658C6800D151E4 /* MockUI */,
+				9400A7982A658D4900D151E4 /* FirstScreenSwiftUI.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -509,6 +520,7 @@
 				943DD48A2A45790200C8B8A2 /* Constraints&TopButtonLabel.swift in Sources */,
 				94B87E652A50722400D48FA2 /* URLSession+dataTask.swift in Sources */,
 				940D07F22A5ACF290049D66B /* FileCacheSQLite.swift in Sources */,
+				9400A7992A658D4900D151E4 /* FirstScreenSwiftUI.swift in Sources */,
 				943DD48E2A45791600C8B8A2 /* ColorPickerViewController.swift in Sources */,
 				943DD4412A45737300C8B8A2 /* AppDelegate.swift in Sources */,
 				943DD4762A45788800C8B8A2 /* FirstScreenTableViewCell.swift in Sources */,

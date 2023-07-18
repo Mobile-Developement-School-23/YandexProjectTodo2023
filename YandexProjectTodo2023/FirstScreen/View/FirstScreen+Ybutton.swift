@@ -70,6 +70,6 @@ extension FirstScreenViewController {
             
         }
         vc.modalTransitionStyle = .coverVertical
-        navigationController?.present(vc, animated: true)
+        self.present(vc, animated: true)
     }
 }

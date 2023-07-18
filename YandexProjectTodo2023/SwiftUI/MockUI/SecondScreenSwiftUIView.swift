@@ -1,10 +1,3 @@
-//
-//  SecondScreenSwiftUIView.swift
-//  YandexProjectTodo2023
-//
-//  Created by Дмитрий Гусев on 17.07.2023.
-//
-
 import SwiftUI
 
 struct SecondScreenSwiftUIView: View {

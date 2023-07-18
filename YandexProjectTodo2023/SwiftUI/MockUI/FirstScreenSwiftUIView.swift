@@ -1,10 +1,3 @@
-//
-//  FirstScreenSwiftUIView.swift
-//  YandexProjectTodo2023
-//
-//  Created by Дмитрий Гусев on 16.07.2023.
-//
-
 import SwiftUI
 
 struct FirstScreenSwiftUIView: View {
